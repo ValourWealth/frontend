@@ -1,0 +1,41 @@
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.session-date {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.session-duration {
+  font-size: 14px;
+  color: #666;
+}
+.course-card {
+  padding: 16px;
+}
+.bg-dark .course-card {
+  color: #fff !important;
+  background: #1a1d1e !important;
+}
+.bg-dark .course-title {
+  color: #fff !important;
+}
+.bg-dark .session-date {
+  color: #fff !important;
+}
+.course-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+  line-height: 24px;
+}
+.course-desc {
+  font-size: 15px;
+}
+.course-card .theme_btn {
+  width: fit-content;
+  margin-top: 20px;
+}

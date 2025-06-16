@@ -1,0 +1,288 @@
+Base styles * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Container and flex utilities */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+/* Navigation bar */
+.second-navbar {
+  background-color: #000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+  padding: 10px 0px;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+.second-navbar .nav-links a {
+  color: #fff;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a {
+  display: block;
+  padding: 15px 0px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--theme-color);
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+.search-icon {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+/* Dropdown styling */
+.nav-item {
+  position: relative;
+}
+.nav-item .dropdown-menu {
+  background-color: #000 !important;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: -22px;
+  /* width: 100vw; */
+  width: 1300px;
+  background-color: #000;
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  padding-top: 0px !important;
+}
+
+.nav-item:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-content {
+  display: flex;
+  padding: 30px 0px;
+  /* max-width: 1200px; */
+  color: #ffff;
+}
+
+.dropdown-left,
+.dropdown-center,
+.dropdown-right {
+  padding: 0 20px;
+}
+
+.dropdown-left {
+  flex: 1;
+}
+
+.dropdown-center {
+  flex: 2;
+}
+
+.dropdown-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px;
+}
+
+.dropdown-content h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.category-list li a {
+  padding: 6px 0;
+}
+.second-nav-links {
+  margin-bottom: 0;
+  padding-left: 0;
+  position: relative !important;
+  gap: 56px;
+}
+
+.category-list li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.category-list li:hover {
+  color: var(--theme-color);
+}
+
+.latest-articles {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.article {
+  display: flex;
+  gap: 15px;
+}
+.article a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.article-image {
+  flex: 0 0 150px;
+  width: 150px;
+  height: 100px;
+}
+
+.article-image img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.article-content {
+  flex: 1;
+}
+
+.article-category {
+  display: block;
+  font-size: 14px;
+  color: #0066cc;
+  margin-bottom: 5px;
+}
+
+.article-title {
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.follow-section {
+  margin-bottom: 30px;
+}
+
+.social-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.social-icon i {
+  font-size: 20px;
+  color: #000;
+}
+
+.view-more {
+  margin-top: auto;
+}
+
+.view-more a {
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-block;
+  transition: color 0.2s ease;
+  padding: 12px;
+}
+.view-more a:hover {
+  color: #fff !important;
+}
+
+/* Content area */
+.content {
+  padding: 50px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content h1 {
+  margin-bottom: 20px;
+}
+
+/* Show dropdown on hover */
+.nav-item:hover .dropdown-menu {
+  display: block;
+}
+
+/* Additional styling to prevent layout shifting */
+.nav-item {
+  /* position: relative; */
+  position: static !important;
+}

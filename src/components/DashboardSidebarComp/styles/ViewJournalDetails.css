@@ -1,0 +1,176 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #161616;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  color: #e0e0e0;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #333;
+  background-color: #1d1d1d;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.modal-title h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #fff;
+}
+
+.result-badge {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.result-badge.profit {
+  background-color: rgba(39, 174, 96, 0.2);
+  color: #27ae60;
+}
+
+.result-badge.loss {
+  background-color: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.close-modal-button {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-modal-button:hover {
+  color: #fff;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.details-section {
+  margin-bottom: 30px;
+}
+
+.details-section h3 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #fff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-item {
+  display: flex;
+  gap: 5px;
+}
+
+.detail-label {
+  font-size: 14px;
+  color: #999;
+}
+
+.detail-value {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.analysis-item {
+  margin-bottom: 20px;
+}
+
+.analysis-item h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #ccc;
+}
+
+.analysis-item p {
+  margin: 0;
+  line-height: 1.5;
+  background-color: #1d1d1d;
+  padding: 12px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+}
+
+.modal-footer {
+  padding: 20px 25px;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-button-modal {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+  height: auto;
+}
+
+.close-button-modal:hover {
+  background-color: #444;
+}
+
+.journal-form-container::-webkit-scrollbar-thumb {
+  background-color: #222222;
+  border-radius: 6px;
+  border: 2px solid #e0e0e0;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #222222; /* Track color */
+}

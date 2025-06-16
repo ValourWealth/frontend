@@ -1,0 +1,117 @@
+.sec_heading h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.live-session-title {
+  color: #000 !important;
+}
+.live-session-titleds {
+  color: #fff !important;
+}
+.bg-dark .live-session-title {
+  color: #ffff !important;
+}
+.session-img {
+  width: 100%;
+  height: 400px !important;
+  object-fit: cover;
+}
+
+.video-card .video-thumbnail {
+  height: 220px !important;
+}
+.bg-dark .session-card {
+  background-color: #212529;
+}
+.play-button-session {
+  background-color: #0009;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  /* font-size: 29px; */
+  left: 50%;
+  /* padding: 20px; */
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+}
+
+.session-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.3s ease-in-out;
+  margin-bottom: 20px;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.thumbnail-container {
+  position: relative;
+}
+
+.play-button {
+  background: #fffc;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 28px;
+  height: 60px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: background 0.3s ease;
+  width: 60px;
+  z-index: 2;
+}
+
+.play-button:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.session-card:hover {
+  cursor: pointer;
+}
+
+.session-content {
+  flex: 1;
+}
+
+.session-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.session-host {
+  font-size: 14px;
+  color: gray;
+}
+
+.session-time {
+  font-size: 14px;
+  color: #007bff;
+}

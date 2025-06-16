@@ -1,0 +1,181 @@
+/* MainTable.css - Bootstrap 5 Theme */
+
+/* Cap size tabs styling */
+.cap-nav {
+  border-bottom: 1px solid #dee2e6;
+  width: 100%;
+}
+.intrady-table-tabs {
+  background-color: transparent !important;
+}
+
+.cap-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.cap-btn.active {
+  color: #212529;
+  font-weight: 500;
+  border-radius: 24px !important;
+}
+
+.cap-btn:hover:not(.active) {
+  color: #495057;
+}
+
+/* Table styles */
+.stocks-table th {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.75rem 0.75rem;
+}
+
+.stocks-table td {
+  padding: 0.65rem 0.75rem;
+  vertical-align: middle;
+}
+
+/* Sentiment and AI score pills */
+.sentiment-pill {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+  min-width: 60px;
+}
+
+.ai-score-pill {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+  min-width: 60px;
+}
+
+/* Positive/Negative styling */
+.bg-success.bg-opacity-25 {
+  background-color: rgba(25, 135, 84, 0.25) !important;
+}
+
+.bg-danger.bg-opacity-25 {
+  background-color: rgba(220, 53, 69, 0.25) !important;
+}
+
+.bg-secondary.bg-opacity-25 {
+  background-color: rgba(108, 117, 125, 0.25) !important;
+}
+
+.text-success {
+  color: #198754 !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+/* Action buttons */
+.btn-light {
+  background-color: #f8f9fa;
+  border-color: #e9ecef;
+}
+
+.rounded-circle {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Alert customization */
+.alert-info {
+  background-color: rgba(13, 110, 253, 0.1);
+  border-color: #0d6efd;
+  border-left-width: 4px;
+  color: #055160;
+}
+
+/* Table hover effect */
+.table-hover tbody tr:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .stocks-table {
+    font-size: 0.9rem;
+  }
+
+  .sentiment-pill,
+  .ai-score-pill {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cap-btn {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.85rem;
+  }
+
+  .container-fluid {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Nav tabs styling */
+.nav-tabs .nav-link.active {
+  font-weight: 500;
+  color: #0d6efd;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-tabs .nav-link:not(.active):hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+}
+/* 
+.shimmer {
+  background: linear-gradient(90deg, #1f2937 25%, #4ade80 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+.shimmer-line {
+  height: 24px;
+  margin-bottom: 4px; */
+/* } */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #1f2937 25%, #4ade80 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: shimmer 13s infinite linear;
+  border-radius: 8px;
+}
+
+.shimmer-line {
+  height: 24px;
+  margin-bottom: 4px;
+}

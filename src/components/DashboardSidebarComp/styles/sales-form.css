@@ -1,0 +1,181 @@
+/* SalesContactForm.css */
+.sales-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #242529;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.sales-form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.sales-form-title {
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.sales-form-subtitle {
+  color: #ddd;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #2f3033;
+  color: white;
+  font-size: 16px;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.phone-input-container {
+  display: flex;
+  align-items: center;
+  background-color: #2f3033;
+  border: 1px solid #444;
+  border-radius: 5px;
+}
+
+.country-code {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border-right: 1px solid #444;
+}
+
+.country-selector {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding-right: 5px;
+}
+
+.flag-icon {
+  margin-right: 5px;
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px solid;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+
+.phone-prefix {
+  color: white;
+  padding-left: 5px;
+}
+
+.phone-input {
+  border: none;
+  border-radius: 0 5px 5px 0;
+  flex-grow: 1;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.btn-submit {
+  padding: 12px;
+  background-color: #703626;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-submit:hover {
+  background-color: #8a4330;
+}
+
+.btn-cancel {
+  background: none;
+  border: none;
+  color: #5d9ad4;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px;
+}
+
+.btn-cancel:hover {
+  text-decoration: underline;
+}
+
+/* modal overlay */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #1d1d1d !important;
+  padding: 40px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  color: white;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}

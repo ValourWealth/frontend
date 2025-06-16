@@ -1,0 +1,123 @@
+.academy-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.lesson-info {
+  font-size: 0.9rem;
+  color: #007bff;
+}
+
+.blurred {
+  filter: blur(5px); /* Apply blur effect */
+  pointer-events: none; /* Disable clicks */
+  opacity: 0.6; /* Slightly faded */
+  transition: all 0.3s ease-in-out;
+}
+
+.academy-card {
+  background-image: url(../images/video_card-overlay.png);
+  /* border-radius: 10px; */
+  padding: 20px;
+  color: white;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 20px;
+  /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
+.academy-badge {
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.academy-card-content h5 {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.academy-duration {
+  font-size: 0.9rem;
+}
+
+.academy-footer {
+  text-align: left;
+}
+
+.academy-link {
+  font-size: 0.9rem;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.academy-link:hover {
+  text-decoration: underline;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #1f2937 25%, #4ade80 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+  border-radius: 8px;
+}
+
+.shimmer-line {
+  height: 50px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+/* Playlist Loading UI */
+.playlist-item.shimmer {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #1f1f1f;
+  margin-bottom: 10px;
+}
+
+.playlist-item.shimmer .thumbnail-skeleton {
+  width: 100px;
+  height: 60px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1f2937 25%, #4ade80 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
+.playlist-item.shimmer .info-skeleton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.playlist-item.shimmer .info-skeleton div {
+  height: 12px;
+  width: 80%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1f2937 25%, #4ade80 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+.shimmer-block {
+  background: linear-gradient(90deg, #1f2937 25%, #4ade80 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+}

@@ -1,0 +1,163 @@
+historical css Container styling .trend-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: end;
+  margin-left: auto;
+}
+
+.up-icon {
+  color: #423d3d;
+  font-size: 36px;
+  cursor: pointer;
+  background: var(--theme-color);
+  border-radius: 10px;
+  padding: 5px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.down-icon {
+  color: #423d3d;
+  font-size: 36px;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: #ccc;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+/* Tabs Styling */
+.nav-tabs .nav-link {
+  color: #666;
+  font-weight: bold;
+}
+.nav-tabs .nav-link.active {
+  color: #000;
+}
+
+/* Table Styling */
+.table {
+  text-align: left;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+.table th {
+  background-color: #007bff;
+  color: white;
+  text-transform: uppercase;
+  padding: 10px;
+}
+.table td {
+  padding: 9px;
+  vertical-align: middle;
+}
+/* tbody tr:nth-child(n+4) {
+    filter: blur(5px);
+    opacity: 0.5;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+}
+   */
+
+/* Irregular Volume Badge */
+.badge {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+.badge.bg-success {
+  background-color: #d4edda !important;
+  color: #28a745;
+  font-weight: bold;
+  border-radius: 12px;
+  display: inline-block; /* ← This is key: don't stretch */
+}
+
+.badge.bg-danger {
+  background-color: #dc3545 !important; /* Bootstrap red */
+  color: white !important;
+  width: fit-content;
+  font-weight: bold;
+  border-radius: 12px;
+  display: inline-block; /* ← This is key: don't stretch */
+}
+
+/* Default Table Styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Light Mode */
+.table-light {
+  background-color: white;
+  color: black;
+}
+
+.table-light th,
+.table-light td {
+  border: 1px solid #ddd;
+}
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --table-border-color: #ddd;
+}
+
+.dark-mode {
+  --background-color: #000000; /* Full black */
+  --text-color: #ffffff; /* White text */
+  --table-border-color: #444; /* Dark border */
+}
+
+.table_history {
+  background-color: #0000 !important;
+  color: #ffff !important;
+  border: 1px solid var(--table-border-color);
+}
+.table_history {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--table-border-color);
+}
+.table_history tr th {
+  background-color: var(--theme-color) !important;
+  color: #fff !important;
+  border-color: #1c1e20 !important;
+}
+
+.table_history th,
+.table_history td {
+  background-color: var(
+    --background-color
+  ) !important; /* Ensures black background */
+  color: var(--text-color) !important; /* Ensures white text */
+  border-color: var(--table-border-color) !important; /* Adjusts border */
+}
+
+.dark-mode {
+  --background-color: #000000; /* Fully black */
+  --text-color: #ffffff; /* White text */
+  --table-border-color: #444; /* Dark gray border */
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  .table {
+    font-size: 14px;
+  }
+  .badge {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}

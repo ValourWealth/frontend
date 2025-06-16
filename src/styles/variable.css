@@ -1,0 +1,31 @@
+:root {
+    /* Primary Theme Colors */
+    --theme-blue-color: #007bff;    /* Dark Blue */
+    /* --theme-color: #59534c;   */
+    --theme-color: #228B22; /*forest green */
+    --theme-yellow-color: #13af0a;  /*forest green hover */
+    --primary-dark: #0f0f1a;    /* Darker Shade of Primary */
+  
+    /* Accent Colors */
+    --accent-main: #fea116;     /* Orange */
+    --accent-light: #ffc057;    /* Light Orange */
+    --accent-dark: #c77c04;     /* Darker Orange */
+  
+    /* Background Colors */
+    --background-main: #f8f9fa; /* Light Gray */
+    --background-dark: #e9ecef; /* Slightly Darker Gray */
+    --background-light: #ffffff; /* Pure White */
+  
+    /* Text Colors */
+    --text-white: #ffffff;       /* White */
+    --text-secondary: #b0b3c0;  /* Light Gray */
+    --text-dark: #121212;       /* Dark Text */
+  
+    /* Border Colors */
+    --border-light: #d6d8db;    /* Light Border */
+    --border-dark: #5c5c5c;     /* Dark Border */
+
+
+    
+  
+}

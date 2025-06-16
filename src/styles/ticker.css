@@ -1,0 +1,47 @@
+/* Ticker container styles */
+.ticker-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.ticker-container {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+/* Animation for horizontal scrolling */
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause animation on hover */
+.ticker-container:hover {
+  animation-play-state: paused;
+}
+
+/* Bootstrap-like utility classes */
+.text-success {
+  color: #28a745;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+.text-secondary {
+  color: #28a745; /* Using green for zero change as shown in the example */
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+.bg-dark {
+  background-color: #1a1d1e;
+}

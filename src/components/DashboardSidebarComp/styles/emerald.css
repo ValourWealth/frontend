@@ -1,0 +1,60 @@
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .lesson-info {
+    color: #6c757d;
+    margin-bottom: 20px;
+  }
+  
+  .card-link {
+    text-decoration: none;
+  }
+  
+  .emerald-card {
+    background: url("../images/dashboard-bg.png") no-repeat center;
+    background-size: cover;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .emerald-card .card-title {
+    text-align: left !important;
+
+
+  }
+  
+  .card-body {
+    text-align: left;
+  }
+  
+  .alert-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffff !important;
+  }
+  
+  .card-text {
+    font-size: 14px;
+    font-weight: lighter;
+    color: #ffff !important;
+  }
+  
+  .view-video {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  

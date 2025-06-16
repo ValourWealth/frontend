@@ -1,0 +1,169 @@
+.dashboard-header {
+  /* background-image: url(../images/dashboard-main-new.jpg); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  border-radius: 10px;
+  padding: 20px 10px;
+  position: relative;
+  overflow: hidden;
+  height: 336px;
+  border-radius: 0;
+  margin-bottom: 22px;
+  background: #1c1e20 !important;
+}
+
+.header-left {
+  margin-left: 10px;
+}
+
+/* minimal version, still no !important needed */
+.dark-mode .edit-profile .card label,
+.dark-mode .edit-profile .card h4 {
+  color: #fff !important;
+}
+
+.dark-mode-content {
+  /* margin-top: 85px; */
+}
+
+/* Dropdown container (hidden by default) */
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 4px;
+  width: 85%;
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 5px 0;
+  display: none;
+  z-index: 10;
+  border: 2px solid var(--theme-color);
+}
+.user-dropdown .dropdown-item {
+  border-bottom: 1px solid #ccc;
+}
+.user_info {
+  cursor: pointer;
+  padding-bottom: 6px;
+  padding-right: 40px !important;
+}
+.bg-dark .search_bar {
+  background-color: #1c1e20 !important;
+  border: 1px solid #373c42 !important;
+}
+
+/* Show dropdown on hover */
+.user_info:hover .user-dropdown {
+  display: block;
+}
+.user-dropdown .dropdown-item:hover {
+  color: #fff;
+  background-color: var(--theme-color);
+}
+
+.bg-dark .user-dropdown {
+  background-color: #1c1e20;
+  color: #fff;
+}
+/* Style for dropdown items */
+.user-dropdown .dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 25%;
+  width: 96%;
+}
+
+.header-left h2 {
+  font-size: 44px;
+  font-weight: 700;
+}
+
+.highlight {
+  color: #57cc61;
+}
+
+.underline {
+  text-decoration: underline;
+  color: #93c5fd;
+}
+
+.header-left p {
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.buttons {
+  margin-top: 15px;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  margin-right: 10px;
+}
+
+.btn-primary {
+  background-color: #4ade80;
+  color: black;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #34d399;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #93c5fd;
+  color: #93c5fd;
+}
+
+.btn-outline:hover {
+  background: #93c5fd;
+  color: black;
+}
+
+.date-btn {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: 0.3s ease-in-out;
+}
+
+.date-btn:hover {
+  background: white;
+  color: black;
+}
+.lite-section .theme_btn {
+  width: fit-content;
+}
+
+/* edit profile */
+.edit-form .theme_btn {
+  height: 50px;
+  width: 225px;
+}
+
+/* Hide media controls in Safari/Chrome (WebKit) */
+video.dashboard-bg-video::-webkit-media-controls {
+  display: none !important;
+}
+
+/* Block all user interaction */
+.dashboard-bg-video {
+  pointer-events: none;
+}

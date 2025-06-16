@@ -1,0 +1,103 @@
+.wealth-series {
+  background-color: #fff; /* Dark theme */
+  color: #fff; /* White text */
+  /* padding: 50px 0; */
+  background-image: url(../images/wealth-gold-img.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.wealth-series .wealth-container {
+  border: 1px solid transparent;
+}
+.title-wealth {
+  font-size: 2rem;
+  font-weight: bold;
+  color: gold; /* Gold accents */
+  margin-bottom: 30px;
+}
+.bg-dark .title-wealth {
+  color: #ffffff;
+}
+
+.wealth-card {
+  background: #222;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3); /* Gold glow effect */
+  margin-bottom: 20px;
+}
+.wealth-card .theme_btn {
+  background-color: gold;
+  width: fit-content;
+  color: #000;
+  font-weight: 600;
+}
+.wealth-card .theme_btn:hover {
+  background-color: #f7d625 !important;
+}
+
+.wealth-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: gold;
+}
+
+.investment-amount {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 1rem;
+  opacity: 0.9;
+  min-height: 150px;
+}
+
+.dark-mode {
+  background-color: #121212;
+  color: #f8c24d;
+}
+
+.light-mode {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.wealth-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 50px 0;
+}
+.dark-mode .wealth-container {
+  background-color: transparent !important;
+}
+
+.wealth-card {
+  background: #1b1b1b;
+  border: 2px solid #f8c24d;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0px 0px 15px rgba(248, 194, 77, 0.3);
+  min-height: 370px;
+}
+
+.dark-mode .wealth-card {
+  background: #0000;
+  color: #f8c24d;
+}
+.dark-mode .title-wealth {
+  color: gold !important;
+}
+.dark-mode .wealth-title {
+  color: gold !important;
+}
+
+.light-mode .wealth-card {
+  background: transparent;
+  color: #ffff;
+  border-color: #f8c24d;
+}

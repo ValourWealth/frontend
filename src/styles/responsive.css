@@ -1,0 +1,101 @@
+@media only screen and (max-width:992px) {
+
+    .container {
+        max-width: none;
+    }
+    .market_cards  {
+        flex-direction: column;
+    }
+    .banner-text {
+        color: white;
+        max-width: 600px;
+        position: absolute;
+        top: 26%;
+        left: 2%;
+    }
+    .login-box {
+       position: absolute;
+        z-index: 2;
+        top: 0;
+        background-color: #fff4f4db;
+    }
+   
+}
+
+@media only screen and (max-width:768px) {
+    .second-navbar {
+        display: none;
+    }
+    section {
+        padding: 50px 0;
+    }
+
+}
+
+@media only screen and (max-width:600px) {
+    .banner-text h1 {
+        font-size: 54px;
+    }
+    .footer-form {
+        flex-direction: column;
+    }
+    .footer-join-btn {
+        margin-top: 10px;
+        margin-left: 0;
+    }
+    .market_details .name {
+        margin-top: 25px;
+    }
+    .extra-heading {
+        font-size: 28px;        
+    }
+    .other-news_section {
+        margin-top: 20px;
+    }
+    .side-news-img {
+        width: 164px;
+    }
+    .popular_card img {
+        height: 300px;
+    }
+    .news-wrap img {
+        height: 400px;
+    }
+    .editor_desc {
+        height: 162px;
+    }
+}
+
+
+@media only screen and (max-width:425px) {
+    .banner-text {
+        left: 4%;
+    }
+    .store-images a img {
+        width: 136px;
+        height: auto;
+    }
+    .market_details p {
+        font-size: 16px;
+        color: #000;
+    }
+    .news-wrap h3 {
+        font-size: 22px;
+        margin-top: 20px;
+    }
+    .news-wrap img {
+        height: 300px;
+    }
+    .btn-login-mobile {
+        padding: 6px 14px;
+        font-weight: 500;
+        font-size: 13px;
+    }
+    .navbar-brand img {
+        height: 72px;
+        margin-left: -50px !important;
+    }
+    .navbar-brand {
+        margin: 0 !important;
+    }
+}
