@@ -1,5 +1,3 @@
-import React from "react";
-
 const PlatinumCard = () => {
   // Features list with icons
   const features = [

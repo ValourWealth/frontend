@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import axios from "axios";
-import FeatureVotingTabs from "./FeatureVotingTabs";
+import { useState } from "react";
 import "../DashboardSidebarComp/styles/mentorship.css";
+import FeatureVotingTabs from "./FeatureVotingTabs";
 
 function FeatureVoting() {
   const [featureTitle, setFeatureTitle] = useState("");
@@ -72,7 +72,7 @@ function FeatureVoting() {
                   type="text"
                   className="form-input"
                   id="featureTitle"
-                  style={{ border: 'none', boxShadow: 'none' }}
+                  style={{ border: "none", boxShadow: "none" }}
                   placeholder="Enter a clear, concise title for your feature request"
                   value={featureTitle}
                   onChange={(e) => setFeatureTitle(e.target.value)}
@@ -86,7 +86,7 @@ function FeatureVoting() {
                 <textarea
                   className="form-input"
                   id="featureDescription"
-                  style={{ border: 'none', boxShadow: 'none' }}
+                  style={{ border: "none", boxShadow: "none" }}
                   rows="5"
                   placeholder="Describe the feature in detail, including how it would benefit platinum members"
                   value={featureDescription}

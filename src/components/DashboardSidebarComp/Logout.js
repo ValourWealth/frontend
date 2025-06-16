@@ -1,16 +1,4 @@
-// import React from "react";
-
-// function Logout() {
-//   return (
-//     <section className="logout">
-//       <div className="container">Logout</div>
-//     </section>
-//   );
-// }
-
-// export default Logout;
-
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Logout() {

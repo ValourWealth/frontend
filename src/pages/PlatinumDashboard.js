@@ -188,7 +188,7 @@ const PlatinumDashboard = () => {
       });
 
       if (res.data && res.data.id) {
-        setConversationId(res.data.id); // ✅ CORRECT
+        setConversationId(res.data.id);
         setMessages(res.data.messages);
       } else {
         console.warn("No active analyst chat found.");

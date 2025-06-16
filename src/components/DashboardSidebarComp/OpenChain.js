@@ -1,6 +1,4 @@
-import React from "react";
 import toolImg from "../DashboardSidebarComp/images/option-chain.jpg";
-
 
 function OpenChain() {
   return (

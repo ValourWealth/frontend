@@ -12,7 +12,7 @@ function DisverificationLevel() {
         const token = localStorage.getItem("accessToken");
 
         const response = await axios.post(
-          "https://valourwealthdjango-production.up.railway.app/api/portfolio/sector-iq/",
+          "https://backend-production-1e63.up.railway.app/api/portfolio/sector-iq/",
           {},
           {
             headers: {

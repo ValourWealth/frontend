@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 
 const API_KEY = "04RGF1U9PAJ49VYI";
-// const PAIRS = [
-//   { from: "EUR", to: "USD" },
-//   { from: "GBP", to: "USD" },
-//   { from: "USD", to: "JPY" },
-//   { from: "BTC", to: "USD" },
-// ];
 
 const PAIRS = [
   { from: "EUR", to: "USD" },
@@ -130,34 +124,6 @@ const MarketInsights = () => {
                   </div>
                 ))}
           </div>
-
-          {/* <div className="market-data">
-            {rates.map(({ pair, bid, ask, trend }) => (
-              <div
-                className="market-row d-flex justify-content-between align-items-center py-3 px-2 border-bottom border-secondary-subtle hover-bg"
-                key={pair}
-              >
-                <div className="d-flex align-items-center gap-2 fw-semibold">
-                  <i
-                    className={`bi bi-arrow-${
-                      trend === "up" ? "up" : "down"
-                    }-right ${
-                      trend === "up" ? "text-success" : "text-danger"
-                    } fs-5`}
-                  ></i>
-                  <span>{pair}</span>
-                </div>
-                <div className="d-flex flex-column text-end">
-                  <small className="text-muted">Bid</small>
-                  <span className="fw-bold">{bid}</span>
-                </div>
-                <div className="d-flex flex-column text-end">
-                  <small className="text-muted">Ask</small>
-                  <span className="fw-bold">{ask}</span>
-                </div>
-              </div>
-            ))}
-          </div> */}
         </div>
 
         {isLoading && (
