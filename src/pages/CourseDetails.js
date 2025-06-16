@@ -35,7 +35,7 @@
 // // //     const fetchProgress = async () => {
 // // //       const token = localStorage.getItem("accessToken");
 // // //       const res = await fetch(
-// // //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+// // //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 // // //         {
 // // //           headers: {
 // // //             Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@
 // // //       const token = localStorage.getItem("accessToken");
 // // //       try {
 // // //         const res = await fetch(
-// // //           `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/`,
+// // //           `https://backend-production-1e63.up.railway.app/courses/${courseId}/`,
 // // //           {
 // // //             headers: {
 // // //               Authorization: `Bearer ${token}`,
@@ -93,7 +93,7 @@
 // // //     // const fetchCourseDetails = async () => {
 // // //     //   const token = localStorage.getItem("accessToken");
 // // //     //   const res = await fetch(
-// // //     //     `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/`,
+// // //     //     `https://backend-production-1e63.up.railway.app/courses/${courseId}/`,
 // // //     //     {
 // // //     //       headers: {
 // // //     //         Authorization: `Bearer ${token}`,
@@ -111,7 +111,7 @@
 // // //     const fetchProgress = async () => {
 // // //       const token = localStorage.getItem("accessToken");
 // // //       const res = await fetch(
-// // //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+// // //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 // // //         {
 // // //           headers: {
 // // //             Authorization: `Bearer ${token}`,
@@ -141,7 +141,7 @@
 // // //       );
 // // //       if (!levelObj) return;
 // // //       const res = await fetch(
-// // //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/notes/`,
+// // //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/notes/`,
 // // //         {
 // // //           headers: {
 // // //             Authorization: `Bearer ${token}`,
@@ -163,7 +163,7 @@
 // // //       );
 // // //       if (!levelObj) return;
 // // //       const res = await fetch(
-// // //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/`,
+// // //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/`,
 // // //         {
 // // //           headers: {
 // // //             Authorization: `Bearer ${token}`,
@@ -217,7 +217,7 @@
 
 // // //     try {
 // // //       const res = await fetch(
-// // //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/submit/`,
+// // //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/submit/`,
 // // //         {
 // // //           method: "POST",
 // // //           headers: {
@@ -232,7 +232,7 @@
 
 // // //       // 💡 Re-fetch progress to update passedLevels
 // // //       const progressRes = await fetch(
-// // //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+// // //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 // // //         {
 // // //           headers: {
 // // //             Authorization: `Bearer ${token}`,
@@ -273,7 +273,7 @@
 // // //       const token = localStorage.getItem("accessToken");
 // // //       try {
 // // //         await fetch(
-// // //           `https://valourwealthdjango-production.up.railway.app/videos/${videoId}/watch/`,
+// // //           `https://backend-production-1e63.up.railway.app/videos/${videoId}/watch/`,
 // // //           {
 // // //             method: "POST",
 // // //             headers: {
@@ -284,7 +284,7 @@
 // // //         );
 
 // // //         const res = await fetch(
-// // //           `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+// // //           `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 // // //           {
 // // //             headers: {
 // // //               Authorization: `Bearer ${token}`,
@@ -638,7 +638,7 @@
 // //       setLoadingProgress(true);
 // //       const token = localStorage.getItem("accessToken");
 // //       const res = await fetch(
-// //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+// //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 // //         {
 // //           headers: {
 // //             Authorization: `Bearer ${token}`,
@@ -673,7 +673,7 @@
 // //       const token = localStorage.getItem("accessToken");
 // //       try {
 // //         const res = await fetch(
-// //           `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/`,
+// //           `https://backend-production-1e63.up.railway.app/courses/${courseId}/`,
 // //           {
 // //             headers: {
 // //               Authorization: `Bearer ${token}`,
@@ -703,7 +703,7 @@
 // //     const fetchProgress = async () => {
 // //       const token = localStorage.getItem("accessToken");
 // //       const res = await fetch(
-// //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+// //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 // //         {
 // //           headers: {
 // //             Authorization: `Bearer ${token}`,
@@ -734,7 +734,7 @@
 // //       );
 // //       if (!levelObj) return;
 // //       const res = await fetch(
-// //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/notes/`,
+// //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/notes/`,
 // //         {
 // //           headers: {
 // //             Authorization: `Bearer ${token}`,
@@ -758,7 +758,7 @@
 // //       );
 // //       if (!levelObj) return;
 // //       const res = await fetch(
-// //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/`,
+// //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/`,
 // //         {
 // //           headers: {
 // //             Authorization: `Bearer ${token}`,
@@ -795,7 +795,7 @@
 
 // //     try {
 // //       const res = await fetch(
-// //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/submit/`,
+// //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/submit/`,
 // //         {
 // //           method: "POST",
 // //           headers: {
@@ -810,7 +810,7 @@
 
 // //       // Re-fetch progress to update passedLevels
 // //       const progressRes = await fetch(
-// //         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+// //         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 // //         {
 // //           headers: {
 // //             Authorization: `Bearer ${token}`,
@@ -1006,7 +1006,7 @@
 // //       const token = localStorage.getItem("accessToken");
 // //       try {
 // //         await fetch(
-// //           `https://valourwealthdjango-production.up.railway.app/videos/${videoId}/watch/`,
+// //           `https://backend-production-1e63.up.railway.app/videos/${videoId}/watch/`,
 // //           {
 // //             method: "POST",
 // //             headers: {
@@ -1017,7 +1017,7 @@
 // //         );
 
 // //         const res = await fetch(
-// //           `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+// //           `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 // //           {
 // //             headers: {
 // //               Authorization: `Bearer ${token}`,
@@ -1846,7 +1846,7 @@
 //       setLoadingProgress(true);
 //       const token = localStorage.getItem("accessToken");
 //       const res = await fetch(
-//         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+//         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -1881,7 +1881,7 @@
 //       const token = localStorage.getItem("accessToken");
 //       try {
 //         const res = await fetch(
-//           `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/`,
+//           `https://backend-production-1e63.up.railway.app/courses/${courseId}/`,
 //           {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
@@ -1911,7 +1911,7 @@
 //     const fetchProgress = async () => {
 //       const token = localStorage.getItem("accessToken");
 //       const res = await fetch(
-//         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+//         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -1942,7 +1942,7 @@
 //       );
 //       if (!levelObj) return;
 //       const res = await fetch(
-//         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/notes/`,
+//         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/notes/`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -1966,7 +1966,7 @@
 //       );
 //       if (!levelObj) return;
 //       const res = await fetch(
-//         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/`,
+//         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -2003,7 +2003,7 @@
 
 //     try {
 //       const res = await fetch(
-//         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/submit/`,
+//         `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/submit/`,
 //         {
 //           method: "POST",
 //           headers: {
@@ -2018,7 +2018,7 @@
 
 //       // Re-fetch progress to update passedLevels
 //       const progressRes = await fetch(
-//         `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+//         `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${token}`,
@@ -2124,7 +2124,7 @@
 //       const token = localStorage.getItem("accessToken");
 //       try {
 //         await fetch(
-//           `https://valourwealthdjango-production.up.railway.app/videos/${videoId}/watch/`,
+//           `https://backend-production-1e63.up.railway.app/videos/${videoId}/watch/`,
 //           {
 //             method: "POST",
 //             headers: {
@@ -2135,7 +2135,7 @@
 //         );
 
 //         const res = await fetch(
-//           `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+//           `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
 //           {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
@@ -2701,7 +2701,7 @@ const ValourAcademy = () => {
       setLoadingProgress(true);
       const token = localStorage.getItem("accessToken");
       const res = await fetch(
-        `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+        `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -2736,7 +2736,7 @@ const ValourAcademy = () => {
       const token = localStorage.getItem("accessToken");
       try {
         const res = await fetch(
-          `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/`,
+          `https://backend-production-1e63.up.railway.app/courses/${courseId}/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -2766,7 +2766,7 @@ const ValourAcademy = () => {
     const fetchProgress = async () => {
       const token = localStorage.getItem("accessToken");
       const res = await fetch(
-        `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+        `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -2797,7 +2797,7 @@ const ValourAcademy = () => {
       );
       if (!levelObj) return;
       const res = await fetch(
-        `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/notes/`,
+        `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/notes/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -2821,7 +2821,7 @@ const ValourAcademy = () => {
       );
       if (!levelObj) return;
       const res = await fetch(
-        `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/`,
+        `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -2858,7 +2858,7 @@ const ValourAcademy = () => {
 
     try {
       const res = await fetch(
-        `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/submit/`,
+        `https://backend-production-1e63.up.railway.app/courses/${courseId}/levels/${levelObj.id}/mcqs/submit/`,
         {
           method: "POST",
           headers: {
@@ -2873,7 +2873,7 @@ const ValourAcademy = () => {
 
       // Re-fetch progress to update passedLevels
       const progressRes = await fetch(
-        `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+        `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -2979,7 +2979,7 @@ const ValourAcademy = () => {
       const token = localStorage.getItem("accessToken");
       try {
         await fetch(
-          `https://valourwealthdjango-production.up.railway.app/videos/${videoId}/watch/`,
+          `https://backend-production-1e63.up.railway.app/videos/${videoId}/watch/`,
           {
             method: "POST",
             headers: {
@@ -2990,7 +2990,7 @@ const ValourAcademy = () => {
         );
 
         const res = await fetch(
-          `https://valourwealthdjango-production.up.railway.app/courses/${courseId}/progress/`,
+          `https://backend-production-1e63.up.railway.app/courses/${courseId}/progress/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

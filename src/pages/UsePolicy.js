@@ -1,5 +1,3 @@
-import React from "react";
-
 function UsePolicy() {
   return (
     <section className="acceptable-use-policy">

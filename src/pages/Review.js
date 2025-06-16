@@ -9,7 +9,7 @@ function Review() {
     e.preventDefault();
 
     const res = await fetch(
-      "https://valourwealthdjango-production.up.railway.app/api/leave-review/",
+      "https://backend-production-1e63.up.railway.app/api/leave-review/",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

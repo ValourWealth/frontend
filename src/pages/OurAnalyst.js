@@ -1,4 +1,3 @@
-import React from "react";
 import analyst1 from "../assets/images/trading-analyst1.png";
 import analyst2 from "../assets/images/trading-analyst2.png";
 import analyst3 from "../assets/images/trading-analyst3.png";
@@ -14,11 +13,7 @@ function Analyst() {
               <div className="row align-items-center">
                 {/* Analyst Image */}
                 <div className="col-md-4 text-center mb-lg-0 mb-2 analyst-img">
-                  <img
-                    src={analyst1}
-                    alt=""
-                    className="obj_fit"
-                  />
+                  <img src={analyst1} alt="" className="obj_fit" />
                 </div>
                 {/* Analyst Details */}
                 <div className="col-md-8">
@@ -47,11 +42,7 @@ function Analyst() {
               <div className="row align-items-center">
                 {/* Analyst Image */}
                 <div className="col-md-4 text-center mb-lg-0 mb-2 analyst-img">
-                  <img
-                    src={analyst2}
-                    alt=""
-                    className="obj_fit"
-                  />
+                  <img src={analyst2} alt="" className="obj_fit" />
                 </div>
                 {/* Analyst Details */}
                 <div className="col-md-8">
@@ -81,11 +72,7 @@ function Analyst() {
               <div className="row align-items-center">
                 {/* Analyst Image */}
                 <div className="col-md-4 text-center mb-lg-0 mb-2 analyst-img">
-                  <img
-                    src={analyst3}
-                    alt=""
-                    className="obj_fit"
-                  />
+                  <img src={analyst3} alt="" className="obj_fit" />
                 </div>
                 {/* Analyst Details */}
                 <div className="col-md-8">
@@ -100,7 +87,8 @@ function Analyst() {
                   <p className="fw-bold">
                     Areas of Focus:{" "}
                     <span className="text-dark">
-                    Areas of Focus: Swing Trading / Breakout Setups / Options Chains / Trade Planning
+                      Areas of Focus: Swing Trading / Breakout Setups / Options
+                      Chains / Trade Planning
                     </span>
                   </p>
                 </div>

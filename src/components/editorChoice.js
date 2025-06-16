@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const API_URL =
-  "https://valourwealthdjango-production.up.railway.app/api/editors-choice/";
+  "https://backend-production-1e63.up.railway.app/api/editors-choice/";
 
 function EditorChoice() {
   const [posts, setPosts] = useState([]);

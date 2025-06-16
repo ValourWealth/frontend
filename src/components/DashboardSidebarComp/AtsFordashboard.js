@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 import "../DashboardSidebarComp/styles/atsflow.css";
 
-const API_BASE_URL = "https://valourwealthdjango-production.up.railway.app/";
+const API_BASE_URL = "https://backend-production-1e63.up.railway.app/";
 
 const AtsFlow = ({ darkMode }) => {
   const [activeTab, setActiveTab] = useState("largeCaps");

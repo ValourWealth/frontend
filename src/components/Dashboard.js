@@ -1,4 +1,3 @@
-// new dashboard
 import axios from "axios";
 import {
   Book,
@@ -34,16 +33,6 @@ import Resources from "./DashboardSidebarComp/Resources";
 import TradeAlertsTable from "./DashboardSidebarComp/TradeAlertsTable";
 import TradeProducts from "./DashboardSidebarComp/TradeProducts";
 import WealthSeries from "./DashboardSidebarComp/WealthSeries";
-// import ChartGrid from "./DashboardSidebarComp/ChartGrid";
-// import LiveOption from "./DashboardSidebarComp/LiveOption";
-// import OptionChain from "./DashboardSidebarComp/OpenChain";
-// import TradeAlerts from "./DashboardSidebarComp/TradeAlerts";
-// import ProgramLite from "./DashboardSidebarComp/programLite";
-// import WealthPremium from "./DashboardSidebarComp/wealthPremium";
-
-// trading tools
-// import ScannerTool from "./DashboardSidebarComp/ScannerTool";
-// import SwingTradeAI from "./DashboardSidebarComp/SwingTradeAI";
 
 import CryptoData from "./DashboardSidebarComp/CryptoData";
 import EditProfile from "./DashboardSidebarComp/EditProfile";
@@ -180,7 +169,11 @@ const Dashboard = () => {
       icon: <Building size={20} />,
     },
     // { id: "trading-tools", label: "Trading Tools", icon: <Wrench size={20} /> },
-    { id: "resources", label: "Platform walkthrough", icon: <Book size={20} /> },
+    {
+      id: "resources",
+      label: "Platform walkthrough",
+      icon: <Book size={20} />,
+    },
     {
       id: "Trade-products",
       label: "ValourWealth Products",
@@ -303,8 +296,6 @@ const Dashboard = () => {
                     setActiveTab={setActiveTab}
                   />
                 );
-              // case "trading-tools":
-              //   return <TradingTools darkMode={darkMode} />;
               case "emerald":
                 return <Emerald darkMode={darkMode} />;
               case "platinum":
@@ -343,139 +334,6 @@ const Dashboard = () => {
       </div>
     );
   };
-
-  // const renderContent = () => {
-  //   return (
-  //     <div className={darkMode ? "dark-mode-content" : "light-mode-content"}>
-  //       {(() => {
-  //         switch (activeTab) {
-  //           case "dashboard":
-  //             return <DashboardData darkMode={darkMode} />;
-  //           case "darkpool-data":
-  //             return <HistoricalDataFlow darkMode={darkMode} />;
-  //           case "live-sessions":
-  //             return <LiveSessions darkMode={darkMode} />;
-  //           case "Trade-products":
-  //             return <TradeProducts darkMode={darkMode} />;
-  //           case "trading-tools":
-  //             return <TradingTools darkMode={darkMode} />;
-  //           case "emerald":
-  //             return <Emerald darkMode={darkMode} />;
-  //           case "platinum":
-  //             return <Platinum darkMode={darkMode} />;
-  //           case "options-academy":
-  //             return <OptionsAcademy darkMode={darkMode} />;
-  //           case "wealth-series":
-  //             return <WealthSeries darkMode={darkMode} />;
-  //           case "mentorship":
-  //             return <Mentorship darkMode={darkMode} />;
-  //           case "resources":
-  //             return <Resources darkMode={darkMode} />;
-
-  //           //  New Trading Tools Components (Dropdown items)
-
-  //           // case "scanner":
-  //           //   return <ScannerTool darkMode={darkMode} />;
-  //           // case "swing-trade-ai":
-  //           //   return <SwingTradeAI darkMode={darkMode} />;
-  //           // case "chart-grid":
-  //           //   return <ChartGrid darkMode={darkMode} />;
-  //           // case "live-option":
-  //           //   return <LiveOption darkMode={darkMode} />;
-  //           // case "option-chain":
-  //           //   return <OptionChain darkMode={darkMode} />;
-  //           // case "trade-alerts":
-  //           //   return <TradeAlerts darkMode={darkMode} />;
-
-  //           case "forex":
-  //             return <ForexData darkMode={darkMode} />;
-
-  //           case "crypto":
-  //             return <CryptoData darkMode={darkMode} />;
-
-  //           case "stocks":
-  //             return <StocksData darkMode={darkMode} />;
-
-  //           //Wealth management series
-
-  //           // case "lite":
-  //           //   return <ProgramLite darkMode={darkMode} />;
-  //           // case "premium":
-  //           //   return <WealthPremium darkMode={darkMode} />;
-
-  //           //User profile
-
-  //           case "edit-profile":
-  //             return <EditProfile darkMode={darkMode} />; // Edit Profile Component
-  //           case "logout":
-  //             return <Logout darkMode={darkMode} />; // Logout Component
-  //           default:
-  //             return null;
-  //         }
-  //       })()}
-  //     </div>
-  //   );
-  // };
-
-  // const renderContent = () => {
-  //   const allowedTabsForFree = ["dashboard", "darkpool-data", "edit-profile", "logout"];
-
-  //   const isFree = userData?.subscription_status === "free";
-  //   const isAdmin = userData?.is_staff || userData?.is_superuser;
-  //   const isRestricted = isFree && !isAdmin && !allowedTabsForFree.includes(activeTab);
-
-  //   return (
-  //     <div className={darkMode ? "dark-mode-content" : "light-mode-content"}>
-  //       {isRestricted ? (
-  //         <div className="text-center py-5">
-  //           <h4 className="text-danger">🔒 Unable to access</h4>
-  //           <p className="text-muted">
-  //             This section is available to premium members or administrators only.
-  //           </p>
-  //         </div>
-  //       ) : (
-  //         (() => {
-  //           switch (activeTab) {
-  //             case "dashboard":
-  //               return <DashboardData darkMode={darkMode} />;
-  //             case "darkpool-data":
-  //               return <HistoricalDataFlow darkMode={darkMode} />;
-  //             case "live-sessions":
-  //               return <LiveSessions darkMode={darkMode} />;
-  // case "Trade-products":
-  //   return <TradeProducts darkMode={darkMode} />;
-  //             case "trading-tools":
-  //               return <TradingTools darkMode={darkMode} />;
-  //             case "emerald":
-  //               return <Emerald darkMode={darkMode} />;
-  //             case "platinum":
-  //               return <Platinum darkMode={darkMode} />;
-  //             case "options-academy":
-  //               return <OptionsAcademy darkMode={darkMode} />;
-  //             case "wealth-series":
-  //               return <WealthSeries darkMode={darkMode} />;
-  //             case "mentorship":
-  //               return <Mentorship darkMode={darkMode} />;
-  //             case "resources":
-  //               return <Resources darkMode={darkMode} />;
-  //             case "forex":
-  //               return <ForexData darkMode={darkMode} />;
-  //             case "crypto":
-  //               return <CryptoData darkMode={darkMode} />;
-  //             case "stocks":
-  //               return <StocksData darkMode={darkMode} />;
-  //             case "edit-profile":
-  //               return <EditProfile darkMode={darkMode} />;
-  //             case "logout":
-  //               return <Logout darkMode={darkMode} />;
-  //             default:
-  //               return null;
-  //           }
-  //         })()
-  //       )}
-  //     </div>
-  //   );
-  // };
 
   return (
     <div className={darkMode ? "bg-dark text-white vh-100" : "bg-light vh-100"}>
@@ -563,20 +421,6 @@ const Dashboard = () => {
                   )}
                 </button>
 
-                {/* Dropdown for Wealth Management Series */}
-                {/* {item.id === "wealth-series" && (
-                <div className="dropdown-container shadow wealth-container p-0">
-                  <div className="dropdown-content-wrap">
-                    <div className="p-2 dropdown-inside" onClick={() => setActiveTab("lite")}>
-                    <li>Lite</li>
-                    </div>
-                    <div className="p-2 dropdown-inside" onClick={() => setActiveTab("premium")}>
-                    <li>Premium</li>
-                    </div>
-                  </div>
-                </div>
-              )} */}
-
                 {/* Dropdown for   */}
                 {item.id === "trading-tools" && (
                   <div className="dropdown-container shadow tools-container p-0">
@@ -659,12 +503,6 @@ const Dashboard = () => {
             {/* Header with Search */}
             <div className="row dashboard-head">
               <div className="col search-main">
-                {/* <input
-                  type="text"
-                  className={`search_bar ${darkMode ? "dark-mode" : ""}`}
-                  placeholder="Search Tickers..."
-                />
-                <i className="fas fa-search search-icon"></i> */}
                 <StockTicker />
               </div>
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 function TermsService() {
   return (
     <section className="terms-service">

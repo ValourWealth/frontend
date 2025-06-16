@@ -106,7 +106,6 @@ function Products({ darkMode, setActiveTab }) {
               className="valour-products-theme-card"
               onClick={() => {
                 navigate("/contact?product=TradeSignal");
-        
               }}
             >
               <img
