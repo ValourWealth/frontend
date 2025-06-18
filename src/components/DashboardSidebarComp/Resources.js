@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import authorImg from "../DashboardSidebarComp/images/thubnail_stream.png";
+import authorImg from "../DashboardSidebarComp/images/pic.png";
 import videoThumbnail from "../DashboardSidebarComp/images/walkthrough-thumnail.png";
 import "../DashboardSidebarComp/styles/resources.css";
 
