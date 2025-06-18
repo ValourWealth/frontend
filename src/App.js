@@ -143,6 +143,15 @@ function App() {
             }
           />
           <Route
+            path="/blog/:slug"
+            element={
+              <Layout>
+                <BlogDetail />
+              </Layout>
+            }
+          />
+
+          <Route
             path="/crypto-details"
             element={
               <Layout>
@@ -206,14 +215,7 @@ function App() {
               </Layout>
             }
           />
-          <Route
-            path="/blog-details"
-            element={
-              <Layout>
-                <BlogDetail />
-              </Layout>
-            }
-          />
+
           <Route path="/academy/:courseId" element={<CourseDetails />} />
           <Route
             path="/request-a-demo"
