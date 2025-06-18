@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const API_URL =
   "https://backend-production-1e63.up.railway.app/api/editors-choice/";
@@ -23,7 +24,7 @@ function EditorChoice() {
           {posts.map((post) => (
             <div key={post.id} className="col-lg-3">
               <div className="editors-choice">
-                <a href={`/blog/${post.slug}`}>
+                {/* <a href={`/blog/${post.slug}`}>
                   <div className="choice_img">
                     <img
                       className="obj_fit"
@@ -37,7 +38,20 @@ function EditorChoice() {
                       <p>{post.description}</p>
                     </a>
                   </div>
-                </a>
+                </a> */}
+                <Link to={`/blog/${post.slug}`}>
+                  <div className="choice_img">
+                    <img
+                      className="obj_fit"
+                      src={post.image_url}
+                      alt="editorChoiceimg"
+                    />
+                  </div>
+                  <div className="editor_desc">
+                    <h3>{post.category}</h3>
+                    <p>{post.description}</p>
+                  </div>
+                </Link>
               </div>
             </div>
           ))}
