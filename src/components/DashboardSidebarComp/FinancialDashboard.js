@@ -10,51 +10,10 @@ export default function FinancialDashboard() {
 
   // Alpha Vantage API configuration
   const API_KEY = "04RGF1U9PAJ49VYI";
-  const tickers = ["KGC", "AGNC", "GILD", "AG", "MU"];
+  const tickers = ["KGC", "AGNC", "GILD", "AG", "MU", "AAPL", "TSLA", "GOOGL"];
 
   // Fetch ticker data from Alpha Vantage
   useEffect(() => {
-    // const fetchTickerData = async () => {
-    //   setLoading(true);
-    //   const promises = tickers.map(async (ticker) => {
-    //     try {
-    //       const response = await fetch(
-    //         `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=1min&apikey=${API_KEY}`
-    //       );
-    //       const data = await response.json();
-
-    //       if (data["Time Series (1min)"]) {
-    //         const timeSeries = data["Time Series (1min)"];
-    //         const latestTime = Object.keys(timeSeries)[0];
-    //         const latest = timeSeries[latestTime];
-    //         const previous = timeSeries[Object.keys(timeSeries)[1]];
-
-    //         const currentPrice = parseFloat(latest["4. close"]);
-    //         const previousPrice = parseFloat(previous["4. close"]);
-    //         const change =
-    //           ((currentPrice - previousPrice) / previousPrice) * 100;
-
-    //         return {
-    //           symbol: ticker,
-    //           price: currentPrice.toFixed(2),
-    //           change: change.toFixed(2),
-    //           company: getCompanyName(ticker),
-    //         };
-    //       }
-    //     } catch (error) {
-    //       console.error(`Error fetching ${ticker}:, error`);
-    //     }
-
-    //     // Fallback dummy data if API fails
-    //     return getDummyData(ticker);
-    //   });
-
-    //   const results = await Promise.all(promises);
-    //   setTickerData(results.filter(Boolean));
-    //   setSelectedTicker(results[0]);
-    //   setLoading(false);
-    // };
-
     const fetchTickerData = async () => {
       setLoading(true);
 
@@ -473,7 +432,8 @@ export default function FinancialDashboard() {
 }
 
 .bg-light .sentiment-label {
-  color: #10B981 !important;
+//   color: #10B981 !important;
+  color: var(--theme-color) !important;
 }
 
 .bg-light .sentiment-tabs {
@@ -514,6 +474,7 @@ export default function FinancialDashboard() {
 .bg-light .spinner {
   border: 3px solid #E5E7EB !important;
   border-top: 3px solid #10B981 !important;
+//   color: var(--theme-color) !important;
 }
         
         .ticker-symbol {
@@ -550,7 +511,8 @@ export default function FinancialDashboard() {
         }
         
         .change.positive {
-          color: #10B981;
+        color: var(--theme-color) !important;
+        //   color: #10B981;
           background: rgba(16, 185, 129, 0.1);
         }
         
@@ -583,7 +545,8 @@ export default function FinancialDashboard() {
         .full-info-btn {
           background: transparent;
           border: 1px solid #10B981;
-          color: #10B981;
+        //   color: #10B981;
+        color: var(--theme-color) !important;
           padding: 12px 20px;
           border-radius: 10px;
           font-weight: 600;
@@ -597,7 +560,8 @@ export default function FinancialDashboard() {
         }
         
         .full-info-btn:hover {
-          background: #10B981;
+        //   background: #10B981;
+        color: var(--theme-color) !important;
           color: #FFFFFF;
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
@@ -672,7 +636,8 @@ export default function FinancialDashboard() {
         }
         
         .sentiment-label {
-          color: #10B981;
+        //   color: #10B981;
+        color: var(--theme-color) !important;
           font-weight: 600;
           font-size: 1rem;
           margin-bottom: 1.5rem;
@@ -700,7 +665,8 @@ export default function FinancialDashboard() {
         }
         
         .sentiment-tab:first-child {
-          background: #10B981;
+        //   background: #10B981;
+        color: var(--theme-color) !important;
           color: #FFFFFF;
         }
         
@@ -743,7 +709,8 @@ export default function FinancialDashboard() {
         .news-value {
           font-size: 2rem;
           font-weight: 700;
-          color: #10B981;
+        //   color: #10B981;
+        color: var(--theme-color) !important;
           margin: 1rem 0;
         }
         
@@ -806,7 +773,8 @@ export default function FinancialDashboard() {
         }
         
         .itm-percentage {
-          color: #10B981;
+        //   color: #10B981;
+        color: var(--theme-color) !important;
           font-weight: 600;
         }
         
