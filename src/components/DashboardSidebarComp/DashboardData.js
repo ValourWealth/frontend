@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "../DashboardSidebarComp/styles/DashboardData.css";
 import AtsFlow from "./AtsFordashboard";
+import FinancialDashboard from "./FinancialDashboard";
 import LiveTrainingSession from "./liveTrainingSession";
 import ProgressBar from "./ProgressBar";
 
@@ -94,7 +95,9 @@ function DashboardData({ darkMode }) {
           </div>
         </div>
       </div>
+
       {error && <p className="error-message">{error}</p>}
+      <FinancialDashboard />
       <LiveTrainingSession />
       {/* <ProgressBar />
        */}

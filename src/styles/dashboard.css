@@ -1464,7 +1464,7 @@ body .dark {
 
 .bg-light .dashboard-head {
   top: 0 !important;
-  background-color: transparent !important;
+  background-color: #fff !important;
 }
 .bg-light .search-container .search-bar {
   background-color: transparent;
