@@ -739,27 +739,23 @@ export default function FinancialDashboard() {
         //   transform: rotate(15deg);
         // }
         
-        .news-meter {
+ .news-meter {
   width: 140px;
   height: 70px;
   margin: 0 auto 1rem;
   position: relative;
-  background: conic-gradient(
-    from 180deg,
-    #EF4444 0deg 60deg,
-    #F59E0B 60deg 120deg,
-    #10B981 120deg 180deg
-  );
-  border-radius: 140px 140px 0 0;
-  transform: rotate(180deg);
+  background: linear-gradient(90deg, #EF4444 0%, #F59E0B 50%, #10B981 100%);
+  border-top-left-radius: 140px;
+  border-top-right-radius: 140px;
+  overflow: hidden;
 }
 
-        .news-needle {
+.news-needle {
   position: absolute;
   bottom: 0;
   left: 50%;
   width: 4px;
-  height: 50px;
+  height: 70px;
   background: #000;
   transform-origin: bottom center;
   transition: transform 0.3s ease-in-out;
