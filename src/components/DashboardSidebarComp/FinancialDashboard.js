@@ -719,26 +719,52 @@ export default function FinancialDashboard() {
           color: #FFFFFF;
         }
         
+        // .news-meter {
+        //   width: 120px;
+        //   height: 60px;
+        //   margin: 0 auto 1rem;
+        //   position: relative;
+        //   background: linear-gradient(90deg, #EF4444 0%, #F59E0B 50%, #10B981 100%);
+        //   border-radius: 60px 60px 0 0;
+        // }
+        
+        // .news-needle {
+        //   position: absolute;
+        //   bottom: 0;
+        //   left: 75%;
+        //   width: 2px;
+        //   height: 50px;
+        //   background: #FFFFFF;
+        //   transform-origin: bottom;
+        //   transform: rotate(15deg);
+        // }
+        
         .news-meter {
-          width: 120px;
-          height: 60px;
-          margin: 0 auto 1rem;
-          position: relative;
-          background: linear-gradient(90deg, #EF4444 0%, #F59E0B 50%, #10B981 100%);
-          border-radius: 60px 60px 0 0;
-        }
-        
+  width: 140px;
+  height: 70px;
+  margin: 0 auto 1rem;
+  position: relative;
+  background: conic-gradient(
+    from 180deg,
+    #EF4444 0deg 60deg,
+    #F59E0B 60deg 120deg,
+    #10B981 120deg 180deg
+  );
+  border-radius: 140px 140px 0 0;
+  transform: rotate(180deg);
+}
+
         .news-needle {
-          position: absolute;
-          bottom: 0;
-          left: 75%;
-          width: 2px;
-          height: 50px;
-          background: #FFFFFF;
-          transform-origin: bottom;
-          transform: rotate(15deg);
-        }
-        
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  height: 50px;
+  background: #000;
+  transform-origin: bottom center;
+  transition: transform 0.3s ease-in-out;
+}
+
         .news-value {
           font-size: 2rem;
           font-weight: 700;
@@ -989,7 +1015,11 @@ export default function FinancialDashboard() {
                         </div>
                       </div>
 
-                      <div className="sentiment-label">Bullish</div>
+                      {/* <div className="sentiment-label">Bullish</div>
+                       */}
+                      <div className="sentiment-label">
+                        {selectedTicker?.sentimentLabel || "Neutral"}
+                      </div>
 
                       {/* <div className="sentiment-tabs">
                         <button className="sentiment-tab">1 Hour</button>
@@ -1001,7 +1031,16 @@ export default function FinancialDashboard() {
                     <div className="news-gauge">
                       <h3 className="news-title">News Sentiment</h3>
                       <div className="news-meter">
-                        <div className="news-needle"></div>
+                        {/* <div className="news-needle"></div> */}
+                        <div
+                          className="news-needle"
+                          style={{
+                            transform: `rotate(${Math.min(
+                              Math.max((newsSentiment ?? 0) * 1.8 - 90, -90),
+                              90
+                            )}deg)`,
+                          }}
+                        ></div>
                       </div>
                       <div className="news-value">
                         {newsSentiment
