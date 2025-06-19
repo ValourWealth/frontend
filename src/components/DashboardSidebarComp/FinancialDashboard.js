@@ -5,6 +5,8 @@ export default function FinancialDashboard() {
   const [selectedTicker, setSelectedTicker] = useState(null);
   const [tickerData, setTickerData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sentimentScore, setSentimentScore] = useState(null);
+  const [newsSentiment, setNewsSentiment] = useState(null);
 
   // Alpha Vantage API configuration
   const API_KEY = "04RGF1U9PAJ49VYI";
@@ -12,44 +14,114 @@ export default function FinancialDashboard() {
 
   // Fetch ticker data from Alpha Vantage
   useEffect(() => {
+    // const fetchTickerData = async () => {
+    //   setLoading(true);
+    //   const promises = tickers.map(async (ticker) => {
+    //     try {
+    //       const response = await fetch(
+    //         `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=1min&apikey=${API_KEY}`
+    //       );
+    //       const data = await response.json();
+
+    //       if (data["Time Series (1min)"]) {
+    //         const timeSeries = data["Time Series (1min)"];
+    //         const latestTime = Object.keys(timeSeries)[0];
+    //         const latest = timeSeries[latestTime];
+    //         const previous = timeSeries[Object.keys(timeSeries)[1]];
+
+    //         const currentPrice = parseFloat(latest["4. close"]);
+    //         const previousPrice = parseFloat(previous["4. close"]);
+    //         const change =
+    //           ((currentPrice - previousPrice) / previousPrice) * 100;
+
+    //         return {
+    //           symbol: ticker,
+    //           price: currentPrice.toFixed(2),
+    //           change: change.toFixed(2),
+    //           company: getCompanyName(ticker),
+    //         };
+    //       }
+    //     } catch (error) {
+    //       console.error(`Error fetching ${ticker}:, error`);
+    //     }
+
+    //     // Fallback dummy data if API fails
+    //     return getDummyData(ticker);
+    //   });
+
+    //   const results = await Promise.all(promises);
+    //   setTickerData(results.filter(Boolean));
+    //   setSelectedTicker(results[0]);
+    //   setLoading(false);
+    // };
+
     const fetchTickerData = async () => {
       setLoading(true);
+
       const promises = tickers.map(async (ticker) => {
         try {
-          const response = await fetch(
-            `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=1min&apikey=${API_KEY}`
-          );
-          const data = await response.json();
+          const [priceRes, sentimentRes, newsRes] = await Promise.all([
+            fetch(
+              `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=1min&apikey=${API_KEY}`
+            ),
+            fetch(
+              `https://www.alphavantage.co/query?function=SENTIMENT_ANALYSIS&symbol=${ticker}&apikey=${API_KEY}`
+            ),
+            fetch(
+              `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${ticker}&apikey=${API_KEY}`
+            ),
+          ]);
 
-          if (data["Time Series (1min)"]) {
-            const timeSeries = data["Time Series (1min)"];
+          const priceData = await priceRes.json();
+          const sentimentData = await sentimentRes.json();
+          const newsData = await newsRes.json();
+
+          let currentPrice = 0;
+          let previousPrice = 0;
+          let change = 0;
+
+          if (priceData["Time Series (1min)"]) {
+            const timeSeries = priceData["Time Series (1min)"];
             const latestTime = Object.keys(timeSeries)[0];
             const latest = timeSeries[latestTime];
             const previous = timeSeries[Object.keys(timeSeries)[1]];
 
-            const currentPrice = parseFloat(latest["4. close"]);
-            const previousPrice = parseFloat(previous["4. close"]);
-            const change =
-              ((currentPrice - previousPrice) / previousPrice) * 100;
-
-            return {
-              symbol: ticker,
-              price: currentPrice.toFixed(2),
-              change: change.toFixed(2),
-              company: getCompanyName(ticker),
-            };
+            currentPrice = parseFloat(latest["4. close"]);
+            previousPrice = parseFloat(previous["4. close"]);
+            change = ((currentPrice - previousPrice) / previousPrice) * 100;
           }
-        } catch (error) {
-          console.error(`Error fetching ${ticker}:, error`);
-        }
 
-        // Fallback dummy data if API fails
-        return getDummyData(ticker);
+          const sentimentScore = sentimentData?.overall_sentiment_score || 0.0;
+          const sentimentLabel =
+            sentimentScore > 0
+              ? "Bullish"
+              : sentimentScore < 0
+              ? "Bearish"
+              : "Neutral";
+
+          const newsSentimentScore =
+            newsData?.feed?.[0]?.overall_sentiment_score ?? 0;
+
+          return {
+            symbol: ticker,
+            price: currentPrice.toFixed(2),
+            change: change.toFixed(2),
+            company: getCompanyName(ticker),
+            sentimentScore,
+            sentimentLabel,
+            newsSentimentScore,
+          };
+        } catch (error) {
+          console.error(`Error fetching ${ticker}:`, error);
+          return getDummyData(ticker);
+        }
       });
 
       const results = await Promise.all(promises);
       setTickerData(results.filter(Boolean));
       setSelectedTicker(results[0]);
+      setSentimentScore(results[0].sentimentScore);
+      setNewsSentiment(results[0].newsSentimentScore);
       setLoading(false);
     };
 
@@ -847,7 +919,11 @@ export default function FinancialDashboard() {
                           ? "selected"
                           : ""
                       }`}
-                      onClick={() => setSelectedTicker(ticker)}
+                      onClick={() => {
+                        setSelectedTicker(ticker);
+                        setSentimentScore(ticker.sentimentScore);
+                        setNewsSentiment(ticker.newsSentimentScore);
+                      }}
                     >
                       <div className="ticker-symbol">{ticker.symbol}</div>
                       <div className="company-name">{ticker.company}</div>
@@ -899,7 +975,16 @@ export default function FinancialDashboard() {
                       <div className="gauge-container">
                         <div className="gauge-circle">
                           <div className="gauge-inner">
-                            <div className="gauge-value">85.71%</div>
+                            <div className="gauge-value">
+                              {sentimentScore
+                                ? `${(sentimentScore * 100).toFixed(2)}%`
+                                : "--"}
+                            </div>
+                            <div className="sentiment-label">
+                              {selectedTicker?.sentimentLabel || "Neutral"}
+                            </div>
+
+                            {/* <div className="gauge-value">85.71%</div> */}
                           </div>
                         </div>
                       </div>
@@ -918,7 +1003,11 @@ export default function FinancialDashboard() {
                       <div className="news-meter">
                         <div className="news-needle"></div>
                       </div>
-                      <div className="news-value">+24.38</div>
+                      <div className="news-value">
+                        {newsSentiment
+                          ? `${(newsSentiment * 100).toFixed(2)}`
+                          : "--"}
+                      </div>
                     </div>
                   </div>
 
