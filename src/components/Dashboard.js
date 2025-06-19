@@ -467,7 +467,7 @@ const Dashboard = () => {
           <div className="position-absolute bottom-0 w-100 ">
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className={`btn btn-link d-flex align-items-center w-100 text-decoration-none night-btn ${
+              className={`btn btn-link dark-mode-btn d-flex align-items-center w-100 text-decoration-none night-btn ${
                 darkMode ? "text-white" : ""
               }`}
               style={darkMode ? { color: "white" } : {}}
