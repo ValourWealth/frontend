@@ -317,6 +317,9 @@ function ReleaseNotes() {
           .bg-dark  .release-description {
            color: #fff !important;
           }
+           .bg-light .release-description  {
+             color: #000 !important;
+           }
            .bg-dark .hero-gradient {
            background: #1c1e20 !important;
            }
