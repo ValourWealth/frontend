@@ -285,13 +285,37 @@ const TradeAlertsTable = ({ darkMode }) => {
   const [active, setActive] = useState(null);
 
   useEffect(() => {
+    // const fetchData = async () => {
+    //   setLoading(true);
+    //   setError(null);
+    //   const url = `${API_BASE_URL}${apiPaths[trend][activeTab]}`;
+
+    //   try {
+    //     const response = await fetch(url);
+    //     if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    //     const data = await response.json();
+    //     setTableData(Array.isArray(data) ? data : []);
+    //   } catch (err) {
+    //     console.error("Fetch error:", err.message);
+    //     setError("Failed to load data.");
+    //     setTableData([]);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-      const url = `${API_BASE_URL}${apiPaths[trend][activeTab]}`;
+      const timestamp = Date.now(); // 👈 bust cache
+      const url = `${API_BASE_URL}${apiPaths[trend][activeTab]}?t=${timestamp}`;
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          headers: {
+            "Cache-Control": "no-cache", // optional but helpful
+          },
+        });
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         const data = await response.json();
         setTableData(Array.isArray(data) ? data : []);
