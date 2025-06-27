@@ -311,11 +311,7 @@ const TradeAlertsTable = ({ darkMode }) => {
       const url = `${API_BASE_URL}${apiPaths[trend][activeTab]}?t=${timestamp}`;
 
       try {
-        const response = await fetch(url, {
-          headers: {
-            "Cache-Control": "no-cache", // optional but helpful
-          },
-        });
+        const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         const data = await response.json();
         setTableData(Array.isArray(data) ? data : []);
