@@ -128,7 +128,7 @@
 import { useEffect, useState } from "react";
 import "../DashboardSidebarComp/styles/historicalDataFlow.css";
 
-const API_BASE_URL = "https://valourwealthdjango-production.up.railway.app/";
+const API_BASE_URL = "https://backend-production-1e63.up.railway.app/";
 
 const apiPaths = {
   "Large Caps": "api/alerts/large_caps/",
