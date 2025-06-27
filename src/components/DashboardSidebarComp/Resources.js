@@ -130,11 +130,11 @@ const Resources = ({ darkMode }) => {
                     poster={videoThumbnail}
                   >
                     <source
-                      src="https://pub-e58a5f6126d0464c9b810e772987ba18.r2.dev/course_videos/platform%20walkthrough%20.mp4"
+                      src="https://pub-552c13ad8f084b0ca3d7b5aa8ddb03a7.r2.dev/platform_walkthrough/latest_platform_walkthrough.mp4"
                       type="video/mp4"
                     />
                     <source
-                      src="https://pub-e58a5f6126d0464c9b810e772987ba18.r2.dev/course_videos/platform%20walkthrough%20.mp4"
+                      src="https://pub-552c13ad8f084b0ca3d7b5aa8ddb03a7.r2.dev/platform_walkthrough/latest_platform_walkthrough.mp4"
                       type="video/webm"
                     />
                     Your browser does not support the video tag.
