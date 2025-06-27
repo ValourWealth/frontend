@@ -348,6 +348,7 @@ const TradeAlertsTable = ({ darkMode }) => {
             onClick={() => {
               setTrend("up");
               setActiveTrend("up");
+              setActive("up");
             }}
           />
           <FaArrowTrendDown
@@ -362,6 +363,7 @@ const TradeAlertsTable = ({ darkMode }) => {
             onClick={() => {
               setTrend("down");
               setActiveTrend("down");
+              setActive("down");
             }}
           />
         </div>
