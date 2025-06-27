@@ -75,7 +75,7 @@ const OptionsAcademy = () => {
           courses.map((course, index) => (
             <div
               key={course.id}
-              className={`col-md-3 mb-4 ${index !== 0 ? "blurred" : ""}`}
+              className={`col-md-3 mb-4 ${index !== 0 ? "" : ""}`}
             >
               <div className="academy-card">
                 <div className="academy-card-content">

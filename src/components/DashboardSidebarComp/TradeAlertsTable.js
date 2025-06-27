@@ -494,8 +494,8 @@ const TradeAlertsTable = ({ darkMode }) => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-      const timestamp = Date.now();
-      const url = `${API_BASE_URL}${apiPaths[trend][activeTab]}?t=${timestamp}`;
+
+      const url = `${API_BASE_URL}${apiPaths[trend][activeTab]}`;
 
       try {
         const response = await fetch(url);
@@ -519,7 +519,7 @@ const TradeAlertsTable = ({ darkMode }) => {
       setLoading(true);
       setError(null);
       const timestamp = Date.now();
-      const url = `${API_BASE_URL}${apiPaths[trend][activeTab]}?t=${timestamp}`;
+      const url = `${API_BASE_URL}${apiPaths[trend][activeTab]}`;
 
       try {
         const response = await fetch(url);
