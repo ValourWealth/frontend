@@ -264,9 +264,9 @@ const API_BASE_URL = "https://valourwealthdjango-production.up.railway.app/";
 
 const apiPaths = {
   up: {
-    "Large Caps": "api/alerts/largecaps/",
-    "Medium Caps": "api/alerts/medim_caps/",
-    "Small Caps": "api/alerts/smal_caps/",
+    "Large Caps": "api/alerts/large_caps/",
+    "Medium Caps": "api/alerts/medium_caps/",
+    "Small Caps": "api/alerts/small_caps/",
   },
   down: {
     "Large Caps": "api/alerts/large_caps_down/",
