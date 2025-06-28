@@ -281,11 +281,21 @@ const Resources = ({ darkMode }) => {
   const [videoData, setVideoData] = useState(null);
 
   useEffect(() => {
-    fetch(API_URL)
-      .then((res) => res.json())
+    const token = localStorage.getItem("accessToken"); // or from context or cookie
+
+    fetch(API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
-          setVideoData(data[0]); // You can also map over all
+          setVideoData(data[0]);
         }
       })
       .catch((err) => console.error("Failed to load video:", err));
