@@ -1,221 +1,157 @@
 import { MessageSquare, Paperclip, Search, Send, Smile } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ChatWithAnalyst = () => {
   const [selectedAnalyst, setSelectedAnalyst] = useState(null);
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-  const API_BASE_URL = process.env.REACT_APP_API_URL?.endsWith("/")
-    ? process.env.REACT_APP_API_URL
-    : process.env.REACT_APP_API_URL + "/";
-  const [chatId, setChatId] = useState(null); // for posting messages
 
   // Enhanced dummy data for analysts with better avatars
-  // const analysts = [
-  //   {
-  //     id: 1,
-  //     name: "Prode",
-  //     lastMessage: "Great analysis on the market trends",
-  //     time: "12:25 am",
-  //     avatar: "💼",
-  //     online: true,
-  //     unread: 2,
-  //     role: "Senior Analyst",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Sarah Chen",
-  //     lastMessage: "The quarterly report is ready for review",
-  //     time: "11:45 pm",
-  //     avatar: "👩",
-  //     online: true,
-  //     unread: 0,
-  //     role: "Financial Analyst",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Mike Johnson",
-  //     lastMessage: "Let me check the data and get back to you",
-  //     time: "10:30 pm",
-  //     avatar: "👨",
-  //     online: false,
-  //     unread: 1,
-  //     role: "Data Scientist",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Emily Davis",
-  //     lastMessage: "Perfect! The client loved the presentation",
-  //     time: "09:15 pm",
-  //     avatar: "👩‍💼",
-  //     online: true,
-  //     unread: 0,
-  //     role: "Business Analyst",
-  //   },
-  // ];
+  const analysts = [
+    {
+      id: 1,
+      name: "Prode",
+      lastMessage: "Great analysis on the market trends",
+      time: "12:25 am",
+      avatar: "💼",
+      online: true,
+      unread: 2,
+      role: "Senior Analyst",
+    },
+    {
+      id: 2,
+      name: "Sarah Chen",
+      lastMessage: "The quarterly report is ready for review",
+      time: "11:45 pm",
+      avatar: "👩",
+      online: true,
+      unread: 0,
+      role: "Financial Analyst",
+    },
+    {
+      id: 3,
+      name: "Mike Johnson",
+      lastMessage: "Let me check the data and get back to you",
+      time: "10:30 pm",
+      avatar: "👨",
+      online: false,
+      unread: 1,
+      role: "Data Scientist",
+    },
+    {
+      id: 4,
+      name: "Emily Davis",
+      lastMessage: "Perfect! The client loved the presentation",
+      time: "09:15 pm",
+      avatar: "👩‍💼",
+      online: true,
+      unread: 0,
+      role: "Business Analyst",
+    },
+  ];
 
-  // // Enhanced chat messages with more realistic conversation
-  // const chatMessages = {
-  //   1: [
-  //     {
-  //       id: 1,
-  //       sender: "Prode",
-  //       message: "hi",
-  //       time: "12:25 am",
-  //       isUser: false,
-  //     },
-  //     {
-  //       id: 2,
-  //       sender: "You",
-  //       message: "Hello",
-  //       time: "01:57 pm",
-  //       isUser: true,
-  //     },
-  //     {
-  //       id: 3,
-  //       sender: "Prode",
-  //       message: "How can I help you with your analysis today?",
-  //       time: "01:58 pm",
-  //       isUser: false,
-  //     },
-  //     {
-  //       id: 4,
-  //       sender: "You",
-  //       message: "I need insights on the quarterly performance metrics",
-  //       time: "02:00 pm",
-  //       isUser: true,
-  //     },
-  //     {
-  //       id: 5,
-  //       sender: "Prode",
-  //       message:
-  //         "Sure! Let me pull up the latest data. The Q3 results show a 15% increase in revenue compared to Q2. 📊",
-  //       time: "02:02 pm",
-  //       isUser: false,
-  //     },
-  //   ],
-  //   2: [
-  //     {
-  //       id: 1,
-  //       sender: "Sarah Chen",
-  //       message:
-  //         "Good morning! The quarterly report is ready for your review. 📈",
-  //       time: "11:45 pm",
-  //       isUser: false,
-  //     },
-  //     {
-  //       id: 2,
-  //       sender: "You",
-  //       message: "Thanks Sarah! I'll review it shortly.",
-  //       time: "12:15 pm",
-  //       isUser: true,
-  //     },
-  //     {
-  //       id: 3,
-  //       sender: "Sarah Chen",
-  //       message:
-  //         "Great! Let me know if you need any clarifications on the financial projections.",
-  //       time: "12:16 pm",
-  //       isUser: false,
-  //     },
-  //   ],
-  //   3: [
-  //     {
-  //       id: 1,
-  //       sender: "You",
-  //       message: "Can you help me with the data analysis?",
-  //       time: "10:25 pm",
-  //       isUser: true,
-  //     },
-  //     {
-  //       id: 2,
-  //       sender: "Mike Johnson",
-  //       message: "Let me check the data and get back to you",
-  //       time: "10:30 pm",
-  //       isUser: false,
-  //     },
-  //   ],
-  //   4: [
-  //     {
-  //       id: 1,
-  //       sender: "Emily Davis",
-  //       message: "Perfect! The client loved the presentation 🎉",
-  //       time: "09:15 pm",
-  //       isUser: false,
-  //     },
-  //     {
-  //       id: 2,
-  //       sender: "You",
-  //       message: "That's fantastic news! Great work on the analysis.",
-  //       time: "09:20 pm",
-  //       isUser: true,
-  //     },
-  //   ],
-  // };
-  useEffect(() => {
-    const token = localStorage.getItem("access"); // or however you store it
-
-    fetch(`${API_BASE_URL}api/ensure-analyst-chat/`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+  // Enhanced chat messages with more realistic conversation
+  const chatMessages = {
+    1: [
+      {
+        id: 1,
+        sender: "Prode",
+        message: "hi",
+        time: "12:25 am",
+        isUser: false,
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setSelectedAnalyst({
-          id: data.analyst,
-          name: data.analyst_username,
-          avatar: "💼",
-          online: true,
-          unread: 0,
-          role: "Analyst",
-        });
-        setMessages(
-          data.messages.map((msg) => ({
-            id: msg.id,
-            message: msg.content,
-            time: new Date(msg.timestamp).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            isUser: msg.sender_name === data.user_username, // optional
-          }))
-        );
-        setChatId(data.id);
-      });
-  }, []);
+      {
+        id: 2,
+        sender: "You",
+        message: "Hello",
+        time: "01:57 pm",
+        isUser: true,
+      },
+      {
+        id: 3,
+        sender: "Prode",
+        message: "How can I help you with your analysis today?",
+        time: "01:58 pm",
+        isUser: false,
+      },
+      {
+        id: 4,
+        sender: "You",
+        message: "I need insights on the quarterly performance metrics",
+        time: "02:00 pm",
+        isUser: true,
+      },
+      {
+        id: 5,
+        sender: "Prode",
+        message:
+          "Sure! Let me pull up the latest data. The Q3 results show a 15% increase in revenue compared to Q2. 📊",
+        time: "02:02 pm",
+        isUser: false,
+      },
+    ],
+    2: [
+      {
+        id: 1,
+        sender: "Sarah Chen",
+        message:
+          "Good morning! The quarterly report is ready for your review. 📈",
+        time: "11:45 pm",
+        isUser: false,
+      },
+      {
+        id: 2,
+        sender: "You",
+        message: "Thanks Sarah! I'll review it shortly.",
+        time: "12:15 pm",
+        isUser: true,
+      },
+      {
+        id: 3,
+        sender: "Sarah Chen",
+        message:
+          "Great! Let me know if you need any clarifications on the financial projections.",
+        time: "12:16 pm",
+        isUser: false,
+      },
+    ],
+    3: [
+      {
+        id: 1,
+        sender: "You",
+        message: "Can you help me with the data analysis?",
+        time: "10:25 pm",
+        isUser: true,
+      },
+      {
+        id: 2,
+        sender: "Mike Johnson",
+        message: "Let me check the data and get back to you",
+        time: "10:30 pm",
+        isUser: false,
+      },
+    ],
+    4: [
+      {
+        id: 1,
+        sender: "Emily Davis",
+        message: "Perfect! The client loved the presentation 🎉",
+        time: "09:15 pm",
+        isUser: false,
+      },
+      {
+        id: 2,
+        sender: "You",
+        message: "That's fantastic news! Great work on the analysis.",
+        time: "09:20 pm",
+        isUser: true,
+      },
+    ],
+  };
 
   const handleSendMessage = () => {
-    if (message.trim() && chatId) {
-      const token = localStorage.getItem("access");
-
-      fetch(`${API_BASE_URL}api/analyst-message/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          chat: chatId,
-          content: message,
-        }),
-      })
-        .then((res) => res.json())
-        .then((newMsg) => {
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: newMsg.id,
-              message: newMsg.content,
-              time: new Date(newMsg.timestamp).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              }),
-              isUser: true,
-            },
-          ]);
-          setMessage("");
-        });
+    if (message.trim() && selectedAnalyst) {
+      console.log("Sending message:", message, "to:", selectedAnalyst.name);
+      setMessage("");
     }
   };
 
@@ -255,9 +191,6 @@ const ChatWithAnalyst = () => {
               }}
             >
               <h5 className="text-white mb-0 fw-bold">Analyst Control Panel</h5>
-              <small className="text-white">
-                Get insights from our specialists
-              </small>
             </div>
 
             {/* Enhanced Search */}
@@ -276,7 +209,7 @@ const ChatWithAnalyst = () => {
                 <input
                   type="text"
                   className="form-control border-0 ps-5 py-2"
-                  placeholder="Search analysts..."
+                  placeholder="Search platinum user..."
                   style={{
                     backgroundColor: "#404040",
                     color: "#fff",
@@ -288,8 +221,8 @@ const ChatWithAnalyst = () => {
             </div>
 
             {/* Enhanced Analyst List */}
-            {/* <div className="overflow-auto" style={{ height: "480px" }}>
-                {selectedAnalyst && (
+            <div className="overflow-auto" style={{ height: "480px" }}>
+              {analysts.map((analyst) => (
                 <div
                   key={analyst.id}
                   className={`p-3 position-relative transition-all ${
@@ -379,64 +312,6 @@ const ChatWithAnalyst = () => {
                   </div>
                 </div>
               ))}
-            </div> */}
-            <div className="overflow-auto" style={{ height: "480px" }}>
-              {selectedAnalyst && (
-                <div
-                  className="p-3 position-relative analyst-item"
-                  style={{
-                    cursor: "pointer",
-                    borderBottom: "1px solid #404040",
-                  }}
-                >
-                  <div className="d-flex align-items-center">
-                    <div className="position-relative me-3">
-                      <div
-                        className="rounded-circle d-flex align-items-center justify-content-center shadow-sm"
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          background:
-                            "linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%)",
-                          fontSize: "20px",
-                          border: "3px solid transparent",
-                        }}
-                      >
-                        {selectedAnalyst.avatar}
-                      </div>
-                      {selectedAnalyst.online && (
-                        <span
-                          className="position-absolute bg-success rounded-circle shadow-sm"
-                          style={{
-                            width: "12px",
-                            height: "12px",
-                            bottom: "2px",
-                            right: "2px",
-                            border: "2px solid #2d2d30",
-                          }}
-                        ></span>
-                      )}
-                    </div>
-                    <div className="flex-grow-1 min-width-0">
-                      <h6 className="text-white mb-0 fw-semibold text-truncate">
-                        {selectedAnalyst.name}
-                      </h6>
-                      <p
-                        className="text-white mb-0 text-truncate"
-                        style={{ fontSize: "13px", lineHeight: "1.3" }}
-                      >
-                        Active conversation
-                      </p>
-                      <small
-                        className="text-white"
-                        style={{ fontSize: "11px" }}
-                      >
-                        {selectedAnalyst.role}
-                      </small>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 
@@ -528,7 +403,7 @@ const ChatWithAnalyst = () => {
                     maxHeight: "470px",
                   }}
                 >
-                  {messages.map((msg, index) => (
+                  {chatMessages[selectedAnalyst.id]?.map((msg, index) => (
                     <div
                       key={msg.id}
                       className={`mb-4 d-flex ${
@@ -686,11 +561,11 @@ const ChatWithAnalyst = () => {
                     <MessageSquare size={40} className="text-white" />
                   </div>
                   <h5 className="text-white mb-2 fw-semibold">
-                    Select an analyst to start chatting
+                    select the platinum member to response and chat with it
                   </h5>
                   <p className="text-white">
-                    Choose from the list to begin your conversation with our
-                    experts
+                    Choose from the list to begin your conversation to help
+                    platinum members
                   </p>
                 </div>
               </div>

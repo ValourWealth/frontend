@@ -131,7 +131,8 @@ const PlatinumDashboard = () => {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         setUserData(res.data);
-        setIsAnalyst(res.data.role === "analyst"); // ✅ move inside try after res
+        setIsAnalyst(res.data.role === "analyst");
+
       } catch (err) {
         console.error("Failed to fetch user", err);
       }
