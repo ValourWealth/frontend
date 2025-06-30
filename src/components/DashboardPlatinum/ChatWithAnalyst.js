@@ -1,157 +1,74 @@
+import axios from "axios";
 import { MessageSquare, Paperclip, Search, Send, Smile } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ChatWithAnalyst = () => {
   const [selectedAnalyst, setSelectedAnalyst] = useState(null);
   const [message, setMessage] = useState("");
+  const [analysts, setAnalysts] = useState([]);
+  const [chatMessages, setChatMessages] = useState({});
 
-  // Enhanced dummy data for analysts with better avatars
-  const analysts = [
-    {
-      id: 1,
-      name: "Prode",
-      lastMessage: "Great analysis on the market trends",
-      time: "12:25 am",
-      avatar: "💼",
-      online: true,
-      unread: 2,
-      role: "Senior Analyst",
-    },
-    {
-      id: 2,
-      name: "Sarah Chen",
-      lastMessage: "The quarterly report is ready for review",
-      time: "11:45 pm",
-      avatar: "👩",
-      online: true,
-      unread: 0,
-      role: "Financial Analyst",
-    },
-    {
-      id: 3,
-      name: "Mike Johnson",
-      lastMessage: "Let me check the data and get back to you",
-      time: "10:30 pm",
-      avatar: "👨",
-      online: false,
-      unread: 1,
-      role: "Data Scientist",
-    },
-    {
-      id: 4,
-      name: "Emily Davis",
-      lastMessage: "Perfect! The client loved the presentation",
-      time: "09:15 pm",
-      avatar: "👩‍💼",
-      online: true,
-      unread: 0,
-      role: "Business Analyst",
-    },
-  ];
+  useEffect(() => {
+    const fetchChats = async () => {
+      try {
+        const response = await axios.get(
+          "https://backend-production-1e63.up.railway.app/api/analyst-chat/ensure/",
+          { withCredentials: true }
+        );
+        setAnalysts(response.data); // set from backend
+      } catch (err) {
+        console.error("Failed to fetch analyst chats:", err);
+      }
+    };
 
-  // Enhanced chat messages with more realistic conversation
-  const chatMessages = {
-    1: [
-      {
-        id: 1,
-        sender: "Prode",
-        message: "hi",
-        time: "12:25 am",
-        isUser: false,
-      },
-      {
-        id: 2,
-        sender: "You",
-        message: "Hello",
-        time: "01:57 pm",
-        isUser: true,
-      },
-      {
-        id: 3,
-        sender: "Prode",
-        message: "How can I help you with your analysis today?",
-        time: "01:58 pm",
-        isUser: false,
-      },
-      {
-        id: 4,
-        sender: "You",
-        message: "I need insights on the quarterly performance metrics",
-        time: "02:00 pm",
-        isUser: true,
-      },
-      {
-        id: 5,
-        sender: "Prode",
-        message:
-          "Sure! Let me pull up the latest data. The Q3 results show a 15% increase in revenue compared to Q2. 📊",
-        time: "02:02 pm",
-        isUser: false,
-      },
-    ],
-    2: [
-      {
-        id: 1,
-        sender: "Sarah Chen",
-        message:
-          "Good morning! The quarterly report is ready for your review. 📈",
-        time: "11:45 pm",
-        isUser: false,
-      },
-      {
-        id: 2,
-        sender: "You",
-        message: "Thanks Sarah! I'll review it shortly.",
-        time: "12:15 pm",
-        isUser: true,
-      },
-      {
-        id: 3,
-        sender: "Sarah Chen",
-        message:
-          "Great! Let me know if you need any clarifications on the financial projections.",
-        time: "12:16 pm",
-        isUser: false,
-      },
-    ],
-    3: [
-      {
-        id: 1,
-        sender: "You",
-        message: "Can you help me with the data analysis?",
-        time: "10:25 pm",
-        isUser: true,
-      },
-      {
-        id: 2,
-        sender: "Mike Johnson",
-        message: "Let me check the data and get back to you",
-        time: "10:30 pm",
-        isUser: false,
-      },
-    ],
-    4: [
-      {
-        id: 1,
-        sender: "Emily Davis",
-        message: "Perfect! The client loved the presentation 🎉",
-        time: "09:15 pm",
-        isUser: false,
-      },
-      {
-        id: 2,
-        sender: "You",
-        message: "That's fantastic news! Great work on the analysis.",
-        time: "09:20 pm",
-        isUser: true,
-      },
-    ],
-  };
+    fetchChats();
+  }, []);
 
-  const handleSendMessage = () => {
-    if (message.trim() && selectedAnalyst) {
-      console.log("Sending message:", message, "to:", selectedAnalyst.name);
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (!selectedAnalyst) return;
+
+      try {
+        const res = await axios.get(
+          `https://backend-production-1e63.up.railway.app/api/analyst-chat/${selectedAnalyst.id}/`,
+          { withCredentials: true }
+        );
+        setChatMessages({
+          ...chatMessages,
+          [selectedAnalyst.id]: res.data.messages,
+        });
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
+    };
+
+    fetchMessages();
+  }, [selectedAnalyst]);
+
+  const handleSendMessage = async () => {
+    if (!message.trim() || !selectedAnalyst) return;
+
+    try {
+      const response = await axios.post(
+        "https://backend-production-1e63.up.railway.app/api/analyst-chat/message/",
+        {
+          chat: selectedAnalyst.id,
+          content: message,
+        },
+        { withCredentials: true }
+      );
+
+      // Append new message to chat
+      setChatMessages((prev) => ({
+        ...prev,
+        [selectedAnalyst.id]: [
+          ...(prev[selectedAnalyst.id] || []),
+          response.data,
+        ],
+      }));
       setMessage("");
+    } catch (error) {
+      console.error("Failed to send message:", error);
     }
   };
 
