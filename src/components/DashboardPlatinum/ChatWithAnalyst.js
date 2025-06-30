@@ -1,8 +1,9 @@
 import { MessageSquare, Paperclip, Search, Send, Smile } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ChatWithAnalyst = () => {
   const [selectedAnalyst, setSelectedAnalyst] = useState(null);
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const API_BASE_URL = process.env.REACT_APP_API_URL?.endsWith("/")
     ? process.env.REACT_APP_API_URL
@@ -287,8 +288,8 @@ const ChatWithAnalyst = () => {
             </div>
 
             {/* Enhanced Analyst List */}
-            <div className="overflow-auto" style={{ height: "480px" }}>
-              {analysts.map((analyst) => (
+            {/* <div className="overflow-auto" style={{ height: "480px" }}>
+                {selectedAnalyst && (
                 <div
                   key={analyst.id}
                   className={`p-3 position-relative transition-all ${
@@ -378,6 +379,64 @@ const ChatWithAnalyst = () => {
                   </div>
                 </div>
               ))}
+            </div> */}
+            <div className="overflow-auto" style={{ height: "480px" }}>
+              {selectedAnalyst && (
+                <div
+                  className="p-3 position-relative analyst-item"
+                  style={{
+                    cursor: "pointer",
+                    borderBottom: "1px solid #404040",
+                  }}
+                >
+                  <div className="d-flex align-items-center">
+                    <div className="position-relative me-3">
+                      <div
+                        className="rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                        style={{
+                          width: "48px",
+                          height: "48px",
+                          background:
+                            "linear-gradient(135deg, #4a4a4a 0%, #5a5a5a 100%)",
+                          fontSize: "20px",
+                          border: "3px solid transparent",
+                        }}
+                      >
+                        {selectedAnalyst.avatar}
+                      </div>
+                      {selectedAnalyst.online && (
+                        <span
+                          className="position-absolute bg-success rounded-circle shadow-sm"
+                          style={{
+                            width: "12px",
+                            height: "12px",
+                            bottom: "2px",
+                            right: "2px",
+                            border: "2px solid #2d2d30",
+                          }}
+                        ></span>
+                      )}
+                    </div>
+                    <div className="flex-grow-1 min-width-0">
+                      <h6 className="text-white mb-0 fw-semibold text-truncate">
+                        {selectedAnalyst.name}
+                      </h6>
+                      <p
+                        className="text-white mb-0 text-truncate"
+                        style={{ fontSize: "13px", lineHeight: "1.3" }}
+                      >
+                        Active conversation
+                      </p>
+                      <small
+                        className="text-white"
+                        style={{ fontSize: "11px" }}
+                      >
+                        {selectedAnalyst.role}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
