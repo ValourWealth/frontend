@@ -3,155 +3,218 @@ import { useState } from "react";
 
 const ChatWithAnalyst = () => {
   const [selectedAnalyst, setSelectedAnalyst] = useState(null);
-  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const API_BASE_URL = process.env.REACT_APP_API_URL?.endsWith("/")
+    ? process.env.REACT_APP_API_URL
+    : process.env.REACT_APP_API_URL + "/";
+  const [chatId, setChatId] = useState(null); // for posting messages
 
   // Enhanced dummy data for analysts with better avatars
-  const analysts = [
-    {
-      id: 1,
-      name: "Prode",
-      lastMessage: "Great analysis on the market trends",
-      time: "12:25 am",
-      avatar: "💼",
-      online: true,
-      unread: 2,
-      role: "Senior Analyst",
-    },
-    {
-      id: 2,
-      name: "Sarah Chen",
-      lastMessage: "The quarterly report is ready for review",
-      time: "11:45 pm",
-      avatar: "👩",
-      online: true,
-      unread: 0,
-      role: "Financial Analyst",
-    },
-    {
-      id: 3,
-      name: "Mike Johnson",
-      lastMessage: "Let me check the data and get back to you",
-      time: "10:30 pm",
-      avatar: "👨",
-      online: false,
-      unread: 1,
-      role: "Data Scientist",
-    },
-    {
-      id: 4,
-      name: "Emily Davis",
-      lastMessage: "Perfect! The client loved the presentation",
-      time: "09:15 pm",
-      avatar: "👩‍💼",
-      online: true,
-      unread: 0,
-      role: "Business Analyst",
-    },
-  ];
+  // const analysts = [
+  //   {
+  //     id: 1,
+  //     name: "Prode",
+  //     lastMessage: "Great analysis on the market trends",
+  //     time: "12:25 am",
+  //     avatar: "💼",
+  //     online: true,
+  //     unread: 2,
+  //     role: "Senior Analyst",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Sarah Chen",
+  //     lastMessage: "The quarterly report is ready for review",
+  //     time: "11:45 pm",
+  //     avatar: "👩",
+  //     online: true,
+  //     unread: 0,
+  //     role: "Financial Analyst",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Mike Johnson",
+  //     lastMessage: "Let me check the data and get back to you",
+  //     time: "10:30 pm",
+  //     avatar: "👨",
+  //     online: false,
+  //     unread: 1,
+  //     role: "Data Scientist",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Emily Davis",
+  //     lastMessage: "Perfect! The client loved the presentation",
+  //     time: "09:15 pm",
+  //     avatar: "👩‍💼",
+  //     online: true,
+  //     unread: 0,
+  //     role: "Business Analyst",
+  //   },
+  // ];
 
-  // Enhanced chat messages with more realistic conversation
-  const chatMessages = {
-    1: [
-      {
-        id: 1,
-        sender: "Prode",
-        message: "hi",
-        time: "12:25 am",
-        isUser: false,
+  // // Enhanced chat messages with more realistic conversation
+  // const chatMessages = {
+  //   1: [
+  //     {
+  //       id: 1,
+  //       sender: "Prode",
+  //       message: "hi",
+  //       time: "12:25 am",
+  //       isUser: false,
+  //     },
+  //     {
+  //       id: 2,
+  //       sender: "You",
+  //       message: "Hello",
+  //       time: "01:57 pm",
+  //       isUser: true,
+  //     },
+  //     {
+  //       id: 3,
+  //       sender: "Prode",
+  //       message: "How can I help you with your analysis today?",
+  //       time: "01:58 pm",
+  //       isUser: false,
+  //     },
+  //     {
+  //       id: 4,
+  //       sender: "You",
+  //       message: "I need insights on the quarterly performance metrics",
+  //       time: "02:00 pm",
+  //       isUser: true,
+  //     },
+  //     {
+  //       id: 5,
+  //       sender: "Prode",
+  //       message:
+  //         "Sure! Let me pull up the latest data. The Q3 results show a 15% increase in revenue compared to Q2. 📊",
+  //       time: "02:02 pm",
+  //       isUser: false,
+  //     },
+  //   ],
+  //   2: [
+  //     {
+  //       id: 1,
+  //       sender: "Sarah Chen",
+  //       message:
+  //         "Good morning! The quarterly report is ready for your review. 📈",
+  //       time: "11:45 pm",
+  //       isUser: false,
+  //     },
+  //     {
+  //       id: 2,
+  //       sender: "You",
+  //       message: "Thanks Sarah! I'll review it shortly.",
+  //       time: "12:15 pm",
+  //       isUser: true,
+  //     },
+  //     {
+  //       id: 3,
+  //       sender: "Sarah Chen",
+  //       message:
+  //         "Great! Let me know if you need any clarifications on the financial projections.",
+  //       time: "12:16 pm",
+  //       isUser: false,
+  //     },
+  //   ],
+  //   3: [
+  //     {
+  //       id: 1,
+  //       sender: "You",
+  //       message: "Can you help me with the data analysis?",
+  //       time: "10:25 pm",
+  //       isUser: true,
+  //     },
+  //     {
+  //       id: 2,
+  //       sender: "Mike Johnson",
+  //       message: "Let me check the data and get back to you",
+  //       time: "10:30 pm",
+  //       isUser: false,
+  //     },
+  //   ],
+  //   4: [
+  //     {
+  //       id: 1,
+  //       sender: "Emily Davis",
+  //       message: "Perfect! The client loved the presentation 🎉",
+  //       time: "09:15 pm",
+  //       isUser: false,
+  //     },
+  //     {
+  //       id: 2,
+  //       sender: "You",
+  //       message: "That's fantastic news! Great work on the analysis.",
+  //       time: "09:20 pm",
+  //       isUser: true,
+  //     },
+  //   ],
+  // };
+  useEffect(() => {
+    const token = localStorage.getItem("access"); // or however you store it
+
+    fetch(`${API_BASE_URL}api/ensure-analyst-chat/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        id: 2,
-        sender: "You",
-        message: "Hello",
-        time: "01:57 pm",
-        isUser: true,
-      },
-      {
-        id: 3,
-        sender: "Prode",
-        message: "How can I help you with your analysis today?",
-        time: "01:58 pm",
-        isUser: false,
-      },
-      {
-        id: 4,
-        sender: "You",
-        message: "I need insights on the quarterly performance metrics",
-        time: "02:00 pm",
-        isUser: true,
-      },
-      {
-        id: 5,
-        sender: "Prode",
-        message:
-          "Sure! Let me pull up the latest data. The Q3 results show a 15% increase in revenue compared to Q2. 📊",
-        time: "02:02 pm",
-        isUser: false,
-      },
-    ],
-    2: [
-      {
-        id: 1,
-        sender: "Sarah Chen",
-        message:
-          "Good morning! The quarterly report is ready for your review. 📈",
-        time: "11:45 pm",
-        isUser: false,
-      },
-      {
-        id: 2,
-        sender: "You",
-        message: "Thanks Sarah! I'll review it shortly.",
-        time: "12:15 pm",
-        isUser: true,
-      },
-      {
-        id: 3,
-        sender: "Sarah Chen",
-        message:
-          "Great! Let me know if you need any clarifications on the financial projections.",
-        time: "12:16 pm",
-        isUser: false,
-      },
-    ],
-    3: [
-      {
-        id: 1,
-        sender: "You",
-        message: "Can you help me with the data analysis?",
-        time: "10:25 pm",
-        isUser: true,
-      },
-      {
-        id: 2,
-        sender: "Mike Johnson",
-        message: "Let me check the data and get back to you",
-        time: "10:30 pm",
-        isUser: false,
-      },
-    ],
-    4: [
-      {
-        id: 1,
-        sender: "Emily Davis",
-        message: "Perfect! The client loved the presentation 🎉",
-        time: "09:15 pm",
-        isUser: false,
-      },
-      {
-        id: 2,
-        sender: "You",
-        message: "That's fantastic news! Great work on the analysis.",
-        time: "09:20 pm",
-        isUser: true,
-      },
-    ],
-  };
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSelectedAnalyst({
+          id: data.analyst,
+          name: data.analyst_username,
+          avatar: "💼",
+          online: true,
+          unread: 0,
+          role: "Analyst",
+        });
+        setMessages(
+          data.messages.map((msg) => ({
+            id: msg.id,
+            message: msg.content,
+            time: new Date(msg.timestamp).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            isUser: msg.sender_name === data.user_username, // optional
+          }))
+        );
+        setChatId(data.id);
+      });
+  }, []);
 
   const handleSendMessage = () => {
-    if (message.trim() && selectedAnalyst) {
-      console.log("Sending message:", message, "to:", selectedAnalyst.name);
-      setMessage("");
+    if (message.trim() && chatId) {
+      const token = localStorage.getItem("access");
+
+      fetch(`${API_BASE_URL}api/analyst-message/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          chat: chatId,
+          content: message,
+        }),
+      })
+        .then((res) => res.json())
+        .then((newMsg) => {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: newMsg.id,
+              message: newMsg.content,
+              time: new Date(newMsg.timestamp).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              }),
+              isUser: true,
+            },
+          ]);
+          setMessage("");
+        });
     }
   };
 
@@ -406,7 +469,7 @@ const ChatWithAnalyst = () => {
                     maxHeight: "470px",
                   }}
                 >
-                  {chatMessages[selectedAnalyst.id]?.map((msg, index) => (
+                  {messages.map((msg, index) => (
                     <div
                       key={msg.id}
                       className={`mb-4 d-flex ${
