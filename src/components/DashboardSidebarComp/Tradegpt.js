@@ -29,7 +29,8 @@ const TradeGPT = () => {
       // Optional: wait 1-2 seconds before redirect (for smoother UX)
       setTimeout(() => {
         // window.location.href = `https://frontend-eight-rho-95.vercel.app?token=${token}`;
-        window.location.href = `https://tradegptlatest.vercel.app?token=${token}`;
+        // window.location.href = `https://tradegptlatest.vercel.app?token=${token}`;
+        window.location.href = `https://latestnewtradegptversion.vercel.app?token=${token}`;
       }, 1500);
     } catch (error) {
       console.error("TradeGPT redirect failed:", error);
