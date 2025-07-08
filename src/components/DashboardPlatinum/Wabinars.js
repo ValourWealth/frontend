@@ -48,7 +48,10 @@ const ExclusiveWebinars = () => {
           w.id === id
             ? {
                 ...w,
-                registered_count: res.data.registered_count,
+                // registered_count: res.data.registered_count,
+                // this is for fake
+                registered_count: res.data.display_count, // use boosted number
+
                 already_registered: true,
               }
             : w
