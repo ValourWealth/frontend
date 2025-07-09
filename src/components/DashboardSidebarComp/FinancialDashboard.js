@@ -1031,7 +1031,8 @@
 //   );
 // }
 
-// with the scraper api from bucket
+
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -1045,45 +1046,44 @@ export default function FinancialDashboard() {
   const [contractsData, setContractsData] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(
-          "https://backend-production-1e63.up.railway.app/api/tickers/"
-        );
-        const data = await res.json();
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("https://backend-production-1e63.up.railway.app/api/tickers/");
+      const data = await res.json();
 
-        const enriched = data.map((item) => ({
-          ...item,
-          timeframe: "1 Hour",
-        }));
+      const enriched = data.map((item) => ({
+        ...item,
+        timeframe: item.timeframe || "1 Hour"
+      }));
 
-        setTickerData(enriched);
+      setTickerData(enriched);
 
-        if (enriched.length > 0) {
-          const first = enriched[0];
-          setSelectedTicker(first);
-          setSentimentScore(parseFloat(first.sentiment));
-          setNewsSentiment(parseFloat(first.news_sentiment));
-          setContractsData(enriched.filter((t) => t.symbol === first.symbol));
-        }
-      } catch (err) {
-        console.error("Failed to fetch tickers", err);
+      const filtered = enriched.filter(t => t.timeframe === activeTimeframe);
+      if (filtered.length > 0) {
+        const first = filtered[0];
+        setSelectedTicker(first);
+        setSentimentScore(parseFloat(first.sentiment));
+        setNewsSentiment(parseFloat(first.news_sentiment));
+        setContractsData(filtered.filter(t => t.symbol === first.symbol));
       }
-      setLoading(false);
-    };
+    } catch (err) {
+      console.error("Failed to fetch tickers", err);
+    }
+    setLoading(false);
+  };
 
+  useEffect(() => {
     fetchData();
-  }, []);
+    const interval = setInterval(fetchData, 5 * 60 * 1000); // Auto-refresh every 5 mins
+    return () => clearInterval(interval);
+  }, [activeTimeframe]);
 
   const handleTickerClick = (ticker) => {
     setSelectedTicker(ticker);
     setSentimentScore(parseFloat(ticker.sentiment));
     setNewsSentiment(parseFloat(ticker.news_sentiment));
-    const matchingContracts = tickerData.filter(
-      (t) => t.symbol === ticker.symbol
-    );
+    const matchingContracts = tickerData.filter(t => t.symbol === ticker.symbol);
     setContractsData(matchingContracts);
     navigate(`/trading-tools?symbol=${ticker.symbol}`);
   };
@@ -1100,13 +1100,8 @@ export default function FinancialDashboard() {
           <div className="left-panel">
             <div className="tickers-header">
               <h3 className="tickers-title">Tickers</h3>
-              <div className="refresh-icon">
-                <svg
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
+              <div className="refresh-icon" onClick={fetchData}>
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12a8 8 0 018-8V2.5L14.5 5 12 7.5V6a6 6 0 100 12 6 6 0 006-6h2a8 8 0 01-16 0z" />
                 </svg>
               </div>
@@ -1116,9 +1111,7 @@ export default function FinancialDashboard() {
               {["1 Hour", "4 Hours", "1 Day"].map((timeframe) => (
                 <button
                   key={timeframe}
-                  className={`tab ${
-                    activeTimeframe === timeframe ? "active" : ""
-                  }`}
+                  className={`tab ${activeTimeframe === timeframe ? "active" : ""}`}
                   onClick={() => setActiveTimeframe(timeframe)}
                 >
                   {timeframe}
@@ -1134,36 +1127,23 @@ export default function FinancialDashboard() {
             ) : (
               <div className="tickers-list">
                 {tickerData
-                  .filter((t) => t.timeframe === activeTimeframe)
+                  .filter(t => t.timeframe === activeTimeframe)
                   .map((ticker, index) => (
                     <div
                       key={index}
-                      className={`ticker-item ${
-                        selectedTicker?.symbol === ticker.symbol
-                          ? "selected"
-                          : ""
-                      }`}
+                      className={`ticker-item ${selectedTicker?.symbol === ticker.symbol ? "selected" : ""}`}
                       onClick={() => handleTickerClick(ticker)}
                     >
                       <div className="ticker-symbol">{ticker.symbol}</div>
                       <div className="company-name">{ticker.company}</div>
                       <div className="price-info">
-                        <span className="price">
-                          ${parseFloat(ticker.price).toFixed(2)}
-                        </span>
-                        <span
-                          className={`change ${
-                            parseFloat(ticker.change) >= 0
-                              ? "positive"
-                              : "negative"
-                          }`}
-                        >
-                          {parseFloat(ticker.change) >= 0 ? "+" : ""}
-                          {parseFloat(ticker.change).toFixed(2)}%
+                        <span className="price">${parseFloat(ticker.price).toFixed(2)}</span>
+                        <span className={`change ${parseFloat(ticker.change) >= 0 ? "positive" : "negative"}`}>
+                          {parseFloat(ticker.change) >= 0 ? "+" : ""}{parseFloat(ticker.change).toFixed(2)}%
                         </span>
                       </div>
                     </div>
-                  ))}
+                ))}
               </div>
             )}
           </div>
@@ -1178,12 +1158,7 @@ export default function FinancialDashboard() {
                   <Link to={`/trading-tools?symbol=${selectedTicker.symbol}`}>
                     <button className="full-info-btn">
                       FULL {selectedTicker.symbol} INFO
-                      <svg
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
+                      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                       </svg>
                     </button>
@@ -1198,9 +1173,7 @@ export default function FinancialDashboard() {
                       <div className="gauge-circle">
                         <div className="gauge-inner">
                           <div className="gauge-value">
-                            {sentimentScore
-                              ? `${(sentimentScore * 100).toFixed(2)}%`
-                              : "--"}
+                            {sentimentScore ? `${(sentimentScore * 100).toFixed(2)}%` : "--"}
                           </div>
                           <div className="sentiment-label">
                             {selectedTicker?.sentimentLabel || "Neutral"}
@@ -1219,9 +1192,7 @@ export default function FinancialDashboard() {
                       <div className="news-needle"></div>
                     </div>
                     <div className="news-value">
-                      {newsSentiment
-                        ? `${(newsSentiment * 100).toFixed(2)}`
-                        : "--"}
+                      {newsSentiment ? `${(newsSentiment * 100).toFixed(2)}` : "--"}
                     </div>
                   </div>
                 </div>
@@ -1231,30 +1202,29 @@ export default function FinancialDashboard() {
                   <table className="contracts-table">
                     <thead>
                       <tr>
-                        <th>
-                          Contract<span className="sort-indicator">1</span>
-                        </th>
+                        <th>Contract<span className="sort-indicator">1</span></th>
                         <th>C/P</th>
                         <th>Strike</th>
                         <th>Price</th>
                         <th>Expiry</th>
-                        <th>
-                          Volume<span className="sort-indicator">2</span>
-                        </th>
+                        <th>Volume<span className="sort-indicator">2</span></th>
                         <th>ITM%</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {contractsData.map((contract, index) => (
-                        <tr key={index}>
-                          <td>{contract.contract}</td>
-                          <td>{contract.cp}</td>
-                          <td>{contract.strike}</td>
-                          <td>{contract.price}</td>
-                          <td>{contract.expiry}</td>
-                          <td>{contract.volume}</td>
-                          <td className="itm-percentage">{contract.itm}</td>
-                        </tr>
+                      {contractsData
+                        .sort((a, b) => parseInt(b.volume) - parseInt(a.volume))
+                        .slice(0, 5)
+                        .map((contract, index) => (
+                          <tr key={index}>
+                            <td>{contract.contract}</td>
+                            <td>{contract.cp}</td>
+                            <td>{contract.strike}</td>
+                            <td>{contract.price}</td>
+                            <td>{contract.expiry}</td>
+                            <td>{contract.volume}</td>
+                            <td className="itm-percentage">{contract.itm}</td>
+                          </tr>
                       ))}
                     </tbody>
                   </table>
