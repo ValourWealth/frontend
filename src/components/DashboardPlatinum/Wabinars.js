@@ -335,7 +335,6 @@
 
 // export default ExclusiveWebinars;
 
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -347,6 +346,37 @@ const ExclusiveWebinars = () => {
   const accessToken = localStorage.getItem("accessToken");
   const API_URL = `${process.env.REACT_APP_API_URL}api/webinars/`;
 
+  // useEffect(() => {
+  //   const fetchWebinars = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const res = await axios.get(API_URL, {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       });
+
+  //       // Add fake boost to registered_count
+  //       const boostRegisteredCount = (list) =>
+  //         list.map((w) => ({
+  //           ...w,
+  //           registered_count: w.registered_count + Math.floor(Math.random() * 100) + 100,
+  //         }));
+
+  //       const upcoming = boostRegisteredCount(res.data.filter((w) => w.status === "Upcoming"));
+  //       const recorded = boostRegisteredCount(res.data.filter((w) => w.status === "Outdated"));
+
+  //       setWebinars(upcoming);
+  //       setRecordings(recorded);
+  //     } catch (err) {
+  //       console.error("Failed to fetch webinars:", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchWebinars();
+  // }, []);
+
   useEffect(() => {
     const fetchWebinars = async () => {
       setLoading(true);
@@ -357,16 +387,24 @@ const ExclusiveWebinars = () => {
           },
         });
 
-        // Add fake boost to registered_count
-        const boostRegisteredCount = (list) =>
-          list.map((w) => ({
-            ...w,
-            registered_count: w.registered_count + Math.floor(Math.random() * 100) + 100,
+        // Always boost registered count by 100–200 in frontend
+        const addFakeUsers = (items) =>
+          items.map((item) => ({
+            ...item,
+            registered_count:
+              (item.registered_count || 0) +
+              Math.floor(Math.random() * 100) +
+              100,
           }));
 
-        const upcoming = boostRegisteredCount(res.data.filter((w) => w.status === "Upcoming"));
-        const recorded = boostRegisteredCount(res.data.filter((w) => w.status === "Outdated"));
+        const upcoming = addFakeUsers(
+          res.data.filter((w) => w.status === "Upcoming")
+        );
+        const recorded = addFakeUsers(
+          res.data.filter((w) => w.status === "Outdated")
+        );
 
+        console.log("FAKE BOOSTED:", upcoming, recorded); // Debugging only
         setWebinars(upcoming);
         setRecordings(recorded);
       } catch (err) {
@@ -375,6 +413,7 @@ const ExclusiveWebinars = () => {
         setLoading(false);
       }
     };
+
     fetchWebinars();
   }, []);
 
@@ -395,7 +434,10 @@ const ExclusiveWebinars = () => {
           w.id === id
             ? {
                 ...w,
-                registered_count: res.data.registered_count + Math.floor(Math.random() * 100) + 100,
+                registered_count:
+                  res.data.registered_count +
+                  Math.floor(Math.random() * 100) +
+                  100,
                 already_registered: true,
               }
             : w
@@ -413,37 +455,78 @@ const ExclusiveWebinars = () => {
 
   const WebinarShimmer = () => (
     <div className="webinar-card">
-      <div className="shimmer-block mb-3" style={{ height: "180px", width: "100%", borderRadius: "8px" }}></div>
+      <div
+        className="shimmer-block mb-3"
+        style={{ height: "180px", width: "100%", borderRadius: "8px" }}
+      ></div>
       <div className="webinar-header">
-        <div className="shimmer-block mb-2" style={{ height: "24px", width: "80%", borderRadius: "4px" }}></div>
-        <div className="shimmer-block" style={{ height: "20px", width: "80px", borderRadius: "12px" }}></div>
+        <div
+          className="shimmer-block mb-2"
+          style={{ height: "24px", width: "80%", borderRadius: "4px" }}
+        ></div>
+        <div
+          className="shimmer-block"
+          style={{ height: "20px", width: "80px", borderRadius: "12px" }}
+        ></div>
       </div>
-      <div className="shimmer-block mb-2" style={{ height: "16px", width: "100%", borderRadius: "4px" }}></div>
-      <div className="shimmer-block mb-3" style={{ height: "16px", width: "75%", borderRadius: "4px" }}></div>
+      <div
+        className="shimmer-block mb-2"
+        style={{ height: "16px", width: "100%", borderRadius: "4px" }}
+      ></div>
+      <div
+        className="shimmer-block mb-3"
+        style={{ height: "16px", width: "75%", borderRadius: "4px" }}
+      ></div>
       <div className="presenter-info">
-        <div className="shimmer-block" style={{ height: "16px", width: "150px", borderRadius: "4px" }}></div>
+        <div
+          className="shimmer-block"
+          style={{ height: "16px", width: "150px", borderRadius: "4px" }}
+        ></div>
       </div>
       <div className="webinar-details">
         <div className="detail-row">
           <div className="detail-item">
-            <div className="shimmer-block" style={{ height: "16px", width: "100px", borderRadius: "4px" }}></div>
+            <div
+              className="shimmer-block"
+              style={{ height: "16px", width: "100px", borderRadius: "4px" }}
+            ></div>
           </div>
           <div className="detail-item">
-            <div className="shimmer-block" style={{ height: "16px", width: "80px", borderRadius: "4px" }}></div>
+            <div
+              className="shimmer-block"
+              style={{ height: "16px", width: "80px", borderRadius: "4px" }}
+            ></div>
           </div>
         </div>
         <div className="detail-row">
           <div className="detail-item">
-            <div className="shimmer-block" style={{ height: "16px", width: "120px", borderRadius: "4px" }}></div>
+            <div
+              className="shimmer-block"
+              style={{ height: "16px", width: "120px", borderRadius: "4px" }}
+            ></div>
           </div>
         </div>
       </div>
       <div className="webinar-footer">
         <div className="tags">
-          <div className="shimmer-block" style={{ height: "20px", width: "60px", borderRadius: "12px", marginRight: "8px" }}></div>
-          <div className="shimmer-block" style={{ height: "20px", width: "70px", borderRadius: "12px" }}></div>
+          <div
+            className="shimmer-block"
+            style={{
+              height: "20px",
+              width: "60px",
+              borderRadius: "12px",
+              marginRight: "8px",
+            }}
+          ></div>
+          <div
+            className="shimmer-block"
+            style={{ height: "20px", width: "70px", borderRadius: "12px" }}
+          ></div>
         </div>
-        <div className="shimmer-block" style={{ height: "36px", width: "120px", borderRadius: "6px" }}></div>
+        <div
+          className="shimmer-block"
+          style={{ height: "36px", width: "120px", borderRadius: "6px" }}
+        ></div>
       </div>
     </div>
   );
@@ -470,13 +553,17 @@ const ExclusiveWebinars = () => {
         <div className="tabs-container">
           <div className="tab-buttons">
             <button
-              className={`tab-button ${activeTab === "Upcoming Webinars" ? "active" : ""}`}
+              className={`tab-button ${
+                activeTab === "Upcoming Webinars" ? "active" : ""
+              }`}
               onClick={() => handleTabChange("Upcoming Webinars")}
             >
               Upcoming Webinars
             </button>
             <button
-              className={`tab-button ${activeTab === "Past Recordings" ? "active" : ""}`}
+              className={`tab-button ${
+                activeTab === "Past Recordings" ? "active" : ""
+              }`}
               onClick={() => handleTabChange("Past Recordings")}
             >
               Past Recordings
@@ -487,7 +574,9 @@ const ExclusiveWebinars = () => {
         <div className="webinars-grid">
           {loading ? (
             <>
-              {[...Array(1)].map((_, index) => <WebinarShimmer key={index} />)}
+              {[...Array(1)].map((_, index) => (
+                <WebinarShimmer key={index} />
+              ))}
             </>
           ) : (
             <>
@@ -508,7 +597,9 @@ const ExclusiveWebinars = () => {
                     <p className="webinar-description">{webinar.description}</p>
                     <div className="presenter-info">
                       <i className="bi bi-person-video3 presenter-icon"></i>
-                      <span className="presenter-name">Presented by {webinar.presenter}</span>
+                      <span className="presenter-name">
+                        Presented by {webinar.presenter}
+                      </span>
                     </div>
                     <div className="webinar-details">
                       <div className="detail-row">
@@ -538,7 +629,9 @@ const ExclusiveWebinars = () => {
                         disabled={webinar.already_registered}
                         onClick={() => handleRegister(webinar.id)}
                       >
-                        {webinar.already_registered ? "Registered" : "Register Now"}
+                        {webinar.already_registered
+                          ? "Registered"
+                          : "Register Now"}
                       </button>
                     </div>
                   </div>
@@ -561,7 +654,9 @@ const ExclusiveWebinars = () => {
                     <p className="webinar-description">{rec.description}</p>
                     <div className="presenter-info">
                       <i className="bi bi-person-video3 presenter-icon"></i>
-                      <span className="presenter-name">Presented by {rec.presenter}</span>
+                      <span className="presenter-name">
+                        Presented by {rec.presenter}
+                      </span>
                     </div>
                     <div className="webinar-details">
                       <div className="detail-row">
@@ -606,4 +701,3 @@ const ExclusiveWebinars = () => {
 };
 
 export default ExclusiveWebinars;
-
