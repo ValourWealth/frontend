@@ -10,6 +10,7 @@ import Dashboard from "./components/Dashboard";
 import Benefits from "./components/DashboardPlatinum/Benefits";
 import ViewChallenge from "./components/DashboardPlatinum/ViewChallenge";
 import ReleaseNotes from "./components/DashboardSidebarComp/ReleaseNotes";
+import TradingTools from "./components/DashboardSidebarComp/TradingTools";
 import Layout from "./components/layout";
 import News from "./components/News";
 import AboutUs from "./pages/AboutUs";
@@ -159,6 +160,15 @@ function App() {
               </Layout>
             }
           />
+          <Route
+            path="/trading-tools"
+            element={
+              <Layout>
+                <TradingTools />
+              </Layout>
+            }
+          />
+
           <Route
             path="/customer-support"
             element={
