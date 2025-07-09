@@ -1262,7 +1262,10 @@ export default function FinancialDashboard() {
 
       try {
         const response = await fetch(
-          `/api/tickers/data/?timeframe=${activeTimeframe.replace(" ", "_")}`
+          `https://backend-production-1e63.up.railway.app/api/tickers/data/api/tickers/data/?timeframe=${activeTimeframe.replace(
+            " ",
+            "_"
+          )}`
         );
         const data = await response.json();
 
