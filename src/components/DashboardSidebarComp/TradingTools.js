@@ -42,6 +42,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const symbols = [
   { label: "Apple (AAPL)", value: "NASDAQ:AAPL" },
@@ -51,9 +52,16 @@ const symbols = [
   { label: "Tesla (TSLA)", value: "NASDAQ:TSLA" },
 ];
 
+function useQuerySymbol(defaultSymbol) {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  return queryParams.get("symbol") || defaultSymbol;
+}
+
 function TradingTools() {
-  const [selectedSymbol, setSelectedSymbol] = useState("NASDAQ:AAPL");
-  const containerRef = useRef < HTMLDivElement > null;
+  const containerRef = useRef(null);
+  const querySymbol = useQuerySymbol("NASDAQ:AAPL");
+  const [selectedSymbol, setSelectedSymbol] = useState(querySymbol);
 
   const loadWidget = (symbol) => {
     if (!window.TradingView) return;
@@ -75,7 +83,6 @@ function TradingTools() {
   };
 
   useEffect(() => {
-    // Only load script once
     if (
       !document.querySelector("script[src='https://s3.tradingview.com/tv.js']")
     ) {
@@ -90,7 +97,6 @@ function TradingTools() {
   }, []);
 
   useEffect(() => {
-    // Clear previous chart
     if (containerRef.current) {
       containerRef.current.innerHTML = "";
     }
@@ -98,7 +104,7 @@ function TradingTools() {
   }, [selectedSymbol]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 px-6 pb-10">
       {/* 🔥 Finviz Heatmap */}
       <div className="heatmap-container">
         <img
@@ -109,7 +115,7 @@ function TradingTools() {
         />
       </div>
 
-      {/* 🔘 Dropdown + Chart */}
+      {/* 🔘 Symbol Dropdown + TradingView */}
       <div className="space-y-4">
         <select
           value={selectedSymbol}

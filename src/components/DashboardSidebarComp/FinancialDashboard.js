@@ -924,7 +924,7 @@ export default function FinancialDashboard() {
                     <h2 className="ticker-title">
                       {selectedTicker.symbol} {selectedTicker.company}
                     </h2>
-                    <Link href={`/trading-tools?symbol=${selectedTicker}`}>
+                    <Link to={`/trading-tools?symbol=${selectedTicker}`}>
                       <button className="full-info-btn">
                         FULL {selectedTicker.symbol} INFO
                         <svg
