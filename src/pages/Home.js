@@ -68,7 +68,7 @@ function Home() {
                   onClick={() =>
                     window.open("https://tradegpt.valourwealth.com", "_blank")
                   }
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  className="theme_btn"
                 >
                   Let’s Try It Free
                 </button>
