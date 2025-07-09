@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function FinancialDashboard() {
@@ -923,19 +924,19 @@ export default function FinancialDashboard() {
                     <h2 className="ticker-title">
                       {selectedTicker.symbol} {selectedTicker.company}
                     </h2>
-                    <button className="full-info-btn">
-                      <Link href={`/trading-tools?symbol=${selectedTicker}`}>
+                    <Link href={`/trading-tools?symbol=${selectedTicker}`}>
+                      <button className="full-info-btn">
                         FULL {selectedTicker.symbol} INFO
-                      </Link>
-                      <svg
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                      </svg>
-                    </button>
+                        <svg
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                      </button>
+                    </Link>
                   </div>
 
                   <div className="sentiments-section">
