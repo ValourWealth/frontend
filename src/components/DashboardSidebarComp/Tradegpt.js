@@ -31,7 +31,9 @@ const TradeGPT = () => {
         // window.location.href = `https://frontend-eight-rho-95.vercel.app?token=${token}`;
         // window.location.href = `https://tradegptlatest.vercel.app?token=${token}`;
         // window.location.href = `https://latestnewtradegptversion.vercel.app?token=${token}`;
-        window.location.href = `https://tradegpt.valourwealth.com?token=${token}`;
+        // window.location.href = `https://tradegpt.valourwealth.com?token=${token}`;
+
+        window.location.href = `https://tradegpt.valourwealth.com`;
       }, 1500);
     } catch (error) {
       console.error("TradeGPT redirect failed:", error);
