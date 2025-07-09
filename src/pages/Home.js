@@ -65,11 +65,20 @@ function Home() {
                   help you elevate your trading to the next level
                 </p>
                 <button
+                  onClick={() =>
+                    window.open("https://tradegpt.valourwealth.com", "_blank")
+                  }
+                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                >
+                  Let’s Try It Free
+                </button>
+
+                {/* <button
                   className="theme_btn"
                   onClick={() => setShowPopup(true)}
                 >
                   Try It For Free
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
