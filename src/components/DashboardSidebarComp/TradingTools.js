@@ -221,6 +221,30 @@ function TradingTools() {
   };
 
   useEffect(() => {
+    const container = document.getElementById("financials_widget");
+    if (!container) return;
+
+    container.innerHTML = ""; // Clear previous widget
+
+    const script = document.createElement("script");
+    script.src =
+      "https://s3.tradingview.com/external-embedding/embed-widget-financials.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      symbol: `NASDAQ:${selectedSymbol}`,
+      colorTheme: "dark",
+      isTransparent: false,
+      largeChartUrl: "",
+      displayMode: "regular",
+      width: "100%",
+      height: 600,
+    });
+
+    container.appendChild(script);
+  }, [selectedSymbol]);
+
+  useEffect(() => {
     if (
       !document.querySelector("script[src='https://s3.tradingview.com/tv.js']")
     ) {
@@ -373,20 +397,12 @@ function TradingTools() {
           <p>P/S Ratio: {overview.PriceToSalesRatioTTM}</p>
         </div>
       )}
-      {embedUrl && (
+      {selectedSymbol && (
         <div className="mt-10 bg-white rounded-lg shadow overflow-hidden">
           <h3 className="text-lg font-semibold text-black px-6 pt-6">
             TradingView Financials Overview
           </h3>
-          <iframe
-            src={embedUrl}
-            width="100%"
-            height="600"
-            frameBorder="0"
-            allowFullScreen
-            title={`Financial Overview - ${selectedSymbol}`}
-            className="w-full"
-          />
+          <div id="financials_widget" className="w-full" />
         </div>
       )}
     </div>
