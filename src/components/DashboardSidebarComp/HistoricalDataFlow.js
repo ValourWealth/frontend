@@ -14,9 +14,9 @@ const HistoricalDataFlow = ({ darkMode }) => {
 
   const apiPaths = {
     up: {
-      largeCaps: "api/large_caps/",
-      mediumCaps: "api/medium_caps/",
-      smallCaps: "api/small_caps/",
+      largeCaps: "api/Large_caps/",
+      mediumCaps: "api/Medium_caps/",
+      smallCaps: "api/Small_caps/",
     },
     down: {
       largeCaps: "api/large_caps_down/",
