@@ -200,6 +200,7 @@ function TradingTools() {
   const [sentiment, setSentiment] = useState(null);
   const [newsSentiment, setNewsSentiment] = useState(null);
   const [latestNews, setLatestNews] = useState(null);
+  const [embedUrl, setEmbedUrl] = useState("");
 
   const loadWidget = (symbol) => {
     if (!window.TradingView) return;
@@ -290,6 +291,9 @@ function TradingTools() {
       setNewsSentiment(newsData?.feed?.[0]?.overall_sentiment_score ?? 0);
       setLatestNews(newsData?.feed?.[0]);
     };
+    setEmbedUrl(
+      `https://www.tradingview.com/symbols/NASDAQ-${selectedSymbol}/financials-overview/?utm_campaign=financials&utm_medium=widget&utm_source=dashboard.tradealgo.com`
+    );
 
     fetchData();
   }, [selectedSymbol]);
@@ -367,6 +371,22 @@ function TradingTools() {
           <p>P/E Ratio: {overview.PERatio}</p>
           <p>P/B Ratio: {overview.PriceToBookRatio}</p>
           <p>P/S Ratio: {overview.PriceToSalesRatioTTM}</p>
+        </div>
+      )}
+      {embedUrl && (
+        <div className="mt-10 bg-white rounded-lg shadow overflow-hidden">
+          <h3 className="text-lg font-semibold text-black px-6 pt-6">
+            TradingView Financials Overview
+          </h3>
+          <iframe
+            src={embedUrl}
+            width="100%"
+            height="600"
+            frameBorder="0"
+            allowFullScreen
+            title={`Financial Overview - ${selectedSymbol}`}
+            className="w-full"
+          />
         </div>
       )}
     </div>
