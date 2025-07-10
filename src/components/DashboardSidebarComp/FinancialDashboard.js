@@ -1284,7 +1284,8 @@ export default function FinancialDashboard() {
               newsSentimentScore: parseFloat(row.news_sentiment) || 0,
               contracts: [],
               price: parseFloat(row.price || "0.00").toFixed(2),
-              change: "0.00", // you can add this from Excel later
+              change: row.change || "0.00",
+              sentimentType: row.sentiment_type || "neutral",
             };
           }
 
@@ -2124,6 +2125,15 @@ export default function FinancialDashboard() {
                         setSelectedTicker(ticker);
                         setSentimentScore(ticker.sentimentScore);
                         setNewsSentiment(ticker.newsSentimentScore);
+                        // Dynamically set CSS variable for sentiment color
+                        const root = document.documentElement;
+                        if (ticker.sentimentType === "positive") {
+                          root.style.setProperty("--theme-color", "#10B981"); // green
+                        } else if (ticker.sentimentType === "negative") {
+                          root.style.setProperty("--theme-color", "#EF4444"); // red
+                        } else {
+                          root.style.setProperty("--theme-color", "#9CA3AF"); // gray
+                        }
                       }}
                     >
                       <div className="ticker-symbol">{ticker.symbol}</div>
@@ -2180,7 +2190,7 @@ export default function FinancialDashboard() {
                           <div className="gauge-inner">
                             <div className="gauge-value">
                               {sentimentScore
-                                ? `${(sentimentScore * 100).toFixed(2)}%`
+                                ? `${sentimentScore.toFixed(2)}%`
                                 : "--"}
                             </div>
                             <div className="sentiment-label">
