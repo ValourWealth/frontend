@@ -834,7 +834,7 @@ function TradingTools() {
       <div className="container">
         {/* Header */}
         <div className="text-center mb-4">
-          <h1 className="h2 fw-bold text-dark">Trading Dashboard</h1>
+          <h1 className="h2 fw-bold text-dark">Today market insights</h1>
           <p className="text-muted">
             Real-time market analysis for {selectedSymbol}
           </p>
@@ -893,7 +893,7 @@ function TradingTools() {
         {/* Chart */}
         <div className="card mb-4 shadow-sm">
           <div className="card-header bg-dark text-white py-3">
-            <h5 className="mb-0 fw-bold">📊 Live Price Chart</h5>
+            {/* <h5 className="mb-0 fw-bold">L</h5> */}
           </div>
           <div className="card-body p-0">
             <div ref={containerRef} id="tradingview_widget" />
@@ -1155,7 +1155,7 @@ function TradingTools() {
         {overview && (
           <div className="card mb-4 shadow-sm">
             <div className="card-header bg-warning text-dark py-3">
-              <h5 className="mb-0 fw-bold">💼 Financial Overview</h5>
+              <h5 className="mb-0 fw-bold">Financial Overview</h5>
             </div>
             <div
               className="card-body p-4"
@@ -1235,10 +1235,10 @@ function TradingTools() {
           <div className="card shadow-sm">
             <div className="card-header bg-dark text-white py-3">
               <div className="d-flex justify-content-between align-items-center">
-                <h5 className="mb-0 fw-bold">
-                  📊 Advanced Financial Analytics
-                </h5>
-                <small className="opacity-75">Powered by TradingView</small>
+                <h5 className="mb-0 fw-bold">Advanced Financial Analytics</h5>
+                <small className="opacity-75">
+                  Powered by ValourTradingView
+                </small>
               </div>
             </div>
             <div className="card-body p-0">
