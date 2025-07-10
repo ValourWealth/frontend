@@ -2125,15 +2125,15 @@ export default function FinancialDashboard() {
                         setSelectedTicker(ticker);
                         setSentimentScore(ticker.sentimentScore);
                         setNewsSentiment(ticker.newsSentimentScore);
-                        // Dynamically set CSS variable for sentiment color
-                        const root = document.documentElement;
-                        if (ticker.sentimentType === "positive") {
-                          root.style.setProperty("--theme-color", "#10B981"); // green
-                        } else if (ticker.sentimentType === "negative") {
-                          root.style.setProperty("--theme-color", "#EF4444"); // red
-                        } else {
-                          root.style.setProperty("--theme-color", "#9CA3AF"); // gray
-                        }
+                        // // Dynamically set CSS variable for sentiment color
+                        // const root = document.documentElement;
+                        // if (ticker.sentimentType === "positive") {
+                        //   root.style.setProperty("--theme-color", "#10B981"); // green
+                        // } else if (ticker.sentimentType === "negative") {
+                        //   root.style.setProperty("--theme-color", "#EF4444"); // red
+                        // } else {
+                        //   root.style.setProperty("--theme-color", "#9CA3AF"); // gray
+                        // }
                       }}
                     >
                       <div className="ticker-symbol">{ticker.symbol}</div>
