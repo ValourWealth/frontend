@@ -1,127 +1,17 @@
-// import "../DashboardSidebarComp/styles/releasenotes.css";
-
-// function ReleaseNotes() {
-//   return (
-//     <div className="releasenotes_container">
-//       <h1 className="releasenotes_heading">Release Notes</h1>
-//       <p className="releasenotes_intro">
-//         See the latest features, improvements, and product updates brought to
-//         you by the <strong>ValourWealth Team</strong>. We are committed to
-//         delivering innovative tools and personalized solutions to help you grow
-//         as a trader and investor.
-//       </p>
-
-//       <div className="releasenotes_section">
-//         <h2 className="releasenotes_title">Wealth Series Now Available</h2>
-//         <p className="releasenotes_meta">May 29, 2025 • v2.15.0</p>
-//         <h3 className="releasenotes_product">Wealth Series</h3>
-//         <p>
-//           Wealth Series Lite combines our proprietary AI stock selection engine
-//           with an intuitive, gamified portfolio builder. Compete on a global
-//           leaderboard while learning how to construct high-performing portfolios
-//           using real market data. Updates are released biweekly to ensure your
-//           strategy stays relevant.
-//         </p>
-//         <p>Contact our sales team to find out more.</p>
-//       </div>
-
-//       <div className="releasenotes_section">
-//         <h2 className="releasenotes_title">
-//           Introducing Wealth Series: Smarter Investments
-//         </h2>
-//         <p className="releasenotes_meta">Apr 15, 2025 • v2.14.0</p>
-//         <h3 className="releasenotes_product">Wealth Series Premium</h3>
-//         <p>
-//           Wealth Series is a powerful new addition to the ValourWealth platform
-//           that allows members to choose from expertly designed AI-generated
-//           portfolio packs: Atlas, Titan, and Everest. These packs include
-//           strategies ranging from high-growth and low-volatility to balanced and
-//           deep-value investments — all curated using advanced data models and
-//           continuously optimized.
-//         </p>
-//         <p>Contact our sales team to find out more.</p>
-//       </div>
-
-//       <div className="releasenotes_section">
-//         <h2 className="releasenotes_title">TradeGPT AI Assistant Launch</h2>
-//         <p className="releasenotes_meta">Mar 1, 2025 • v2.13.0</p>
-//         <h3 className="releasenotes_product">TradeGPT</h3>
-//         <p>
-//           TradeGPT, the flagship AI assistant from ValourWealth, is now
-//           available across the entire platform. It enables users to ask
-//           real-time trading questions, analyze market moves, and receive
-//           actionable feedback based on 50+ million data points. Whether you’re
-//           looking for a quick analysis or strategic insight, TradeGPT delivers
-//           instant support.
-//         </p>
-//         <p>Now available to all registered members.</p>
-//       </div>
-
-//       <div className="releasenotes_section">
-//         <h2 className="releasenotes_title">Beginner Hub</h2>
-//         <p className="releasenotes_meta">Feb 12, 2025 • v2.12.0</p>
-//         <h3 className="releasenotes_product">Beginner Hub</h3>
-//         <p>
-//           We've expanded the Beginner Hub with brand-new content tailored for
-//           first-time traders. Covering basic market terms, technical analysis,
-//           and risk management principles, the Trading Academy now offers a more
-//           interactive learning experience to build confidence before placing
-//           your first trade.
-//         </p>
-//       </div>
-
-//       <div className="releasenotes_section">
-//         <h2 className="releasenotes_title">
-//           One-to-One Mentorship & Platinum Features
-//         </h2>
-//         <p className="releasenotes_meta">Jan 15, 2025 • v2.11.0</p>
-//         <h3 className="releasenotes_product">Mentorship & Platinum Program</h3>
-//         <p>
-//           We’ve officially launched our One-to-One Mentorship Program,
-//           connecting members with expert coaches for live, personalized trading
-//           feedback. Alongside this, our Platinum tier unlocks access to premium
-//           AI insights, strategy calls, and priority access to new features — all
-//           designed for serious traders ready to scale.
-//         </p>
-//       </div>
-
-//       <div className="releasenotes_section">
-//         <h2 className="releasenotes_title">
-//           Live Training Sessions & Webinars
-//         </h2>
-//         <p className="releasenotes_meta">Dec 20, 2024 • v2.10.0</p>
-//         <h3 className="releasenotes_product">Live Sessions</h3>
-//         <p>
-//           Join our weekly live webinars hosted by seasoned traders and analysts.
-//           Ask real-time questions, get insights into ongoing market trends, and
-//           walk away with practical trading ideas you can apply immediately.
-//         </p>
-//       </div>
-
-//       <footer className="releasenotes_footer">
-//         © 2025 ValourWealth. Built for traders, by the ValourWealth Team.
-//       </footer>
-//     </div>
-//   );
-// }
-
-// export default ReleaseNotes;
-
-
 function ReleaseNotes() {
   return (
     <>
       {/* Bootstrap 5 CSS */}
-      <link 
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" 
-        rel="stylesheet" 
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+        rel="stylesheet"
       />
       {/* Bootstrap Icons */}
-      <link 
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" 
-        rel="stylesheet" 
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+        rel="stylesheet"
       />
-      
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -456,14 +346,20 @@ function ReleaseNotes() {
                 <div className="hero-icon">
                   <i className="bi bi-journal-bookmark-fill"></i>
                 </div>
-                <h1 className="display-3 fw-bold mb-4" style={{textShadow: '0 4px 8px rgba(0,0,0,0.3)'}}>
+                <h1
+                  className="display-3 fw-bold mb-4"
+                  style={{ textShadow: "0 4px 8px rgba(0,0,0,0.3)" }}
+                >
                   Release Notes
                 </h1>
-                <p className="lead mb-0 fs-4" style={{textShadow: '0 2px 4px rgba(0,0,0,0.2)'}}>
-                  See the latest features, improvements, and product updates brought to
-                  you by the <strong>ValourWealth Team</strong>. We are committed to
-                  delivering innovative tools and personalized solutions to help you grow
-                  as a trader and investor.
+                <p
+                  className="lead mb-0 fs-4"
+                  style={{ textShadow: "0 2px 4px rgba(0,0,0,0.2)" }}
+                >
+                  See the latest features, improvements, and product updates
+                  brought to you by the <strong>ValourWealth Team</strong>. We
+                  are committed to delivering innovative tools and personalized
+                  solutions to help you grow as a trader and investor.
                 </p>
               </div>
             </div>
@@ -477,9 +373,9 @@ function ReleaseNotes() {
               <div className="col-lg-12">
                 <div className="position-relative">
                   <div className="timeline-line d-none d-lg-block"></div>
-                  
+
                   {/* Release 1 - Wealth Series Now Available */}
-                  <div className="card release-card mb-5 fade-in position-relative">
+                  {/* <div className="card release-card mb-5 fade-in position-relative">
                     <div className="timeline-dot d-none d-lg-block"></div>
                     <div className="card-body p-5">
                       <div className="row align-items-start">
@@ -523,6 +419,153 @@ function ReleaseNotes() {
                       </div>
                     </div>
                   </div>
+                   */}
+                  {/* New Release - Wealth Series Auto Version */}
+                  <div className="card release-card mb-5 fade-in position-relative">
+                    <div className="timeline-dot d-none d-lg-block"></div>
+                    <div className="card-body p-5">
+                      <div className="row align-items-start">
+                        <div className="col-lg-2 text-center text-lg-start mb-3 mb-lg-0">
+                          <div className="release-icon">
+                            <i className="bi bi-lightning-charge-fill"></i>
+                          </div>
+                        </div>
+                        <div className="col-lg-12">
+                          <div className="d-flex flex-wrap align-items-center gap-3 mb-3">
+                            <span className="version-badge">v2.17.0</span>
+                            <span className="date-text">
+                              <i className="bi bi-calendar-event me-2"></i>
+                              July 10, 2025
+                            </span>
+                          </div>
+                          <h2 className="release-title mb-4">
+                            Wealth Series Auto Version
+                          </h2>
+
+                          <div className="mb-4">
+                            <span className="product-badge">
+                              <i className="bi bi-lightbulb-fill me-2"></i>
+                              Wealth Series x Orion
+                            </span>
+                          </div>
+
+                          <div className="release-description mb-4">
+                            We are proud to partner with <strong>Orion</strong>{" "}
+                            to introduce the Auto Version of Wealth Series — a
+                            smarter, fully automated portfolio management
+                            experience. Portfolios now rebalance automatically,
+                            ensuring optimal performance without manual effort.
+                            Get set for seamless, AI-powered investing.
+                          </div>
+
+                          <div className="contact-highlight">
+                            <p className="contact-text">
+                              <i className="bi bi-telephone-fill me-2"></i>
+                              Contact our sales team to learn how to activate
+                              auto-rebalancing.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* New Release - Wealth Series Enhancements */}
+                  <div className="card release-card mb-5 fade-in position-relative">
+                    <div className="timeline-dot d-none d-lg-block"></div>
+                    <div className="card-body p-5">
+                      <div className="row align-items-start">
+                        <div className="col-lg-2 text-center text-lg-start mb-3 mb-lg-0">
+                          <div className="release-icon">
+                            <i className="bi bi-bar-chart-steps"></i>
+                          </div>
+                        </div>
+                        <div className="col-lg-12">
+                          <div className="d-flex flex-wrap align-items-center gap-3 mb-3">
+                            <span className="version-badge">v2.16.0</span>
+                            <span className="date-text">
+                              <i className="bi bi-calendar-event me-2"></i>
+                              June 20, 2025
+                            </span>
+                          </div>
+                          <h2 className="release-title mb-4">
+                            Wealth Series Enhancements — Easier to Use, More to
+                            Discover
+                          </h2>
+
+                          <div className="release-description">
+                            <ul>
+                              <li>
+                                <strong>AI Trade Price:</strong> View the exact
+                                price at which AI trades are executed during
+                                rebalancing.
+                              </li>
+                              <li>
+                                <strong>Portfolio Narratives:</strong>{" "}
+                                Understand the strategy and expected rebalance
+                                frequency behind each portfolio.
+                              </li>
+                              <li>
+                                <strong>Rebalance Rationale:</strong> Explore
+                                the logic behind every portfolio and
+                                ticker-level adjustment.
+                              </li>
+                              <li>
+                                <strong>Ticker Performance:</strong> Drill down
+                                on ticker-level returns and contribution to
+                                overall performance.
+                              </li>
+                              <li>
+                                <strong>Benchmark Comparison:</strong> Compare
+                                results against S&P500 for deeper perspective.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* New Release - Advanced Ticker Dashboard */}
+                  <div className="card release-card mb-5 fade-in position-relative">
+                    <div className="timeline-dot d-none d-lg-block"></div>
+                    <div className="card-body p-5">
+                      <div className="row align-items-start">
+                        <div className="col-lg-2 text-center text-lg-start mb-3 mb-lg-0">
+                          <div className="release-icon">
+                            <i className="bi bi-search"></i>
+                          </div>
+                        </div>
+                        <div className="col-lg-12">
+                          <div className="d-flex flex-wrap align-items-center gap-3 mb-3">
+                            <span className="version-badge">v2.16.5</span>
+                            <span className="date-text">
+                              <i className="bi bi-calendar-event me-2"></i>
+                              June 25, 2025
+                            </span>
+                          </div>
+                          <h2 className="release-title mb-4">
+                            New: Ticker Search + Full Trading Tools View
+                          </h2>
+
+                          <div className="release-description mb-4">
+                            Search any stock ticker and view full financial
+                            detail on its dedicated page. Now includes:
+                            <ul>
+                              <li>Embedded Trading Tools & Charts</li>
+                              <li>Real-time Sentiment AI Analysis</li>
+                              <li>Company Profile, Overview & Fundamentals</li>
+                              <li>
+                                Support for <strong>1 Hour</strong>,{" "}
+                                <strong>4 Hours</strong>, and{" "}
+                                <strong>1 Day</strong> timeframe data
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   {/* Release 2 - Introducing Wealth Series: Smarter Investments */}
                   <div className="card release-card mb-5 fade-in position-relative">
@@ -536,30 +579,34 @@ function ReleaseNotes() {
                         </div>
                         <div className="col-lg-12">
                           <div className="d-flex flex-wrap align-items-center gap-3 mb-3">
-                            <span className="version-badge">v2.14.0</span>
+                            <span className="version-badge">v2.15.0</span>
                             <span className="date-text">
                               <i className="bi bi-calendar-event me-2"></i>
-                              Apr 15, 2025
+                              Jun 10, 2025
                             </span>
                           </div>
-                          <h2 className="release-title mb-4">Introducing Wealth Series: Smarter Investments</h2>
-                          
+                          <h2 className="release-title mb-4">
+                            Introducing Wealth Series: Smarter Investments
+                          </h2>
+
                           <div className="mb-4">
                             <span className="product-badge">
                               <i className="bi bi-crown-fill me-2"></i>
                               Wealth Series Premium
                             </span>
                           </div>
-                          
+
                           <div className="release-description mb-4">
-                            Wealth Series is a powerful new addition to the ValourWealth platform
-                            that allows members to choose from expertly designed AI-generated
-                            portfolio packs: Atlas, Titan, and Everest. These packs include
-                            strategies ranging from high-growth and low-volatility to balanced and
-                            deep-value investments — all curated using advanced data models and
-                            continuously optimized.
+                            Wealth Series is a powerful new addition to the
+                            ValourWealth platform that allows members to choose
+                            from expertly designed AI-generated portfolio packs:
+                            Atlas, Titan, and Everest. These packs include
+                            strategies ranging from high-growth and
+                            low-volatility to balanced and deep-value
+                            investments — all curated using advanced data models
+                            and continuously optimized.
                           </div>
-                          
+
                           <div className="contact-highlight">
                             <p className="contact-text">
                               <i className="bi bi-telephone-fill me-2"></i>
@@ -572,6 +619,7 @@ function ReleaseNotes() {
                   </div>
 
                   {/* Release 3 - TradeGPT AI Assistant Launch */}
+                  {/* Updated Release - TradeGPT AI Assistant */}
                   <div className="card release-card mb-5 fade-in position-relative">
                     <div className="timeline-dot d-none d-lg-block"></div>
                     <div className="card-body p-5">
@@ -583,34 +631,61 @@ function ReleaseNotes() {
                         </div>
                         <div className="col-lg-12">
                           <div className="d-flex flex-wrap align-items-center gap-3 mb-3">
-                            <span className="version-badge">v2.13.0</span>
+                            <span className="version-badge">v2.13.5</span>
                             <span className="date-text">
                               <i className="bi bi-calendar-event me-2"></i>
-                              Mar 1, 2025
+                              Jun 10, 2025
                             </span>
                           </div>
-                          <h2 className="release-title mb-4">TradeGPT AI Assistant Launch</h2>
-                          
+                          <h2 className="release-title mb-4">
+                            TradeGPT Gets Even Smarter
+                          </h2>
+
                           <div className="mb-4">
                             <span className="product-badge">
                               <i className="bi bi-cpu-fill me-2"></i>
                               TradeGPT
                             </span>
                           </div>
-                          
+
                           <div className="release-description mb-4">
-                            TradeGPT, the flagship AI assistant from ValourWealth, is now
-                            available across the entire platform. It enables users to ask
-                            real-time trading questions, analyze market moves, and receive
-                            actionable feedback based on 50+ million data points. Whether you're
-                            looking for a quick analysis or strategic insight, TradeGPT delivers
-                            instant support.
+                            Our flagship AI assistant, TradeGPT, just got a
+                            major upgrade:
+                            <ul>
+                              <li>
+                                <strong>
+                                  Smarter Prompts & Real-Time Chat Saving:
+                                </strong>{" "}
+                                Chat with TradeGPT and save conversations across
+                                sessions for continuity.
+                              </li>
+                              <li>
+                                <strong>Integrated Watchlist:</strong> Select
+                                any ticker from your watchlist and ask for trade
+                                ideas, price analysis, or chart-based
+                                breakdowns.
+                              </li>
+                              <li>
+                                <strong>Multi-mode Analysis:</strong> Instantly
+                                view a ticker's fundamentals, price charts,
+                                AI-generated trade ideas, and sentiment
+                                analysis.
+                              </li>
+                              <li>
+                                <strong>Free Training for All Users:</strong>{" "}
+                                Boost your trading profits with our{" "}
+                                <strong>
+                                  FREE AI-powered training sessions
+                                </strong>
+                                , now integrated into the dashboard.
+                              </li>
+                            </ul>
                           </div>
-                          
+
                           <div className="available-highlight">
                             <p className="available-text">
                               <i className="bi bi-check-circle-fill me-2"></i>
-                              Now available to all registered members.
+                              Now available for all Valour Wealth users.
                             </p>
                           </div>
                         </div>
@@ -637,20 +712,21 @@ function ReleaseNotes() {
                             </span>
                           </div>
                           <h2 className="release-title mb-4">Beginner Hub</h2>
-                          
+
                           <div className="mb-4">
                             <span className="product-badge">
                               <i className="bi bi-book-fill me-2"></i>
                               Beginner Hub
                             </span>
                           </div>
-                          
+
                           <div className="release-description">
-                            We've expanded the Beginner Hub with brand-new content tailored for
-                            first-time traders. Covering basic market terms, technical analysis,
-                            and risk management principles, the Trading Academy now offers a more
-                            interactive learning experience to build confidence before placing
-                            your first trade.
+                            We've expanded the Beginner Hub with brand-new
+                            content tailored for first-time traders. Covering
+                            basic market terms, technical analysis, and risk
+                            management principles, the Trading Academy now
+                            offers a more interactive learning experience to
+                            build confidence before placing your first trade.
                           </div>
                         </div>
                       </div>
@@ -675,21 +751,25 @@ function ReleaseNotes() {
                               Jan 15, 2025
                             </span>
                           </div>
-                          <h2 className="release-title mb-4">One-to-One Mentorship & Platinum Features</h2>
-                          
+                          <h2 className="release-title mb-4">
+                            One-to-One Mentorship & Platinum Features
+                          </h2>
+
                           <div className="mb-4">
                             <span className="product-badge">
                               <i className="bi bi-award-fill me-2"></i>
                               Mentorship & Platinum Program
                             </span>
                           </div>
-                          
+
                           <div className="release-description">
-                            We've officially launched our One-to-One Mentorship Program,
-                            connecting members with expert coaches for live, personalized trading
-                            feedback. Alongside this, our Platinum tier unlocks access to premium
-                            AI insights, strategy calls, and priority access to new features — all
-                            designed for serious traders ready to scale.
+                            We've officially launched our One-to-One Mentorship
+                            Program, connecting members with expert coaches for
+                            live, personalized trading feedback. Alongside this,
+                            our Platinum tier unlocks access to premium AI
+                            insights, strategy calls, and priority access to new
+                            features — all designed for serious traders ready to
+                            scale.
                           </div>
                         </div>
                       </div>
@@ -714,19 +794,23 @@ function ReleaseNotes() {
                               Dec 20, 2024
                             </span>
                           </div>
-                          <h2 className="release-title mb-4">Live Training Sessions & Webinars</h2>
-                          
+                          <h2 className="release-title mb-4">
+                            Live Training Sessions & Webinars
+                          </h2>
+
                           <div className="mb-4">
                             <span className="product-badge">
                               <i className="bi bi-broadcast me-2"></i>
                               Live Sessions
                             </span>
                           </div>
-                          
+
                           <div className="release-description">
-                            Join our weekly live webinars hosted by seasoned traders and analysts.
-                            Ask real-time questions, get insights into ongoing market trends, and
-                            walk away with practical trading ideas you can apply immediately.
+                            Join our weekly live webinars hosted by seasoned
+                            traders and analysts. Ask real-time questions, get
+                            insights into ongoing market trends, and walk away
+                            with practical trading ideas you can apply
+                            immediately.
                           </div>
                         </div>
                       </div>
@@ -744,10 +828,14 @@ function ReleaseNotes() {
             <div className="row justify-content-center">
               <div className="col-lg-8 text-center">
                 <div className="mb-3">
-                  <i className="bi bi-c-circle fs-4 me-2" style={{color: '#228B22'}}></i>
+                  <i
+                    className="bi bi-c-circle fs-4 me-2"
+                    style={{ color: "#228B22" }}
+                  ></i>
                 </div>
                 <p className="mb-0 fs-5 fw-medium">
-                  2025 ValourWealth. Built for traders, by the ValourWealth Team.
+                  2025 ValourWealth. Built for traders, by the ValourWealth
+                  Team.
                 </p>
               </div>
             </div>
