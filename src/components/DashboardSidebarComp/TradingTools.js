@@ -399,9 +399,6 @@ function TradingTools() {
       )}
       {selectedSymbol && (
         <div className="mt-10 bg-white rounded-lg shadow overflow-hidden">
-          <h3 className="text-lg font-semibold text-black px-6 pt-6">
-            TradingView Financials Overview
-          </h3>
           <div id="financials_widget" className="w-full" />
         </div>
       )}
