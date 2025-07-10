@@ -2148,7 +2148,7 @@ export default function FinancialDashboard() {
                           }`}
                         >
                           {parseFloat(ticker.change) >= 0 ? "+" : ""}
-                          {ticker.change}%
+                          {parseFloat(ticker.change).toFixed(2)}%
                         </span>
                       </div>
                     </div>
@@ -2222,7 +2222,7 @@ export default function FinancialDashboard() {
                       </div>
                       <div className="news-value">
                         {newsSentiment
-                          ? `${(newsSentiment * 100).toFixed(2)}`
+                          ? `${parseFloat(newsSentiment).toFixed(2)}`
                           : "--"}
                       </div>
                     </div>
