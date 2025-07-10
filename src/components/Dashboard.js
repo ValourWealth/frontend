@@ -204,6 +204,7 @@ const Dashboard = () => {
       id: "releasenotes",
       label: "Release Notes",
       icon: <FileText size={20} />,
+      isNew: true,
     },
   ];
 
