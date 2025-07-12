@@ -950,20 +950,19 @@
 
 // export default NFTMarketplace;
 
-
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const categoryMap = {
   "6month": "6 Month Anniversary",
-  "epic": "Epic",
-  "rare": "Rare",
-  "uncommon": "Uncommon",
-  "legendary": "Legendary",
-  "first": "First Place",
-  "second": "Second Place",
-  "third": "Third Place",
-  "founder": "Founder",
+  epic: "Epic",
+  rare: "Rare",
+  uncommon: "Uncommon",
+  legendary: "Legendary",
+  first: "First Place",
+  second: "Second Place",
+  third: "Third Place",
+  founder: "Founder",
 };
 
 const categories = Object.keys(categoryMap);
@@ -1015,7 +1014,9 @@ const NFTMarketplace = () => {
                   className="w-full h-48 object-contain mb-4"
                 />
                 <h3 className="text-xl font-semibold">{badge.name}</h3>
-                <p className="text-gray-600 text-sm mt-1">{badge.description}</p>
+                <p className="text-gray-600 text-sm mt-1">
+                  {badge.description}
+                </p>
               </div>
             ))}
           </div>
