@@ -1024,6 +1024,12 @@ const NFTMarketplace = () => {
       ))}
     </div>
   );
+
+
+
 };
 
+
+
 export default NFTMarketplace;
+
