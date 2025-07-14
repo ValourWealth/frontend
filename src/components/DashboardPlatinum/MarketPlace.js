@@ -1019,11 +1019,11 @@ const NFTMarketplace = () => {
                     <div className="card-body text-center">
                       <h5 className="card-title">{badge.name}</h5>
                       <p className="card-subtitle">{badge.description}</p>
-                      <p className="token-id">Badge #{badge.id}</p>
+                      {/* <p className="token-id">Badge #{badge.id}</p>
                       <p className="mint-date">Minted Date: TBD</p>
                       <button className="btn btn-primary w-100">
                         View details
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>
