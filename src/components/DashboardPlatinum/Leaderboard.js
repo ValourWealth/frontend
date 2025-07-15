@@ -124,10 +124,18 @@ const TraderLeaderboard = () => {
                   </div>
                   <div className="trader-stats">
                     <span
+                      className={`trader-status ${
+                        trader.badge ? trader.badge.toLowerCase() : ""
+                      }`}
+                    >
+                      {trader.badge || "No Badge"}
+                    </span>
+
+                    {/* <span
                       className={`trader-status ${trader.badge.toLowerCase()}`}
                     >
                       {trader.badge}
-                    </span>
+                    </span> */}
                     <span className="trader-performance">
                       <i className="bi bi-graph-up-arrow"></i> +
                       {/* {parseFloat(trader.total_gain_loss_percent).toFixed(2)}% */}
