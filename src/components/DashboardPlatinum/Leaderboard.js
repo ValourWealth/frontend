@@ -14,7 +14,7 @@ const TraderLeaderboard = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.get(
-        "https://backend-production-1e63.up.railway.app/api/leaderboard/overall/",
+        "https://backend-production-1e63.up.railway.app/api/overall-leaderboard/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -95,9 +95,9 @@ const TraderLeaderboard = () => {
                   <div className="trader-info">
                     <div className="rank-circle">{index + 1}</div>
                     <div className="avatar-circle">
-                      {trader.profile_photo_url ? (
+                      {trader.profile?.profile_photo_url ? (
                         <img
-                          src={trader.profile_photo_url}
+                          src={trader.profile.profile_photo_url}
                           alt="Profile"
                           style={{
                             width: "40px",
@@ -130,7 +130,9 @@ const TraderLeaderboard = () => {
                     </span>
                     <span className="trader-performance">
                       <i className="bi bi-graph-up-arrow"></i> +
-                      {parseFloat(trader.total_gain_loss_percent).toFixed(2)}%
+                      {/* {parseFloat(trader.total_gain_loss_percent).toFixed(2)}% */}
+                      <i className="bi bi-graph-up-arrow"></i>{" "}
+                      {trader.total_score} pts
                     </span>
                   </div>
                 </div>
