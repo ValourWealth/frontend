@@ -1,8 +1,7 @@
-import React from 'react';
+import affiliate4 from '../assets/images/affiliate-tradegpt.png';
 import affiliate1 from '../assets/images/affiliate1.png';
 import affiliate2 from '../assets/images/affiliate2.png';
 import affiliate3 from '../assets/images/pricing-affiliate.png';
-import affiliate4 from '../assets/images/affiliate-tradegpt.png';
 
 const ValourWealthGallery = () => {
   return (
