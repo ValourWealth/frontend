@@ -21,26 +21,26 @@ import user_logo from "../assets/images/dashboard_logo.png";
 import valourWealthInverted from "../assets/images/full-transparent.png";
 import valourWealth from "../assets/images/Valour_Wealth.png";
 import "../styles/dashboard.css";
+import CryptoData from "./DashboardSidebarComp/CryptoData";
 import DashboardData from "./DashboardSidebarComp/DashboardData";
+import EditProfile from "./DashboardSidebarComp/EditProfile";
 import Emerald from "./DashboardSidebarComp/Emerald";
+import ForexData from "./DashboardSidebarComp/ForexData";
 import HistoricalDataFlow from "./DashboardSidebarComp/HistoricalDataFlow";
 import LiveSessions from "./DashboardSidebarComp/LiveSessions";
+import Logout from "./DashboardSidebarComp/Logout";
 import MainTable from "./DashboardSidebarComp/MainTable";
 import Mentorship from "./DashboardSidebarComp/Mentorship";
 import OptionsAcademy from "./DashboardSidebarComp/OptionsAcademy";
 import Platinum from "./DashboardSidebarComp/Platinum";
+import ReleaseNotes from "./DashboardSidebarComp/ReleaseNotes";
 import Resources from "./DashboardSidebarComp/Resources";
+import StocksData from "./DashboardSidebarComp/StocksData";
 import TradeAlertsTable from "./DashboardSidebarComp/TradeAlertsTable";
+import Tradegpt from "./DashboardSidebarComp/Tradegpt";
+import TradeGPTChatbot from "./DashboardSidebarComp/TradeGptChatbot";
 import TradeProducts from "./DashboardSidebarComp/TradeProducts";
 import WealthSeries from "./DashboardSidebarComp/WealthSeries";
-
-import CryptoData from "./DashboardSidebarComp/CryptoData";
-import EditProfile from "./DashboardSidebarComp/EditProfile";
-import ForexData from "./DashboardSidebarComp/ForexData";
-import Logout from "./DashboardSidebarComp/Logout";
-import ReleaseNotes from "./DashboardSidebarComp/ReleaseNotes";
-import StocksData from "./DashboardSidebarComp/StocksData";
-import Tradegpt from "./DashboardSidebarComp/Tradegpt";
 import StockTicker from "./StockTicker";
 
 const Dashboard = () => {
