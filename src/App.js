@@ -14,6 +14,7 @@ import TradingTools from "./components/DashboardSidebarComp/TradingTools";
 import Layout from "./components/layout";
 import News from "./components/News";
 import AboutUs from "./pages/AboutUs";
+import Affiliate from "./pages/Affiliate";
 import BlogDetail from "./pages/BlogDetail";
 import ContactPage from "./pages/ContactPage";
 import CourseDetails from "./pages/CourseDetails";
@@ -243,6 +244,7 @@ function App() {
           <Route path="/challenges/:id" element={<ViewChallenge />} />
           <Route path="/benefits" element={<Benefits />} />
           <Route path="/releasenotes" element={<ReleaseNotes />} />
+          <Route path="/affiliate" element={<Affiliate />} />
         </Routes>
       </LoaderWrapper>
     </Router>
