@@ -548,6 +548,18 @@ const Dashboard = () => {
               {renderContent()}
             </div>
           </div>
+
+          {/* Chatbot Floating Button */}
+          <div
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "20px",
+              zIndex: 9999,
+            }}
+          >
+            <TradeGPTChatbot />
+          </div>
         </div>
       </div>
     </div>
