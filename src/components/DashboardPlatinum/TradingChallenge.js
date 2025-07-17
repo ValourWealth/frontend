@@ -340,22 +340,6 @@ const TradingChallenges = () => {
 
   return (
     <div className="trading-challenges-container">
-      {recentBadges.length > 0 && (
-        <div className="bg-green-100 border border-green-400 text-green-800 px-4 py-2 mb-4 rounded">
-          🎉 <strong>Congratulations!</strong> You've recently unlocked a badge:
-          <ul className="list-disc list-inside mt-1">
-            {recentBadges.map((badge) => (
-              <li key={badge.id}>
-                {badge.name} —{" "}
-                <Link to="" className="text-blue-600 underline">
-                  View in NFT Marketplace →
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       <div className="challenges-header">
         <div className="trophy-icon-container">
           <i className="bi bi-trophy"></i>
@@ -466,22 +450,6 @@ const TradingChallenges = () => {
                   Join Challenge
                 </button>
               )}
-
-              {challenge.nft_rewards &&
-                challenge.nft_rewards.length > 0 &&
-                challenge.nft_rewards
-                  .filter((badge) => badge.unlocked)
-                  .map((badge) => (
-                    <div
-                      key={badge.id}
-                      className="mt-2 p-2 bg-green-50 border border-green-400 rounded text-sm text-green-700"
-                    >
-                      🎉 You’ve unlocked: <strong>{badge.name}</strong>!{" "}
-                      <Link to="" className="text-blue-600 underline ml-1">
-                        Go and Collect now
-                      </Link>
-                    </div>
-                  ))}
             </div>
 
             {/* Current Leaderboard */}
@@ -531,6 +499,37 @@ const TradingChallenges = () => {
                   </div>
                 </div>
               )}
+            {/* {recentBadges.length > 0 && (
+              <div className="bg-green-100 border border-green-400 text-green-800 px-4 py-2 mb-4 rounded">
+                🎉 <strong>Congratulations!</strong> You've recently unlocked a
+                badge:
+                <ul className="list-disc list-inside mt-1">
+                  {recentBadges.map((badge) => (
+                    <li key={badge.id}>
+                      {badge.name} —{" "}
+                      <Link to="" className="text-blue-600 underline">
+                        View in NFT Marketplace →
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )} */}
+            {/* 🔥 Show badge inside this challenge card only if linked_challenge matches */}
+            {recentBadges
+              .filter((badge) => badge.linked_challenge === challenge.id)
+              .map((badge) => (
+                <div
+                  key={badge.id}
+                  className="bg-green-100 border border-green-400 text-green-800 px-4 py-2 mt-3 rounded text-sm"
+                >
+                  🎉 <strong>Congratulations!</strong> You've unlocked:{" "}
+                  <strong>{badge.name}</strong> —{" "}
+                  <Link to="" className="text-blue-700 underline">
+                    View in NFT Marketplace →
+                  </Link>
+                </div>
+              ))}
           </div>
         ))}
       </div>
