@@ -12,7 +12,7 @@ const PlatinumMembershipNFT = () => {
     try {
       const token = localStorage.getItem("accessToken");
       const response = await axios.get(
-        "https://backend-production-1e63.up.railway.app/api/profile/",
+        "https://backend-production-1e63.up.railway.app/api/user/profile/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -217,9 +217,8 @@ const PlatinumMembershipNFT = () => {
       {/* NFT Collection Tab Content */}
       {/* {activeTab === "nft-collection" && <NFTCollection />} */}
       {activeTab === "nft-collection" && (
-  <NFTCollection onPrimarySet={fetchProfile} />
-)}
-
+        <NFTCollection onPrimarySet={fetchProfile} />
+      )}
 
       {/* Marketplace Tab Content */}
       {activeTab === "marketplace" && <Marketplace />}

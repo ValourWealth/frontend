@@ -198,9 +198,7 @@ const NFTCollection = ({ onPrimarySet }) => {
       <h2 className="collection-title">Your NFT Collection</h2>
 
       <div className="nft-grid">
-        {badges.length === 0 && (
-          <p className="text-gray-400">You haven’t collected any NFTs yet.</p>
-        )}
+        {badges.length === 0 && <p className="text-gray-400">Loading/....</p>}
 
         {badges.map((badge) => (
           <div className="nft-card" key={badge.id}>
