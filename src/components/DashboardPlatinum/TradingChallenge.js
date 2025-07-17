@@ -431,6 +431,22 @@ const TradingChallenges = () => {
                   Join Challenge
                 </button>
               )}
+
+              {challenge.nft_rewards &&
+                challenge.nft_rewards.length > 0 &&
+                challenge.nft_rewards
+                  .filter((badge) => badge.unlocked)
+                  .map((badge) => (
+                    <div
+                      key={badge.id}
+                      className="mt-2 p-2 bg-green-50 border border-green-400 rounded text-sm text-green-700"
+                    >
+                      🎉 You’ve unlocked: <strong>{badge.name}</strong>!{" "}
+                      <Link to="" className="text-blue-600 underline ml-1">
+                        Go and Collect now
+                      </Link>
+                    </div>
+                  ))}
             </div>
 
             {/* Current Leaderboard */}
