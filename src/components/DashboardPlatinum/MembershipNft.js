@@ -7,24 +7,26 @@ const PlatinumMembershipNFT = () => {
   const [activeTab, setActiveTab] = useState("membership-badge");
   const [userProfile, setUserProfile] = useState(null);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const token = localStorage.getItem("accessToken");
-        const response = await axios.get(
-          "https://backend-production-1e63.up.railway.app/api/profile/",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setUserProfile(response.data);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
-    };
+  // Step 1: Ye function ko useEffect ke bahar define karo
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const response = await axios.get(
+        "https://backend-production-1e63.up.railway.app/api/profile/",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUserProfile(response.data); // state update
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  };
 
+  // Step 2: Pehle mount pe call karo
+  useEffect(() => {
     fetchProfile();
   }, []);
 
@@ -213,7 +215,11 @@ const PlatinumMembershipNFT = () => {
       )}
 
       {/* NFT Collection Tab Content */}
-      {activeTab === "nft-collection" && <NFTCollection />}
+      {/* {activeTab === "nft-collection" && <NFTCollection />} */}
+      {activeTab === "nft-collection" && (
+  <NFTCollection onPrimarySet={fetchProfile} />
+)}
+
 
       {/* Marketplace Tab Content */}
       {activeTab === "marketplace" && <Marketplace />}

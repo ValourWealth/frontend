@@ -140,8 +140,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const NFTCollection = () => {
+const NFTCollection = ({ onPrimarySet }) => {
   const [badges, setBadges] = useState([]);
+  const [loadingId, setLoadingId] = useState(null);
 
   useEffect(() => {
     const fetchUserBadges = async () => {
@@ -163,6 +164,34 @@ const NFTCollection = () => {
 
     fetchUserBadges();
   }, []);
+
+  const setPrimaryBadge = async (badgeId) => {
+    try {
+      setLoadingId(badgeId);
+      const token = localStorage.getItem("accessToken");
+
+      await axios.post(
+        "https://backend-production-1e63.up.railway.app/api/set-primary-badge/",
+        { badge_id: badgeId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Primary badge set successfully!");
+      if (onPrimarySet) onPrimarySet(); // trigger profile refetch from parent
+    } catch (error) {
+      console.error(
+        "Failed to set primary badge:",
+        error.response?.data || error
+      );
+      alert(error.response?.data?.error || "Something went wrong.");
+    } finally {
+      setLoadingId(null);
+    }
+  };
 
   return (
     <div className="nft-collection-container">
@@ -192,13 +221,13 @@ const NFTCollection = () => {
               Issued: {new Date(badge.assigned_at).toLocaleDateString()}
             </p>
 
-            {/* Dummy benefits, or you can store them in DB and return with badge */}
-            <ul className="nft-benefits">
-              <li>✅ Example benefit 1</li>
-              <li>✅ Example benefit 2</li>
-            </ul>
-
-            <button className="view-details-btn">View Details</button>
+            <button
+              className="view-details-btn"
+              onClick={() => setPrimaryBadge(badge.id)}
+              disabled={loadingId === badge.id}
+            >
+              {loadingId === badge.id ? "Setting..." : "Set as Primary Badge"}
+            </button>
           </div>
         ))}
       </div>
