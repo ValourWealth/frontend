@@ -12,6 +12,7 @@ const TradingChallenges = () => {
   const [performanceData, setPerformanceData] = useState(null);
   const [joinedChallenges, setJoinedChallenges] = useState([]);
   const [recentBadges, setRecentBadges] = useState([]);
+  const [showBadgePopup, setShowBadgePopup] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,7 +52,19 @@ const TradingChallenges = () => {
           },
         }
       );
-      setRecentBadges(res.data);
+
+      const newBadges = res.data.filter((badge) => {
+        const seen = localStorage.getItem(`badge-${badge.id}`);
+        return !seen;
+      });
+
+      if (newBadges.length > 0) {
+        setRecentBadges(newBadges); // show the new ones only
+        setShowBadgePopup(true); // 🚨 this will control the alert
+        newBadges.forEach((badge) =>
+          localStorage.setItem(`badge-${badge.id}`, "seen")
+        );
+      }
     } catch (err) {
       console.error("Failed to fetch recent badges", err);
     }
@@ -344,6 +357,31 @@ const TradingChallenges = () => {
         <div className="trophy-icon-container">
           <i className="bi bi-trophy"></i>
         </div>
+        {showBadgePopup && recentBadges.length > 0 && (
+          <div className="bg-[#121212] text-white px-4 py-3 rounded-md shadow-md border border-gray-700 mb-4 flex items-center justify-between">
+            <div>
+              🎉 <strong>Congratulations!</strong> You’ve unlocked a badge:{" "}
+              <span className="ml-1 font-semibold text-blue-400">
+                {recentBadges[0].name}
+              </span>{" "}
+              —
+              <a
+                href="/nft-marketplace"
+                className="text-blue-500 underline ml-1"
+                target="_blank"
+              >
+                View in NFT Marketplace →
+              </a>
+            </div>
+            <button
+              className="ml-4 text-gray-400 hover:text-white"
+              onClick={() => setShowBadgePopup(false)}
+            >
+              ✖
+            </button>
+          </div>
+        )}
+
         <div>
           <h2 className="challenges-title">Private Trading Challenges</h2>
           <p className="challenges-subtitle">
@@ -464,46 +502,43 @@ const TradingChallenges = () => {
                   </div>
 
                   <div className="leaderboard-entries">
-  {leaderboards[challenge.id].map((entry, index) => (
-    <div key={index} className="leaderboard-entry">
-      {/* Rank */}
-      <div className="entry-rank">{index + 1}</div>
+                    {leaderboards[challenge.id].map((entry, index) => (
+                      <div key={index} className="leaderboard-entry">
+                        {/* Rank */}
+                        <div className="entry-rank">{index + 1}</div>
 
-      {/* Avatar */}
-      <div className="entry-avatar">
-        {entry.user_profile?.profile_photo_url ? (
-          <img
-            src={entry.user_profile.profile_photo_url}
-            alt="Profile"
-            style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-        ) : (
-          <div
-            style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "50%",
-              backgroundColor: "#6c757d",
-            }}
-          ></div>
-        )}
-      </div>
+                        {/* Avatar */}
+                        <div className="entry-avatar">
+                          {entry.user_profile?.profile_photo_url ? (
+                            <img
+                              src={entry.user_profile.profile_photo_url}
+                              alt="Profile"
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "50%",
+                                objectFit: "cover",
+                              }}
+                            />
+                          ) : (
+                            <div
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "50%",
+                                backgroundColor: "#6c757d",
+                              }}
+                            ></div>
+                          )}
+                        </div>
 
-      {/* Name */}
-      <div className="entry-name">
-        {entry.user_profile?.username || "Anonymous"}
-      </div>
-
-      
-    </div>
-  ))}
-</div>
-
+                        {/* Name */}
+                        <div className="entry-name">
+                          {entry.user_profile?.username || "Anonymous"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             {/* {recentBadges.length > 0 && (
