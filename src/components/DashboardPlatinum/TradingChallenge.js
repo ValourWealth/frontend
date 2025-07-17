@@ -464,39 +464,46 @@ const TradingChallenges = () => {
                   </div>
 
                   <div className="leaderboard-entries">
-                    {leaderboards[challenge.id].map((entry, index) => (
-                      <div key={index} className="leaderboard-entry">
-                        <div className="entry-rank">{index + 1}</div>
-                        <div className="entry-avatar">
-                          {entry.profile_photo_url ? (
-                            <img
-                              src={entry.profile_photo_url}
-                              alt="Profile"
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                borderRadius: "50%",
-                                objectFit: "cover",
-                              }}
-                            />
-                          ) : (
-                            <div
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                borderRadius: "50%",
-                                backgroundColor: "#6c757d",
-                              }}
-                            ></div>
-                          )}
-                        </div>
-                        <div className="entry-name">{entry.username}</div>
-                        <div className="entry-performance">
-                          {parseFloat(entry.performance).toFixed(2)}%
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+  {leaderboards[challenge.id].map((entry, index) => (
+    <div key={index} className="leaderboard-entry">
+      {/* Rank */}
+      <div className="entry-rank">{index + 1}</div>
+
+      {/* Avatar */}
+      <div className="entry-avatar">
+        {entry.user_profile?.profile_photo_url ? (
+          <img
+            src={entry.user_profile.profile_photo_url}
+            alt="Profile"
+            style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "50%",
+              backgroundColor: "#6c757d",
+            }}
+          ></div>
+        )}
+      </div>
+
+      {/* Name */}
+      <div className="entry-name">
+        {entry.user_profile?.username || "Anonymous"}
+      </div>
+
+      
+    </div>
+  ))}
+</div>
+
                 </div>
               )}
             {/* {recentBadges.length > 0 && (
