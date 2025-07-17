@@ -987,6 +987,25 @@ const NFTMarketplace = () => {
     fetchAllCategories();
   }, []);
 
+  const collectBadge = async (badgeId) => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const res = await axios.post(
+        `https://backend-production-1e63.up.railway.app/api/collect-badge/${badgeId}/`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("🎉 Badge collected!");
+      window.location.reload(); // or re-fetch NFTs if you prefer
+    } catch (err) {
+      alert("❌ Already collected or error occurred");
+    }
+  };
+
   return (
     <div className="main-container">
       <div className="container">
@@ -1019,11 +1038,20 @@ const NFTMarketplace = () => {
                     <div className="card-body text-center">
                       <h5 className="card-title">{badge.name}</h5>
                       <p className="card-subtitle">{badge.description}</p>
-                      {/* <p className="token-id">Badge #{badge.id}</p>
-                      <p className="mint-date">Minted Date: TBD</p>
-                      <button className="btn btn-primary w-100">
-                        View details
-                      </button> */}
+                      <p className="token-id">Badge #{badge.id}</p>
+                      {/* <p className="mint-date">Minted Date: TBD</p> */}
+                      {!badge.linked_user ? (
+                        <button
+                          className="btn btn-primary w-100"
+                          onClick={() => collectBadge(badge.id)}
+                        >
+                          Collect it
+                        </button>
+                      ) : (
+                        <button className="btn btn-secondary w-100" disabled>
+                          ✅ Collected
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
