@@ -11,10 +11,13 @@ const TradingChallenges = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [performanceData, setPerformanceData] = useState(null);
   const [joinedChallenges, setJoinedChallenges] = useState([]);
+  const [recentBadges, setRecentBadges] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchChallenges();
+    fetchMyRecentBadges();
   }, []);
 
   const fetchChallenges = async () => {
@@ -35,6 +38,22 @@ const TradingChallenges = () => {
     } catch (error) {
       console.error("Error fetching challenges:", error);
       setLoading(false);
+    }
+  };
+  const fetchMyRecentBadges = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      const res = await axios.get(
+        `https://backend-production-1e63.up.railway.app/api/my-recent-badges/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setRecentBadges(res.data);
+    } catch (err) {
+      console.error("Failed to fetch recent badges", err);
     }
   };
 
@@ -321,6 +340,22 @@ const TradingChallenges = () => {
 
   return (
     <div className="trading-challenges-container">
+      {recentBadges.length > 0 && (
+        <div className="bg-green-100 border border-green-400 text-green-800 px-4 py-2 mb-4 rounded">
+          🎉 <strong>Congratulations!</strong> You've recently unlocked a badge:
+          <ul className="list-disc list-inside mt-1">
+            {recentBadges.map((badge) => (
+              <li key={badge.id}>
+                {badge.name} —{" "}
+                <Link to="" className="text-blue-600 underline">
+                  View in NFT Marketplace →
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="challenges-header">
         <div className="trophy-icon-container">
           <i className="bi bi-trophy"></i>
