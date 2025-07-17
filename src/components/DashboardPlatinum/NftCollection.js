@@ -181,6 +181,7 @@ const NFTCollection = ({ onPrimarySet }) => {
       );
 
       alert("Primary badge set successfully!");
+
       if (onPrimarySet) onPrimarySet(); // trigger profile refetch from parent
     } catch (error) {
       console.error(
