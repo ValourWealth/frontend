@@ -1,9 +1,32 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Marketplace from "./MarketPlace";
 import NFTCollection from "./NftCollection";
 
 const PlatinumMembershipNFT = () => {
   const [activeTab, setActiveTab] = useState("membership-badge");
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+        const response = await axios.get(
+          "https://backend-production-1e63.up.railway.app/api/profile/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setUserProfile(response.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -63,74 +86,50 @@ const PlatinumMembershipNFT = () => {
                 <h2>Your Platinum Membership NFT</h2>
                 <div className="nft-display">
                   <div className="nft-badge">
-                    <svg
-                      width="100%"
-                      height="100%"
-                      viewBox="0 0 200 200"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="100"
-                        cy="100"
-                        r="90"
-                        stroke="white"
-                        strokeWidth="4"
-                      />
-                      <path
-                        d="M100 140C100 140 130 120 130 90C130 73.4315 116.569 60 100 60C83.4315 60 70 73.4315 70 90C70 120 100 140 100 140Z"
-                        stroke="white"
-                        strokeWidth="4"
-                      />
-                      <circle
-                        cx="100"
-                        cy="90"
-                        r="15"
-                        stroke="white"
-                        strokeWidth="4"
-                      />
-                    </svg>
+                    <img
+                      src={userProfile?.primary_badge?.image_public_url}
+                      alt="Membership NFT"
+                      style={{
+                        width: "120px",
+                        height: "120px",
+                        borderRadius: "8px",
+                      }}
+                    />
                   </div>
                   <div className="member-info">
-                    <div className="member-badge">Platinum Member</div>
-                    <h3>John Doe</h3>
-                    <p>Member since April 12, 2025</p>
+                    <div className="member-badge">
+                      {userProfile?.primary_badge?.category ||
+                        "Membership Badge"}
+                    </div>
+                    <h3>{userProfile?.username}</h3>
+                    <p>
+                      Member since{" "}
+                      {userProfile?.created_at
+                        ? new Date(userProfile.created_at).toLocaleDateString()
+                        : "N/A"}
+                    </p>
                     <div className="badge-actions">
-                      <button className="btn btn-secondary">
+                      <a
+                        href={userProfile?.primary_badge?.image_public_url}
+                        download
+                        className="btn btn-secondary"
+                      >
                         <i className="bi bi-download me-2"></i>
                         Download Badge
-                      </button>
-                      <button className="btn btn-outline-light">
+                      </a>
+                      <button
+                        className="btn btn-outline-light"
+                        onClick={() =>
+                          navigator.share &&
+                          navigator.share({
+                            url: userProfile?.primary_badge?.image_public_url,
+                          })
+                        }
+                      >
                         <i className="bi bi-share me-2"></i>
                         Share Badge
                       </button>
                     </div>
-                  </div>
-                </div>
-
-                <div className="token-details">
-                  <div className="token-row">
-                    <div className="token-label">Token ID</div>
-                    <div className="token-value">PT-25-04-12-8743</div>
-                  </div>
-                  <div className="token-row">
-                    <div className="token-label">Network</div>
-                    <div className="token-value">Ethereum</div>
-                  </div>
-                  <div className="token-row">
-                    <div className="token-label">Token Address</div>
-                    <div className="token-value">
-                      0x7a58...eb89
-                      <button className="copy-btn">
-                        <i className="bi bi-clipboard"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="blockchain-link">
-                    <button className="btn btn-block btn-dark">
-                      <i className="bi bi-box-arrow-up-right me-2"></i>
-                      View on Blockchain Explorer
-                    </button>
                   </div>
                 </div>
               </div>
@@ -174,7 +173,7 @@ const PlatinumMembershipNFT = () => {
                 </div>
 
                 <div className="benefits-card mt-4">
-                  <div className="card-header">
+                  {/* <div className="card-header">
                     <h3>Membership Details</h3>
                   </div>
                   <div className="membership-details">
@@ -192,7 +191,7 @@ const PlatinumMembershipNFT = () => {
                       <div className="detail-label">Renewal</div>
                       <div className="detail-value">Automatic</div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="benefits-card mt-4">
