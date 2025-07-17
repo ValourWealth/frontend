@@ -617,8 +617,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import NewsBg from "../../assets/images/news-bg.png";
-import sentimentBg from "../../assets/images/sentiment-bg.png";
+import NewsBg from "../../assets/images/news-bg.jpg";
+import sentimentBg from "../../assets/images/sentiment-bg.jpg";
 
 const API_KEY = "04RGF1U9PAJ49VYI";
 
