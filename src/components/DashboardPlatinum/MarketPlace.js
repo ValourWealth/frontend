@@ -1040,7 +1040,7 @@ const NFTMarketplace = () => {
                       <p className="card-subtitle">{badge.description}</p>
                       <p className="token-id">Badge #{badge.id}</p>
                       {/* <p className="mint-date">Minted Date: TBD</p> */}
-                      {!badge.linked_user ? (
+                      {/* {!badge.linked_user ? (
                         <button
                           className="btn btn-primary w-100"
                           onClick={() => collectBadge(badge.id)}
@@ -1050,6 +1050,25 @@ const NFTMarketplace = () => {
                       ) : (
                         <button className="btn btn-secondary w-100" disabled>
                           ✅ Collected
+                        </button>
+                      )} */}
+                      {badge.can_collect ? (
+                        <button
+                          className="btn btn-primary w-100"
+                          onClick={() => collectBadge(badge.id)}
+                        >
+                          Collect it
+                        </button>
+                      ) : badge.linked_user ? (
+                        <button className="btn btn-secondary w-100" disabled>
+                          ✅ Collected
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-outline-secondary w-100"
+                          disabled
+                        >
+                          🔒 Not eligible
                         </button>
                       )}
                     </div>
@@ -1068,81 +1087,3 @@ const NFTMarketplace = () => {
 };
 
 export default NFTMarketplace;
-
-// import axios from "axios";
-// import { useEffect, useState } from "react";
-
-// const categoryMap = {
-//   "6month": "6 Month Anniversary",
-//   epic: "Epic",
-//   rare: "Rare",
-//   uncommon: "Uncommon",
-//   legendary: "Legendary",
-//   first: "First Place",
-//   second: "Second Place",
-//   third: "Third Place",
-//   founder: "Founder",
-// };
-
-// const categories = Object.keys(categoryMap);
-
-// const NFTMarketplace = () => {
-//   const [nftsByCategory, setNftsByCategory] = useState({});
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchAll = async () => {
-//       const result = {};
-//       for (const cat of categories) {
-//         try {
-//           const res = await axios.get(
-//             `https://backend-production-1e63.up.railway.app/api/nfts/?category=${cat}`
-//           );
-//           if (res.data.length > 0) {
-//             result[cat] = res.data;
-//           }
-//         } catch (err) {
-//           console.error(`Failed to load ${cat}`, err);
-//         }
-//       }
-//       setNftsByCategory(result);
-//       setLoading(false);
-//     };
-
-//     fetchAll();
-//   }, []);
-
-//   if (loading) return <div className="p-4">Loading NFTs...</div>;
-
-//   return (
-//     <div className="p-6 space-y-10">
-//       {Object.entries(nftsByCategory).map(([category, badges]) => (
-//         <div key={category}>
-//           <h2 className="text-2xl font-bold mb-4 border-b pb-2">
-//             {categoryMap[category] || category}
-//           </h2>
-//           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-//             {badges.map((badge) => (
-//               <div
-//                 key={badge.id}
-//                 className="border rounded-lg p-4 shadow hover:shadow-lg transition duration-300"
-//               >
-//                 <img
-//                   src={badge.image_url}
-//                   alt={badge.name}
-//                   className="w-full h-48 object-contain mb-4"
-//                 />
-//                 <h3 className="text-xl font-semibold">{badge.name}</h3>
-//                 <p className="text-gray-600 text-sm mt-1">
-//                   {badge.description}
-//                 </p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default NFTMarketplace;
