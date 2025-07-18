@@ -238,7 +238,8 @@ const TradingPlatform = () => {
             </>
           ) : webinars.length > 0 ? (
             // Actual Webinars
-            webinars.slice(0, 2).map((webinar) => (
+            // webinars.slice(0, 2).map((webinar) => (
+            webinars.map((webinar) => (
               <div key={webinar.id} className="webinar-card webinar-car-img">
                 {webinar.thumbnail_public_url && (
                   <img

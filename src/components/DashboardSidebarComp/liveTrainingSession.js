@@ -23,8 +23,8 @@ function LiveTrainingSession() {
         });
         const past = res.data
           .filter((w) => w.status === "Outdated")
-          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-          .slice(0, 2);
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        // .slice(0, 2);
         setPastWebinars(past);
       } catch (err) {
         console.error("Failed to fetch webinars:", err);
