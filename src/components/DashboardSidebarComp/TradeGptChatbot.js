@@ -614,7 +614,6 @@ You support a wide range of queries, including:
   const handleOpenChat = () => {
     setIsChatOpen(true);
   };
-  ``;
 
   const handleCloseChat = () => {
     setIsChatOpen(false);
