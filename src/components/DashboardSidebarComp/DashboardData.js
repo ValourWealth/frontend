@@ -96,7 +96,7 @@ function DashboardData({ darkMode }) {
         </div>
       </div>
 
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className="error-message ms-5">{error}</p>}
       <FinancialDashboard />
       <LiveTrainingSession />
       {/* <ProgressBar />
