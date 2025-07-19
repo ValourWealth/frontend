@@ -20,7 +20,9 @@ const TradeGPT = () => {
     const data = await res.json();
 
     if (data["Time Series (5min)"]) {
-      const latestTime = Object.keys(data["Time Series (5min)"])[0];
+      const latestTime = Object.keys(data["Time Series (5min)"])
+        .sort()
+        .reverse()[0]; // FIXED
       const price = data["Time Series (5min)"][latestTime]["4. close"];
       return { source: "AlphaVantage", ticker, price, latestTime };
     }
@@ -53,13 +55,15 @@ const TradeGPT = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${process.env.REACT_APP_DEEPSEEK_API_KEY}`,
-        Authorization: `Bearer sk-fd092005f2f446d78dade7662a13c896`,
+        Authorization: "Bearer sk-fd092005f2f446d78dade7662a13c896", // your working DeepSeek key
       },
       body: JSON.stringify({
         model: "deepseek-chat",
         messages: [
-          { role: "system", content: systemPrompt },
+          {
+            role: "system",
+            content: systemPrompt,
+          },
           {
             role: "user",
             content: `${userMessage}\n\nReal-Time Market Data:\n${JSON.stringify(
@@ -208,13 +212,17 @@ Would you like me to analyze any specific aspect in more detail?`,
     setIsAnalyzing(true);
 
     try {
-      const tickers = extractTickers(userMessage);
+      let tickers = extractTickers(userMessage);
+      if (tickers.length === 0) {
+        tickers = [ticker]; // fallback to manually selected ticker
+      }
+
       let realTimeData = [];
 
-      for (const ticker of tickers) {
+      for (const tkr of tickers) {
         const [alphaData, finnhubData] = await Promise.all([
-          fetchAlphaVantageData(ticker),
-          fetchFinnhubData(ticker),
+          fetchAlphaVantageData(tkr),
+          fetchFinnhubData(tkr),
         ]);
         if (alphaData) realTimeData.push(alphaData);
         if (finnhubData) realTimeData.push(finnhubData);
