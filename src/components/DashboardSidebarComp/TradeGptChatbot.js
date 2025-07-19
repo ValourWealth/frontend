@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 const TradeGPT = () => {
   const [inputText, setInputText] = useState("");
@@ -613,6 +614,7 @@ You support a wide range of queries, including:
   const handleOpenChat = () => {
     setIsChatOpen(true);
   };
+  ``;
 
   const handleCloseChat = () => {
     setIsChatOpen(false);
@@ -1268,7 +1270,11 @@ Would you like me to analyze any specific aspect in more detail?`,
                         key={index}
                         className={`message message-${message.type}`}
                       >
-                        <div className="message-content">{message.content}</div>
+                        {/* <div className="message-content">{message.content}</div>
+                         */}
+                        <div className="message-content text-left text-sm text-gray-800 leading-relaxed prose prose-sm prose-invert max-w-full">
+                          <ReactMarkdown>{message.content}</ReactMarkdown>
+                        </div>
                       </div>
                     )
                   )}
