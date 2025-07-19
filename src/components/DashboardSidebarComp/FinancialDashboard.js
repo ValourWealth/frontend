@@ -1349,54 +1349,7 @@ export default function FinancialDashboard() {
 
   const contractsData = selectedTicker?.contracts || [];
 
-  // const contractsData = [
-  //   {
-  //     contract: ".KGC251121C14",
-  //     type: "Call",
-  //     strike: 14,
-  //     price: 2.7,
-  //     expiry: "Nov 21st 25",
-  //     volume: 61,
-  //     itm: "59%",
-  //   },
-  //   {
-  //     contract: ".KGC260116C12",
-  //     type: "Call",
-  //     strike: 12,
-  //     price: 4.35,
-  //     expiry: "Jan 16th 26",
-  //     volume: 60,
-  //     itm: "70%",
-  //   },
-  //   {
-  //     contract: ".KGC251121C15",
-  //     type: "Call",
-  //     strike: 15,
-  //     price: 2.13,
-  //     expiry: "Nov 21st 25",
-  //     volume: 57,
-  //     itm: "51%",
-  //   },
-  //   {
-  //     contract: ".KGC250815C15",
-  //     type: "Call",
-  //     strike: 15,
-  //     price: 1.45,
-  //     expiry: "Aug 15th 25",
-  //     volume: 48,
-  //     itm: "55%",
-  //   },
-  //   {
-  //     contract: ".KGC250627C1...",
-  //     type: "Call",
-  //     strike: 15.5,
-  //     price: 0.41,
-  //     expiry: "Jun 27th 25",
-  //     volume: 35,
-  //     itm: "51%",
-  //   },
-  // ];
-
+  
   return (
     <>
       <style>{`
