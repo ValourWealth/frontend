@@ -517,6 +517,95 @@ You support a wide range of queries, including:
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const renderFormattedText = (text) => {
+    const lines = text.split("\n");
+
+    return lines.map((line, index) => {
+      const trimmed = line.trim();
+
+      if (trimmed === "" || trimmed === "---") {
+        return <div key={index} className="h-4" />;
+      }
+
+      if (trimmed.startsWith("# ")) {
+        return null;
+      }
+
+      if (trimmed.startsWith("###")) {
+        const title = trimmed
+          .replace(/^###\s*\*\*(.*?)\*\*/, "$1")
+          .replace(/^###\s*/, "")
+          .replace(/\*\*/g, "");
+        return (
+          <h3 key={index} className="text-lg font-bold text-white mb-3 mt-4">
+            {title}
+          </h3>
+        );
+      }
+
+      if (trimmed.startsWith("##")) {
+        const title = trimmed
+          .replace(/^##\s*\*\*(.*?)\*\*/, "$1")
+          .replace(/^##\s*/, "")
+          .replace(/\*\*/g, "");
+        if (title.toLowerCase() === "entry levels") return null;
+
+        return (
+          <h2 key={index} className="text-xl font-bold text-white mb-3 mt-5">
+            {title}
+          </h2>
+        );
+      }
+
+      if (/^\d+\.\s/.test(trimmed)) {
+        const num = trimmed.match(/^(\d+)\./)?.[1] || "";
+        const content = trimmed
+          .replace(/^\d+\.\s/, "")
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        return (
+          <div key={index} className="mb-2">
+            <div className="flex items-start gap-2">
+              <span className="text-white font-bold mt-1 text-sm">{num}.</span>
+              <div
+                className="text-gray-100 flex-1"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+            </div>
+          </div>
+        );
+      }
+
+      if (/^[-*]\s/.test(trimmed)) {
+        const content = trimmed
+          .replace(/^[-*]\s*/, "")
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        return (
+          <div key={index} className="mb-2 ml-4">
+            <div className="flex items-start gap-2">
+              <span className="text-white mt-1 text-sm">•</span>
+              <div
+                className="text-gray-100 flex-1"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+            </div>
+          </div>
+        );
+      }
+
+      const formatted = trimmed.replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+      );
+      return (
+        <div
+          key={index}
+          className="text-gray-200 mb-2"
+          dangerouslySetInnerHTML={{ __html: formatted }}
+        />
+      );
+    });
+  };
+
   useEffect(() => {
     scrollToBottom();
   }, [messages, isAnalyzing]);
@@ -1234,7 +1323,7 @@ Would you like me to analyze any specific aspect in more detail?`,
 
               <div className="disclaimer">
                 This is for informational purposes only. Consult a professional
-                before making investment decisions.
+                Tradegpt before making investment decisions.
               </div>
             </div>
           </div>
