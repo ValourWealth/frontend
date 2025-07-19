@@ -25,13 +25,206 @@ const TradeGPT = () => {
       "CHF",
       "NZD",
     ];
+
+    const tickerMap = {
+      appl: "AAPL",
+      apple: "AAPL",
+      amazon: "AMZN",
+      amzn: "AMZN",
+      tesla: "TSLA",
+      tsla: "TSLA",
+      netflix: "NFLX",
+      nflx: "NFLX",
+      microsoft: "MSFT",
+      msft: "MSFT",
+      google: "GOOGL",
+      googl: "GOOGL",
+      alphabet: "GOOGL",
+      meta: "META",
+      facebook: "META",
+      nvidia: "NVDA",
+      nvda: "NVDA",
+      coinbase: "COIN",
+      coin: "COIN",
+      intel: "INTC",
+      amd: "AMD",
+      qualcomm: "QCOM",
+      qcom: "QCOM",
+      cisco: "CSCO",
+      csco: "CSCO",
+      oracle: "ORCL",
+      orcl: "ORCL",
+      ibm: "IBM",
+      paypal: "PYPL",
+      pypl: "PYPL",
+      uber: "UBER",
+      lyft: "LYFT",
+      airbnb: "ABNB",
+      shopify: "SHOP",
+      snap: "SNAP",
+      snapchat: "SNAP",
+      zoom: "ZM",
+      zillow: "ZG",
+      roku: "ROKU",
+      datadog: "DDOG",
+      snowflake: "SNOW",
+      palantir: "PLTR",
+      pltr: "PLTR",
+      twilio: "TWLO",
+      twlo: "TWLO",
+      square: "SQ",
+      block: "SQ",
+      spotify: "SPOT",
+      spce: "SPCE",
+      rivian: "RIVN",
+      lucid: "LCID",
+      chewy: "CHWY",
+      etsy: "ETSY",
+      pins: "PINS",
+      adobe: "ADBE",
+      adbe: "ADBE",
+      autodesk: "ADSK",
+      adsk: "ADSK",
+      atlassian: "TEAM",
+      team: "TEAM",
+      salesforce: "CRM",
+      crm: "CRM",
+      slack: "WORK",
+      ford: "F",
+      gm: "GM",
+      boeing: "BA",
+      ba: "BA",
+      lockheed: "LMT",
+      raytheon: "RTX",
+      northrop: "NOC",
+      exxon: "XOM",
+      chevron: "CVX",
+      shell: "SHEL",
+      bp: "BP",
+      conocophillips: "COP",
+      phillips: "PSX",
+      pfizer: "PFE",
+      moderna: "MRNA",
+      jnj: "JNJ",
+      johnson: "JNJ",
+      unitedhealth: "UNH",
+      unh: "UNH",
+      merck: "MRK",
+      abbvie: "ABBV",
+      walmart: "WMT",
+      costco: "COST",
+      target: "TGT",
+      lowe: "LOW",
+      nike: "NKE",
+      mcdonald: "MCD",
+      burger: "QSR",
+      coca: "KO",
+      pepsi: "PEP",
+      starbucks: "SBUX",
+      sbux: "SBUX",
+      chipotle: "CMG",
+      dis: "DIS",
+      disney: "DIS",
+      warner: "WBD",
+      paramount: "PARA",
+      vz: "VZ",
+      verizon: "VZ",
+      tmus: "TMUS",
+      tmobile: "TMUS",
+      att: "T",
+      comcast: "CMCSA",
+      lumn: "LUMN",
+      aal: "AAL",
+      delta: "DAL",
+      ual: "UAL",
+      jetblue: "JBLU",
+      alaska: "ALK",
+      spirit: "SAVE",
+      fedex: "FDX",
+      ups: "UPS",
+      lucidmotors: "LCID",
+      rivianauto: "RIVN",
+      carvana: "CVNA",
+      carmax: "KMX",
+      autonation: "AN",
+      manheim: "KAR",
+      gmfinancial: "GM",
+      applied: "AMAT",
+      amat: "AMAT",
+      zoominfo: "ZI",
+      zi: "ZI",
+      roblox: "RBLX",
+      rblx: "RBLX",
+      unity: "U",
+      unitysoft: "U",
+      doordash: "DASH",
+      dash: "DASH",
+      draftkings: "DKNG",
+      dkng: "DKNG",
+      tripadvisor: "TRIP",
+      trip: "TRIP",
+      matchgroup: "MTCH",
+      mtch: "MTCH",
+      affirm: "AFRM",
+      afrm: "AFRM",
+      etrade: "ETFC",
+      etfc: "ETFC",
+      robinhood: "HOOD",
+      hood: "HOOD",
+      blackrock: "BLK",
+      blk: "BLK",
+      goldman: "GS",
+      gs: "GS",
+      morgan: "MS",
+      ms: "MS",
+      jpmorgan: "JPM",
+      jpm: "JPM",
+      wells: "WFC",
+      wfc: "WFC",
+      bankofamerica: "BAC",
+      bac: "BAC",
+      citigroup: "C",
+      c: "C",
+      barclays: "BCS",
+      bcs: "BCS",
+      vale: "VALE",
+      "vale s.a.": "VALE",
+      run: "RUN",
+      sunrun: "RUN",
+      wolf: "WOLF",
+      wolfspeed: "WOLF",
+      csx: "CSX",
+      kmi: "KMI",
+      kinder: "KMI",
+      t: "T",
+      "at&t": "T",
+      rcat: "RCAT",
+      redcat: "RCAT",
+      ccl: "CCL",
+      carnival: "CCL",
+      usb: "USB",
+      usbank: "USB",
+      aedaud: "AED/AUD",
+      aedcad: "AED/CAD",
+      aedusd: "AED/USD",
+      aedjpy: "AED/JPY",
+      aedinr: "AED/INR",
+      aedeur: "AED/EUR",
+      audusd: "AUD/USD",
+      audjpy: "AUD/JPY",
+      audcad: "AUD/CAD",
+      audinr: "AUD/INR",
+      audcny: "AUD/CNY",
+      audnzd: "AUD/NZD",
+    };
+
     const upperText = text.toUpperCase();
+    const lowerText = text.toLowerCase();
 
-    const forexPattern = /\b([A-Z]{3})[\/\-\s]?([A-Z]{3})\b/g;
     const forexMatches = [];
+    const forexRegex = /\b([A-Z]{3})[\/\-]([A-Z]{3})\b/g;
     let match;
-
-    while ((match = forexPattern.exec(upperText)) !== null) {
+    while ((match = forexRegex.exec(upperText)) !== null) {
       if (
         knownCurrencies.includes(match[1]) &&
         knownCurrencies.includes(match[2])
@@ -40,17 +233,14 @@ const TradeGPT = () => {
       }
     }
 
-    const tickerPattern = /\b[A-Z]{2,5}\b/g;
-    const allTickers = upperText.match(tickerPattern) || [];
-    const filteredTickers = allTickers.filter(
-      (t) =>
-        !knownCurrencies.includes(t) &&
-        !forexMatches.some((pair) => pair.includes(t))
-    );
+    const words = lowerText.split(/\s+/);
+    const tickers = words
+      .map((w) => tickerMap[w])
+      .filter((t) => t && !forexMatches.some((pair) => pair.includes(t)));
 
     return {
-      forexPairs: forexMatches,
-      tickers: [...new Set(filteredTickers)],
+      tickers: [...new Set(tickers)],
+      forexPairs: [...new Set(forexMatches)],
     };
   };
 
@@ -221,7 +411,81 @@ const TradeGPT = () => {
   // };
 
   const streamChatResponse = async (userMessage, realTimeData) => {
-    const systemPrompt = `You are TradeGPT, a professional market analyst. Use the real-time market data provided to analyze and respond clearly and professionally with trading insights. Summarize price action, trends, and provide possible interpretations.`;
+    const systemPrompt = `You are TradeGPT — an intelligent, professional yet approachable trading assistant, built to help with anything finance, investing, or trading-related.
+
+You support a wide range of queries, including:
+
+📊 **Market Analysis**
+- Breakdowns of stocks, crypto, forex, ETFs using fundamentals and technicals.
+- Use clear sections like Summary, Momentum, Key Levels, and Trade Plan.
+- Include live data (if provided), trend direction, and upcoming catalysts.
+
+💡 **Trade Ideas**
+- Generate long/short setups for stocks, options, or forex.
+- Include entry, stop-loss, targets, risk/reward, and rationale.
+- Tailor strategies for swing trading, day trading, long-term investing, or options plays (covered calls, spreads, leaps, etc.).
+
+🌍 **Forex-Specific Analysis**
+- Identify forex pairs showing reversals or breakouts.
+- Analyze gold (XAUUSD) on multiple timeframes (Daily + 4H).
+- Spot pairs that broke previous daily high/lows.
+- Generate intraday trade ideas for pairs like EUR/USD or USD/JPY.
+- Use real technicals: RSI, MACD, S/R levels, candlesticks, sentiment.
+- Include news-driven catalysts (e.g., CPI, Fed, BoE).
+- Be structured with: Pair, Signal, Setup, Risk, Reasoning.
+- Show clean formatting with 🟢 Bullish / 🔴 Bearish calls when possible.
+
+📆 **Economic News & Macros**
+- List upcoming events: CPI, NFP, Fed, ECB, PBoC, earnings.
+- Rate impact: High/Medium/Low.
+- Summarize how these events may affect USD, EUR, commodities, indices.
+- Be clear on timing and risk to markets.
+
+📚 **Concepts & Education**
+- Explain financial concepts in simple terms: e.g., "What is the Put/Call Ratio?", "What does RSI mean?", "What is IV Crush?"
+- Use analogies and examples when needed. Make it beginner-friendly but smart.
+
+🧠 **Simulations & Projections**
+- Run simulations like: “If I invest $1000 per month in QQQ, what can I have in 5 years?”
+- Or: “If I trade options with 70% win rate and 2:1 R/R, what’s my expected portfolio after 12 months?”
+- Be realistic. Include assumptions, show step-by-step reasoning, and give numbers.
+
+📈 **Portfolio & Strategy Building**
+- Help users build diversified portfolios based on their risk tolerance.
+- Recommend ETFs, growth stocks, dividend ideas, hedging techniques.
+- Provide allocation suggestions (e.g. 60/30/10 stock/bond/cash).
+
+🤝 **Conversational Support**
+- Respond casually if user says "hey", "what’s up?", etc.
+- Be warm, friendly, engaging — like a smart trading friend.
+- Always keep the conversation going: "Want to dive deeper into options on that?", "Should we run a backtest next?"
+
+📍 **Formatting Guidelines**
+- Use clean markdown-style formatting: bullet points, headers, emojis when helpful.
+- Avoid placeholders like $XXX — always use real values or estimates if data is available.
+- End every response with a helpful follow-up.
+
+🧩 **Examples of Queries You Support**
+- “Identify 3 forex pairs showing reversal signs”
+- “Analyse XAUUSD on Daily and 4H”
+- “Which pairs broke above their daily highs?”
+- “Give intraday trade idea for EURUSD”
+- “Any economic news that may affect markets today?”
+- “What’s the best call option for AAPL this week?”
+- “Compare Apple vs Google as long-term picks”
+- “What is RSI and how to use it?”
+
+🎯 **Tone**
+- Friendly, sharp, and intelligent.
+- No fluff, but approachable.
+- Adjust depth based on user signals (beginner vs. advanced).
+
+---
+
+🔔 *For personalized guidance or a deeper portfolio review, you can always connect with a [Valour Wealth Analyst](https://valourwealth.com).*
+`;
+
+    //  `You are TradeGPT, a professional market analyst. Use the real-time market data provided to analyze and respond clearly and professionally with trading insights. Summarize price action, trends, and provide possible interpretations.`;
 
     const res = await fetch("https://api.deepseek.com/chat/completions", {
       method: "POST",
