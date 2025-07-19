@@ -14,18 +14,118 @@ const TradeGPT = () => {
     return matches || [];
   };
 
+  // const fetchAlphaVantageData = async (ticker) => {
+  //   const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=5min&apikey=04RGF1U9PAJ49VYI`;
+  //   const res = await fetch(url);
+  //   const data = await res.json();
+
+  //   const timeSeries = data["Time Series (5min)"];
+  //   if (timeSeries) {
+  //     const labels = Object.keys(timeSeries).slice(0, 10).reverse(); // 10 recent points
+  //     const prices = labels.map((time) =>
+  //       parseFloat(timeSeries[time]["4. close"])
+  //     );
+
+  //     const chartConfig = {
+  //       type: "line",
+  //       data: {
+  //         labels,
+  //         datasets: [
+  //           {
+  //             label: `${ticker} Price (5min)`,
+  //             data: prices,
+  //             fill: false,
+  //             borderColor: "green",
+  //             tension: 0.1,
+  //           },
+  //         ],
+  //       },
+  //       options: {
+  //         plugins: {
+  //           legend: { display: false },
+  //         },
+  //         scales: {
+  //           x: { ticks: { maxTicksLimit: 5 } },
+  //         },
+  //       },
+  //     };
+
+  //     const encodedChart = encodeURIComponent(JSON.stringify(chartConfig));
+  //     const chartUrl = `https://quickchart.io/chart?c=${encodedChart}`;
+
+  //     const latestTime = labels[labels.length - 1];
+  //     const price = prices[prices.length - 1];
+
+  //     return { source: "AlphaVantage", ticker, price, latestTime, chartUrl };
+  //   }
+
+  //   return null;
+  // };
+
+  // const fetchFinnhubData = async (ticker) => {
+  //   const url = `https://finnhub.io/api/v1/quote?symbol=${ticker}&token=d08gifhr01qh1ecc2v7gd08gifhr01qh1ecc2v80`;
+  //   const res = await fetch(url);
+  //   const data = await res.json();
+
+  //   if (data.c) {
+  //     return {
+  //       source: "Finnhub",
+  //       ticker,
+  //       current: data.c,
+  //       high: data.h,
+  //       low: data.l,
+  //       open: data.o,
+  //       previousClose: data.pc,
+  //     };
+  //   }
+  //   return null;
+  // };
+
   const fetchAlphaVantageData = async (ticker) => {
     const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=5min&apikey=04RGF1U9PAJ49VYI`;
     const res = await fetch(url);
     const data = await res.json();
 
-    if (data["Time Series (5min)"]) {
-      const latestTime = Object.keys(data["Time Series (5min)"])
-        .sort()
-        .reverse()[0]; // FIXED
-      const price = data["Time Series (5min)"][latestTime]["4. close"];
-      return { source: "AlphaVantage", ticker, price, latestTime };
+    const timeSeries = data["Time Series (5min)"];
+    if (timeSeries) {
+      const labels = Object.keys(timeSeries).slice(0, 10).reverse();
+      const prices = labels.map((time) =>
+        parseFloat(timeSeries[time]["4. close"])
+      );
+
+      const chartConfig = {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: `${ticker} Price (5min)`,
+              data: prices,
+              fill: false,
+              borderColor: "green",
+              tension: 0.1,
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            legend: { display: false },
+          },
+          scales: {
+            x: { ticks: { maxTicksLimit: 5 } },
+          },
+        },
+      };
+
+      const encodedChart = encodeURIComponent(JSON.stringify(chartConfig));
+      const chartUrl = `https://quickchart.io/chart?c=${encodedChart}`;
+
+      const latestTime = labels[labels.length - 1];
+      const price = prices[prices.length - 1];
+
+      return { source: "AlphaVantage", ticker, price, latestTime, chartUrl };
     }
+
     return null;
   };
 
@@ -48,6 +148,38 @@ const TradeGPT = () => {
     return null;
   };
 
+  // const streamChatResponse = async (userMessage, realTimeData) => {
+  //   const systemPrompt = `You are TradeGPT, a professional market analyst. Use the real-time market data provided to analyze and respond clearly and professionally with trading insights. Summarize price action, trends, and provide possible interpretations.`;
+
+  //   const res = await fetch("https://api.deepseek.com/chat/completions", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer sk-fd092005f2f446d78dade7662a13c896", // your working DeepSeek key
+  //     },
+  //     body: JSON.stringify({
+  //       model: "deepseek-chat",
+  //       messages: [
+  //         {
+  //           role: "system",
+  //           content: systemPrompt,
+  //         },
+  //         {
+  //           role: "user",
+  //           content: `${userMessage}\n\nReal-Time Market Data:\n${JSON.stringify(
+  //             realTimeData,
+  //             null,
+  //             2
+  //           )}`,
+  //         },
+  //       ],
+  //     }),
+  //   });
+
+  //   const json = await res.json();
+  //   return json.choices?.[0]?.message?.content || "No response from AI.";
+  // };
+
   const streamChatResponse = async (userMessage, realTimeData) => {
     const systemPrompt = `You are TradeGPT, a professional market analyst. Use the real-time market data provided to analyze and respond clearly and professionally with trading insights. Summarize price action, trends, and provide possible interpretations.`;
 
@@ -55,15 +187,12 @@ const TradeGPT = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer sk-fd092005f2f446d78dade7662a13c896", // your working DeepSeek key
+        Authorization: "Bearer sk-fd092005f2f446d78dade7662a13c896",
       },
       body: JSON.stringify({
         model: "deepseek-chat",
         messages: [
-          {
-            role: "system",
-            content: systemPrompt,
-          },
+          { role: "system", content: systemPrompt },
           {
             role: "user",
             content: `${userMessage}\n\nReal-Time Market Data:\n${JSON.stringify(
@@ -213,9 +342,7 @@ Would you like me to analyze any specific aspect in more detail?`,
 
     try {
       let tickers = extractTickers(userMessage);
-      if (tickers.length === 0) {
-        tickers = [ticker]; // fallback to manually selected ticker
-      }
+      if (tickers.length === 0) tickers = [ticker];
 
       let realTimeData = [];
 
@@ -229,7 +356,17 @@ Would you like me to analyze any specific aspect in more detail?`,
       }
 
       const reply = await streamChatResponse(userMessage, realTimeData);
-      setMessages((prev) => [...prev, { type: "assistant", content: reply }]);
+
+      const assistantMessage = { type: "assistant", content: reply };
+      const chartImageMessage = realTimeData.find((d) => d.chartUrl)
+        ? { type: "image", url: realTimeData.find((d) => d.chartUrl).chartUrl }
+        : null;
+
+      setMessages((prev) => [
+        ...prev,
+        assistantMessage,
+        ...(chartImageMessage ? [chartImageMessage] : []),
+      ]);
     } catch (err) {
       console.error("Chat error:", err);
       setMessages((prev) => [
@@ -699,15 +836,47 @@ Would you like me to analyze any specific aspect in more detail?`,
                   </div>
                 </>
               ) : (
+                // <div className="chat-messages">
+                //   {messages.map((message, index) => (
+                //     <div
+                //       key={index}
+                //       className={`message message-${message.type}`}
+                //     >
+                //       <div className="message-content">{message.content}</div>
+                //     </div>
+                //   ))}
+
+                //   {isAnalyzing && (
+                //     <div className="analyzing-indicator">
+                //       <span>Analyzing</span>
+                //       <div className="analyzing-dots">
+                //         <div className="analyzing-dot"></div>
+                //         <div className="analyzing-dot"></div>
+                //         <div className="analyzing-dot"></div>
+                //       </div>
+                //     </div>
+                //   )}
+                //   <div ref={messagesEndRef} />
+                // </div>
                 <div className="chat-messages">
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`message message-${message.type}`}
-                    >
-                      <div className="message-content">{message.content}</div>
-                    </div>
-                  ))}
+                  {messages.map((message, index) =>
+                    message.type === "image" ? (
+                      <div key={index} className="message-assistant">
+                        <img
+                          src={message.url}
+                          alt="Price Chart"
+                          style={{ maxWidth: "100%", borderRadius: 8 }}
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        key={index}
+                        className={`message message-${message.type}`}
+                      >
+                        <div className="message-content">{message.content}</div>
+                      </div>
+                    )
+                  )}
 
                   {isAnalyzing && (
                     <div className="analyzing-indicator">
