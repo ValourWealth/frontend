@@ -9,9 +9,49 @@ const TradeGPT = () => {
   const [inputFocused, setInputFocused] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const extractTickers = (text) => {
-    const matches = text.match(/\b[A-Z]{2,5}\b/g);
-    return matches || [];
+  // const extractTickers = (text) => {
+  //   const matches = text.match(/\b[A-Z]{2,5}\b/g);
+  //   return matches || [];
+  // };
+
+  const extractEntities = (text) => {
+    const knownCurrencies = [
+      "USD",
+      "EUR",
+      "JPY",
+      "GBP",
+      "AUD",
+      "CAD",
+      "CHF",
+      "NZD",
+    ];
+    const upperText = text.toUpperCase();
+
+    const forexPattern = /\b([A-Z]{3})[\/\-\s]?([A-Z]{3})\b/g;
+    const forexMatches = [];
+    let match;
+
+    while ((match = forexPattern.exec(upperText)) !== null) {
+      if (
+        knownCurrencies.includes(match[1]) &&
+        knownCurrencies.includes(match[2])
+      ) {
+        forexMatches.push(`${match[1]}/${match[2]}`);
+      }
+    }
+
+    const tickerPattern = /\b[A-Z]{2,5}\b/g;
+    const allTickers = upperText.match(tickerPattern) || [];
+    const filteredTickers = allTickers.filter(
+      (t) =>
+        !knownCurrencies.includes(t) &&
+        !forexMatches.some((pair) => pair.includes(t))
+    );
+
+    return {
+      forexPairs: forexMatches,
+      tickers: [...new Set(filteredTickers)],
+    };
   };
 
   // const fetchAlphaVantageData = async (ticker) => {
@@ -341,7 +381,9 @@ Would you like me to analyze any specific aspect in more detail?`,
     setIsAnalyzing(true);
 
     try {
-      let tickers = extractTickers(userMessage);
+      // let tickers = extractTickers(userMessage);
+      let { forexPairs, tickers } = extractEntities(userMessage);
+
       if (tickers.length === 0) tickers = [ticker];
 
       let realTimeData = [];
