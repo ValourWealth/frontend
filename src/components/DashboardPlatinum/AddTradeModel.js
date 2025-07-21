@@ -242,13 +242,6 @@ const AddTradeModal = ({ isOpen, onClose, onAddTrade }) => {
     <div className="enhanced-modal-overlay">
       <div className="enhanced-modal-container">
         <div className="enhanced-modal-header">
-          <div className="header-content">
-            <h2 className="enhanced-modal-title">Add New Trade</h2>
-            <p className="enhanced-modal-subtitle">
-              Enter your trade details to track performance and analyze your
-              strategy.
-            </p>
-          </div>
           <button className="enhanced-close-button" onClick={onClose}>
             <X size={20} />
           </button>

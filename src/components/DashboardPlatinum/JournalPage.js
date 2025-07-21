@@ -393,7 +393,7 @@ const Journal = () => {
               <div className="custom-progress-container">
                 <div
                   className="custom-progress-fill"
-                  style={{ width: `${portfolioMetrics.successRate}% ` }}
+                  style={{ width: `${portfolioMetrics.successRate}%` }}
                 ></div>
               </div>
             </div>
@@ -634,7 +634,7 @@ const Journal = () => {
                   <div
                     className="performance-progress-fill excellent-performance"
                     style={{
-                      width: `${tradingAnalysisData.exitPerformanceDistribution.excellent.percentage}% `,
+                      width: `${tradingAnalysisData.exitPerformanceDistribution.excellent.percentage}%`,
                     }}
                   ></div>
                 </div>
@@ -1212,7 +1212,9 @@ const Journal = () => {
                     </div>
                     <div className="reports-cell-pnl">
                       <span
-                        className={`fw-bold ${item.totalProfit >= 0 ? "profit-color" : "loss-color"}`}
+                        className={`fw-bold ${
+                          trade.pnl >= 0 ? "profit-color" : "loss-color"
+                        }`}
                       >
                         {trade.pnl >= 0 ? "+" : ""}${trade.pnl.toFixed(2)}
                       </span>
