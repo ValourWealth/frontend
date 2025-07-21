@@ -923,7 +923,7 @@ Would you like me to analyze any specific aspect in more detail?`,
           flex-direction: column;
         }
 
-        .chat-messages {
+        .chat-messagesbot {
           flex: 1;
           padding: 20px;
           overflow-y: auto;
@@ -1168,15 +1168,15 @@ Would you like me to analyze any specific aspect in more detail?`,
         }
 
         /* Scrollbar */
-        .chat-messages::-webkit-scrollbar {
+        .chat-messagesbot::-webkit-scrollbar {
           width: 4px;
         }
 
-        .chat-messages::-webkit-scrollbar-track {
+        .chat-messagesbot::-webkit-scrollbar-track {
           background: #f1f1f1;
         }
 
-        .chat-messages::-webkit-scrollbar-thumb {
+        .chat-messagesbot::-webkit-scrollbar-thumb {
           background: #c1c1c1;
           border-radius: 4px;
         }
