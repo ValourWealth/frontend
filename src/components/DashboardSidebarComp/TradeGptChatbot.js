@@ -726,26 +726,25 @@ Would you like me to analyze any specific aspect in more detail?`,
     setTicker(e.target.value.toUpperCase());
   };
 
-const fetchForexRate = async (pair) => {
-  const [from, to] = pair.split("/");
+  const fetchForexRate = async (pair) => {
+    const [from, to] = pair.split("/");
 
-  const url = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${from}&to_currency=${to}&apikey=04RGF1U9PAJ49VYI`;
-  const res = await fetch(url);
-  const data = await res.json();
+    const url = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${from}&to_currency=${to}&apikey=04RGF1U9PAJ49VYI`;
+    const res = await fetch(url);
+    const data = await res.json();
 
-  const rateData = data["Realtime Currency Exchange Rate"];
-  if (rateData) {
-    return {
-      pair,
-      exchangeRate: rateData["5. Exchange Rate"],
-      bidPrice: rateData["8. Bid Price"],
-      askPrice: rateData["9. Ask Price"],
-    };
-  }
+    const rateData = data["Realtime Currency Exchange Rate"];
+    if (rateData) {
+      return {
+        pair,
+        exchangeRate: rateData["5. Exchange Rate"],
+        bidPrice: rateData["8. Bid Price"],
+        askPrice: rateData["9. Ask Price"],
+      };
+    }
 
-  return null;
-};
-
+    return null;
+  };
 
   // const handleSendMessage = async () => {
   //   if (!inputText.trim()) return;
@@ -799,60 +798,60 @@ const fetchForexRate = async (pair) => {
   // };
 
   const handleSendMessage = async () => {
-  if (!inputText.trim()) return;
+    if (!inputText.trim()) return;
 
-  const userMessage = inputText;
-  setMessages((prev) => [...prev, { type: "user", content: userMessage }]);
-  setInputText("");
-  setIsAnalyzing(true);
+    const userMessage = inputText;
+    setMessages((prev) => [...prev, { type: "user", content: userMessage }]);
+    setInputText("");
+    setIsAnalyzing(true);
 
-  try {
-    let { forexPairs, tickers } = extractEntities(userMessage);
-    let realTimeData = [];
+    try {
+      let { forexPairs, tickers } = extractEntities(userMessage);
+      let realTimeData = [];
 
-    // Handle Forex Pairs if mentioned
-    if (forexPairs.length > 0) {
-      for (const pair of forexPairs) {
-        const fxData = await fetchForexRate(pair);
-        if (fxData) realTimeData.push(fxData);
+      // Handle Forex Pairs if mentioned
+      if (forexPairs.length > 0) {
+        for (const pair of forexPairs) {
+          const fxData = await fetchForexRate(pair);
+          if (fxData) realTimeData.push(fxData);
+        }
+      } else {
+        if (tickers.length === 0) tickers = [ticker];
+        for (const tkr of tickers) {
+          const [alphaData, finnhubData] = await Promise.all([
+            fetchAlphaVantageData(tkr),
+            fetchFinnhubData(tkr),
+          ]);
+          if (alphaData) realTimeData.push(alphaData);
+          if (finnhubData) realTimeData.push(finnhubData);
+        }
       }
-    } else {
-      if (tickers.length === 0) tickers = [ticker];
-      for (const tkr of tickers) {
-        const [alphaData, finnhubData] = await Promise.all([
-          fetchAlphaVantageData(tkr),
-          fetchFinnhubData(tkr),
-        ]);
-        if (alphaData) realTimeData.push(alphaData);
-        if (finnhubData) realTimeData.push(finnhubData);
-      }
+
+      const reply = await streamChatResponse(userMessage, realTimeData);
+
+      const assistantMessage = { type: "assistant", content: reply };
+      const chartImageMessage = realTimeData.find((d) => d.chartUrl)
+        ? { type: "image", url: realTimeData.find((d) => d.chartUrl).chartUrl }
+        : null;
+
+      setMessages((prev) => [
+        ...prev,
+        assistantMessage,
+        ...(chartImageMessage ? [chartImageMessage] : []),
+      ]);
+    } catch (err) {
+      console.error("Chat error:", err);
+      setMessages((prev) => [
+        ...prev,
+        {
+          type: "assistant",
+          content: "⚠️ Error fetching market data or generating a response.",
+        },
+      ]);
+    } finally {
+      setIsAnalyzing(false);
     }
-
-    const reply = await streamChatResponse(userMessage, realTimeData);
-
-    const assistantMessage = { type: "assistant", content: reply };
-    const chartImageMessage = realTimeData.find((d) => d.chartUrl)
-      ? { type: "image", url: realTimeData.find((d) => d.chartUrl).chartUrl }
-      : null;
-
-    setMessages((prev) => [
-      ...prev,
-      assistantMessage,
-      ...(chartImageMessage ? [chartImageMessage] : []),
-    ]);
-  } catch (err) {
-    console.error("Chat error:", err);
-    setMessages((prev) => [
-      ...prev,
-      {
-        type: "assistant",
-        content: "⚠️ Error fetching market data or generating a response.",
-      },
-    ]);
-  } finally {
-    setIsAnalyzing(false);
-  }
-};
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -1117,7 +1116,7 @@ const fetchForexRate = async (pair) => {
         }
 
         .message-user .message-content {
-          background: #667eea;
+          linear-gradient(135deg, #040805 0%, #38a739 100%)
           color: white;
         }
 
@@ -1331,7 +1330,7 @@ const fetchForexRate = async (pair) => {
                 //   )}
                 //   <div ref={messagesEndRef} />
                 // </div>
-                <div className="chat-messages">
+                <div className="chat-messagesbot">
                   {messages.map((message, index) =>
                     message.type === "image" ? (
                       <div key={index} className="message-assistant">
