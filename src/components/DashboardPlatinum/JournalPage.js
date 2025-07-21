@@ -1832,12 +1832,8 @@ const Journal = () => {
                     </div>
                     <div className="reports-cell-pnl">
                       <span
-                        className={
-                          fw -
-                          bold`${
-                            trade.pnl >= 0 ? "profit-color" : "loss-color"
-                          }`
-                        }
+                        className={`fw-bold ${item.totalProfit >= 0 ? "profit-color" : "loss-color"}`}
+
                       >
                         {trade.pnl >= 0 ? "+" : ""}${trade.pnl.toFixed(2)}
                       </span>
