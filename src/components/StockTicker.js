@@ -1,964 +1,355 @@
 // import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
 // const API_KEY = "04RGF1U9PAJ49VYI";
 
-// const StockTicker = () => {
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [stockData, setStockData] = useState(null);
-//   const [newsArticles, setNewsArticles] = useState([]);
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [isNewsLoading, setIsNewsLoading] = useState(false); // Added this line
-//   const [error, setError] = useState("");
+// export default function SearchStockBar() {
+//   const [query, setQuery] = useState("");
+//   const [results, setResults] = useState([]);
+//   const [showResults, setShowResults] = useState(false);
+//   const navigate = useNavigate();
 
-//   const fetchStock = async (symbol) => {
-//     if (!symbol) return;
-
-//     setIsLoading(true);
-//     setError("");
-//     setNewsArticles([]);
-
-//     try {
-//       const res = await fetch(
-//         `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`
-//       );
-//       const data = await res.json();
-
-//       if (
-//         data["Global Quote"] &&
-//         Object.keys(data["Global Quote"]).length > 0
-//       ) {
-//         const quote = data["Global Quote"];
-
-//         setStockData({
-//           symbol: quote["01. symbol"],
-//           price: parseFloat(quote["05. price"]).toFixed(2),
-//           change: parseFloat(quote["09. change"]).toFixed(2),
-//           changePercent: quote["10. change percent"].replace("%", ""),
-//           open: parseFloat(quote["02. open"]).toFixed(4),
-//           high: parseFloat(quote["03. high"]).toFixed(4),
-//           low: parseFloat(quote["04. low"]).toFixed(4),
-//           volume: quote["06. volume"],
-//           prevClose: parseFloat(quote["08. previous close"]).toFixed(4),
-//           companyName: getCompanyName(quote["01. symbol"]),
-//         });
-
-//         fetchNews(symbol);
-//       } else {
-//         setError("Stock not found");
-//         setStockData(null);
-//       }
-//     } catch (err) {
-//       setError("Failed to fetch stock data");
-//       setStockData(null);
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   const fetchNews = async (symbol) => {
-//     setIsNewsLoading(true); // Added this line
-//     try {
-//       const res = await fetch(
-//         `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&apikey=${API_KEY}`
-//       );
-//       const data = await res.json();
-//       const feed = data.feed || [];
-//       setNewsArticles(feed.slice(0, 5));
-//     } catch (err) {
-//       console.error("Failed to fetch news", err);
-//     } finally {
-//       setIsNewsLoading(false); // Added this line
-//     }
-//   };
-
-//   const getCompanyName = (symbol) => {
-//     const companies = {
-//       AAPL: "Apple Inc.",
-//       MSFT: "Microsoft Corp.",
-//       GOOGL: "Alphabet Inc.",
-//       AMZN: "Amazon.com Inc.",
-//       META: "Meta Platforms Inc.",
-//       TSLA: "Tesla Inc.",
-//       NVDA: "NVIDIA Corp.",
-//       JPM: "JPMorgan Chase & Co.",
-//     };
-//     return companies[symbol] || "${symbol} Stock";
-//   };
-
-//   const handleSearch = () => {
-//     if (searchQuery.trim()) {
-//       fetchStock(searchQuery.trim().toUpperCase());
-//     }
-//   };
-
-//   const handleKeyDown = (e) => {
-//     if (e.key === "Enter") {
-//       handleSearch();
-//     }
-//   };
-
-//   const handleBack = () => {
-//     setStockData(null);
-//     setSearchQuery("");
-//     setNewsArticles([]);
-//   };
-
-//   return (
-//     <div className={`stock-ticker p-0 ${stockData ? "expanded" : ""}`}>
-//       <style>
-//         {`
-//           @keyframes newsLoadingSpin {
-//             0% { transform: rotate(0deg); }
-//             100% { transform: rotate(360deg); }
-//           }
-//           @keyframes newsPulse {
-//             0%, 100% { opacity: 1; }
-//             50% { opacity: 0.5; }
-//           }
-//           @keyframes newsSlideIn {
-//             0% { transform: translateY(20px); opacity: 0; }
-//             100% { transform: translateY(0); opacity: 1; }
-//           }
-//           .news-loading-container {
-//             display: flex;
-//             flex-direction: column;
-//             align-items: center;
-//             justify-content: center;
-//             padding: 40px 20px;
-//             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-//             border-radius: 12px;
-//             margin: 20px 0;
-//             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-//           }
-//           .news-loading-spinner {
-//             width: 40px;
-//             height: 40px;
-//             border: 4px solid #e2e8f0;
-//             border-top: 4px solid #3b82f6;
-//             border-radius: 50%;
-//             animation: newsLoadingSpin 1s linear infinite;
-//             margin-bottom: 16px;
-//           }
-//           .news-loading-text {
-//             color: #64748b;
-//             font-size: 16px;
-//             font-weight: 500;
-//             animation: newsPulse 2s ease-in-out infinite;
-//             text-align: center;
-//           }
-//           .news-loading-dots {
-//             display: inline-block;
-//             width: 20px;
-//             text-align: left;
-//           }
-//           .news-loading-dots::after {
-//             content: '';
-//             animation: newsLoadingDots 1.5s infinite;
-//           }
-//           @keyframes newsLoadingDots {
-//             0%, 20% { content: ''; }
-//             40% { content: '.'; }
-//             60% { content: '..'; }
-//             80%, 100% { content: '...'; }
-//           }
-//           .news-article {
-//             animation: newsSlideIn 0.5s ease-out;
-//           }
-//         `}
-//       </style>
-
-//       {!stockData ? (
-//         <div className="search-only-container">
-//           <div className="search-container">
-//             <input
-//               type="text"
-//               className="search-bar"
-//               placeholder="Search ticker (e.g., AMZN, AAPL)"
-//               value={searchQuery}
-//               onChange={(e) => setSearchQuery(e.target.value)}
-//               onKeyDown={handleKeyDown}
-//             />
-//             <button className="search-button" onClick={handleSearch}>
-//               <svg
-//                 viewBox="0 0 24 24"
-//                 fill="none"
-//                 stroke="currentColor"
-//                 strokeWidth="2"
-//               >
-//                 <circle cx="11" cy="11" r="8" />
-//                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
-//               </svg>
-//             </button>
-//           </div>
-//           {isLoading && <div className="loading">Loading...</div>}
-//           {error && <div className="error">{error}</div>}
-//         </div>
-//       ) : (
-//         <>
-//           <div className="search-container">
-//             <input
-//               type="text"
-//               className="search-bar"
-//               placeholder="Search ticker (e.g., AMZN, AAPL)"
-//               value={searchQuery}
-//               onChange={(e) => setSearchQuery(e.target.value)}
-//               onKeyDown={handleKeyDown}
-//             />
-//             <button className="search-button" onClick={handleSearch}>
-//               <svg
-//                 viewBox="0 0 24 24"
-//                 fill="none"
-//                 stroke="currentColor"
-//                 strokeWidth="2"
-//               >
-//                 <circle cx="11" cy="11" r="8" />
-//                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
-//               </svg>
-//             </button>
-//           </div>
-
-//           {isLoading && <div className="loading">Loading...</div>}
-//           {error && <div className="error">{error}</div>}
-
-//           <div className="stock-details">
-//             <div className="back-link" onClick={handleBack}></div>
-
-//             <div className="stock-header">
-//               <div className="column headers">
-//                 <div>Symbol</div>
-//                 <div>Trend</div>
-//                 <div>Price</div>
-//               </div>
-
-//               <div className="column data">
-//                 <div className="symbol-container">
-//                   <div className="close-button" onClick={handleBack}>
-//                     ×
-//                   </div>
-//                   <div className="symbol">{stockData.symbol}</div>
-//                   <div className="company-name">{stockData.companyName}</div>
-//                 </div>
-
-//                 <div className="trend">
-//                   <svg
-//                     viewBox="0 0 100 30"
-//                     className={
-//                       parseFloat(stockData.change) >= 0
-//                         ? "trend-up"
-//                         : "trend-down"
-//                     }
-//                   >
-//                     <path
-//                       d={
-//                         parseFloat(stockData.change) >= 0
-//                           ? "M0,20 Q25,15 50,10 T100,5"
-//                           : "M0,5 Q25,10 50,15 T100,20"
-//                       }
-//                     />
-//                   </svg>
-//                 </div>
-
-//                 <div className="price-container">
-//                   <div className="price">${stockData.price}</div>
-//                   <div
-//                     className={`change ${
-//                       parseFloat(stockData.change) >= 0
-//                         ? "positive"
-//                         : "negative"
-//                     }`}
-//                   >
-//                     {parseFloat(stockData.change) >= 0 ? "+" : ""}
-//                     {stockData.changePercent}%
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="stock-details-rows">
-//               <div className="detail-row">
-//                 <div className="detail-label">Open:</div>
-//                 <div className="detail-value">${stockData.open}</div>
-//               </div>
-//               <div className="detail-row">
-//                 <div className="detail-label">High:</div>
-//                 <div className="detail-value">${stockData.high}</div>
-//               </div>
-//               <div className="detail-row">
-//                 <div className="detail-label">Low:</div>
-//                 <div className="detail-value">${stockData.low}</div>
-//               </div>
-//               <div className="detail-row">
-//                 <div className="detail-label">Volume:</div>
-//                 <div className="detail-value">
-//                   {stockData.volume !== "NaN" ? stockData.volume : "NaN"}
-//                 </div>
-//               </div>
-//               <div className="detail-row">
-//                 <div className="detail-label">Prev Close:</div>
-//                 <div className="detail-value">${stockData.prevClose}</div>
-//               </div>
-//             </div>
-
-//             <div className="news-section-ticker">
-//               <h4 className="news-title">Latest News on {stockData.symbol}</h4>
-
-//               {/* Added beautiful loading animation */}
-//               {isNewsLoading ? (
-//                 <div className="news-loading-container">
-//                   <div className="news-loading-spinner"></div>
-//                   <div className="news-loading-text">
-//                     Loading latest news
-//                     <span className="news-loading-dots"></span>
-//                   </div>
-//                 </div>
-//               ) : newsArticles.length > 0 ? (
-//                 newsArticles.map((article, index) => (
-//                   <div key={index} className="news-article">
-//                     <div className="news-headline">
-//                       <a
-//                         href={article.url}
-//                         target="_blank"
-//                         rel="noopener noreferrer"
-//                       >
-//                         {article.title}
-//                       </a>
-//                     </div>
-//                     <div className="news-meta">
-//                       <span>
-//                         {new Date(article.time_published).toLocaleString()}
-//                       </span>
-//                       <span className="news-source"> | {article.source}</span>
-//                     </div>
-//                   </div>
-//                 ))
-//               ) : (
-//                 <div
-//                   style={{
-//                     padding: "20px",
-//                     textAlign: "center",
-//                     color: "#666",
-//                     fontStyle: "italic",
-//                   }}
-//                 >
-//                   No news articles found for {stockData.symbol}
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-//         </>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default StockTicker;
-
-// ================
-// // import { useState } from "react";
-
-// // const API_KEY = "04RGF1U9PAJ49VYI";
-
-// // const StockTicker = () => {
-// //   const [searchQuery, setSearchQuery] = useState("");
-// //   const [stockData, setStockData] = useState(null);
-// //   const [newsArticles, setNewsArticles] = useState([]);
-// //   const [isLoading, setIsLoading] = useState(false);
-// //   const [isNewsLoading, setIsNewsLoading] = useState(false); // Added this line
-// //   const [error, setError] = useState("");
-
-// //   const fetchStock = async (symbol) => {
-// //     if (!symbol) return;
-
-// //     setIsLoading(true);
-// //     setError("");
-// //     setNewsArticles([]);
-
-// //     try {
-// //       const res = await fetch(
-// //         https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}
-// //       );
-// //       const data = await res.json();
-
-// //       if (
-// //         data["Global Quote"] &&
-// //         Object.keys(data["Global Quote"]).length > 0
-// //       ) {
-// //         const quote = data["Global Quote"];
-
-// //         setStockData({
-// //           symbol: quote["01. symbol"],
-// //           price: parseFloat(quote["05. price"]).toFixed(2),
-// //           change: parseFloat(quote["09. change"]).toFixed(2),
-// //           changePercent: quote["10. change percent"].replace("%", ""),
-// //           open: parseFloat(quote["02. open"]).toFixed(4),
-// //           high: parseFloat(quote["03. high"]).toFixed(4),
-// //           low: parseFloat(quote["04. low"]).toFixed(4),
-// //           volume: quote["06. volume"],
-// //           prevClose: parseFloat(quote["08. previous close"]).toFixed(4),
-// //           companyName: getCompanyName(quote["01. symbol"]),
-// //         });
-
-// //         fetchNews(symbol);
-// //       } else {
-// //         setError("Stock not found");
-// //         setStockData(null);
-// //       }
-// //     } catch (err) {
-// //       setError("Failed to fetch stock data");
-// //       setStockData(null);
-// //     } finally {
-// //       setIsLoading(false);
-// //     }
-// //   };
-
-// //   const fetchNews = async (symbol) => {
-// //     setIsNewsLoading(true); // Added this line
-// //     try {
-// //       const res = await fetch(
-// //         https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&apikey=${API_KEY}
-// //       );
-// //       const data = await res.json();
-// //       const feed = data.feed || [];
-// //       setNewsArticles(feed.slice(0, 5));
-// //     } catch (err) {
-// //       console.error("Failed to fetch news", err);
-// //     } finally {
-// //       setIsNewsLoading(false); // Added this line
-// //     }
-// //   };
-
-// //   const getCompanyName = (symbol) => {
-// //     const companies = {
-// //       AAPL: "Apple Inc.",
-// //       MSFT: "Microsoft Corp.",
-// //       GOOGL: "Alphabet Inc.",
-// //       AMZN: "Amazon.com Inc.",
-// //       META: "Meta Platforms Inc.",
-// //       TSLA: "Tesla Inc.",
-// //       NVDA: "NVIDIA Corp.",
-// //       JPM: "JPMorgan Chase & Co.",
-// //     };
-// //     return companies[symbol] || "${symbol} Stock";
-// //   };
-
-// //   const handleSearch = () => {
-// //     if (searchQuery.trim()) {
-// //       fetchStock(searchQuery.trim().toUpperCase());
-// //     }
-// //   };
-
-// //   const handleKeyDown = (e) => {
-// //     if (e.key === "Enter") {
-// //       handleSearch();
-// //     }
-// //   };
-
-// //   const handleBack = () => {
-// //     setStockData(null);
-// //     setSearchQuery("");
-// //     setNewsArticles([]);
-// //   };
-
-// //   return (
-// //     <div className={stock-ticker p-0 ${stockData ? "expanded" : ""}}>
-// //       <style>
-// //         {`
-// //           @keyframes newsLoadingSpin {
-// //             0% { transform: rotate(0deg); }
-// //             100% { transform: rotate(360deg); }
-// //           }
-// //           @keyframes newsPulse {
-// //             0%, 100% { opacity: 1; }
-// //             50% { opacity: 0.5; }
-// //           }
-// //           @keyframes newsSlideIn {
-// //             0% { transform: translateY(20px); opacity: 0; }
-// //             100% { transform: translateY(0); opacity: 1; }
-// //           }
-// //           .news-loading-container {
-// //             display: flex;
-// //             flex-direction: column;
-// //             align-items: center;
-// //             justify-content: center;
-// //             padding: 40px 20px;
-// //             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-// //             border-radius: 12px;
-// //             margin: 20px 0;
-// //             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-// //           }
-// //           .news-loading-spinner {
-// //             width: 40px;
-// //             height: 40px;
-// //             border: 4px solid #e2e8f0;
-// //             border-top: 4px solid #3b82f6;
-// //             border-radius: 50%;
-// //             animation: newsLoadingSpin 1s linear infinite;
-// //             margin-bottom: 16px;
-// //           }
-// //           .news-loading-text {
-// //             color: #64748b;
-// //             font-size: 16px;
-// //             font-weight: 500;
-// //             animation: newsPulse 2s ease-in-out infinite;
-// //             text-align: center;
-// //           }
-// //           .news-loading-dots {
-// //             display: inline-block;
-// //             width: 20px;
-// //             text-align: left;
-// //           }
-// //           .news-loading-dots::after {
-// //             content: '';
-// //             animation: newsLoadingDots 1.5s infinite;
-// //           }
-// //           @keyframes newsLoadingDots {
-// //             0%, 20% { content: ''; }
-// //             40% { content: '.'; }
-// //             60% { content: '..'; }
-// //             80%, 100% { content: '...'; }
-// //           }
-// //           .news-article {
-// //             animation: newsSlideIn 0.5s ease-out;
-// //           }
-// //         `}
-// //       </style>
-
-// //       {!stockData ? (
-// //         <div className="search-only-container">
-// //           <div className="search-container">
-// //             <input
-// //               type="text"
-// //               className="search-bar"
-// //               placeholder="Search ticker (e.g., AMZN, AAPL)"
-// //               value={searchQuery}
-// //               onChange={(e) => setSearchQuery(e.target.value)}
-// //               onKeyDown={handleKeyDown}
-// //             />
-// //             <button className="search-button" onClick={handleSearch}>
-// //               <svg
-// //                 viewBox="0 0 24 24"
-// //                 fill="none"
-// //                 stroke="currentColor"
-// //                 strokeWidth="2"
-// //               >
-// //                 <circle cx="11" cy="11" r="8" />
-// //                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
-// //               </svg>
-// //             </button>
-// //           </div>
-// //           {isLoading && <div className="loading">Loading...</div>}
-// //           {error && <div className="error">{error}</div>}
-// //         </div>
-// //       ) : (
-// //         <>
-// //           <div className="search-container">
-// //             <input
-// //               type="text"
-// //               className="search-bar"
-// //               placeholder="Search ticker (e.g., AMZN, AAPL)"
-// //               value={searchQuery}
-// //               onChange={(e) => setSearchQuery(e.target.value)}
-// //               onKeyDown={handleKeyDown}
-// //             />
-// //             <button className="search-button" onClick={handleSearch}>
-// //               <svg
-// //                 viewBox="0 0 24 24"
-// //                 fill="none"
-// //                 stroke="currentColor"
-// //                 strokeWidth="2"
-// //               >
-// //                 <circle cx="11" cy="11" r="8" />
-// //                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
-// //               </svg>
-// //             </button>
-// //           </div>
-
-// //           {isLoading && <div className="loading">Loading...</div>}
-// //           {error && <div className="error">{error}</div>}
-
-// //           <div className="stock-details">
-// //             <div className="back-link" onClick={handleBack}></div>
-
-// //             <div className="stock-header">
-// //               <div className="column headers">
-// //                 <div>Symbol</div>
-// //                 <div>Trend</div>
-// //                 <div>Price</div>
-// //               </div>
-
-// //               <div className="column data">
-// //                 <div className="symbol-container">
-// //                   <div className="close-button" onClick={handleBack}>
-// //                     ×
-// //                   </div>
-// //                   <div className="symbol">{stockData.symbol}</div>
-// //                   <div className="company-name">{stockData.companyName}</div>
-// //                 </div>
-
-// //                 <div className="trend">
-// //                   <svg
-// //                     viewBox="0 0 100 30"
-// //                     className={
-// //                       parseFloat(stockData.change) >= 0
-// //                         ? "trend-up"
-// //                         : "trend-down"
-// //                     }
-// //                   >
-// //                     <path
-// //                       d={
-// //                         parseFloat(stockData.change) >= 0
-// //                           ? "M0,20 Q25,15 50,10 T100,5"
-// //                           : "M0,5 Q25,10 50,15 T100,20"
-// //                       }
-// //                     />
-// //                   </svg>
-// //                 </div>
-
-// //                 <div className="price-container">
-// //                   <div className="price">${stockData.price}</div>
-// //                   <div
-// //                     className={`change ${
-// //                       parseFloat(stockData.change) >= 0
-// //                         ? "positive"
-// //                         : "negative"
-// //                     }`}
-// //                   >
-// //                     {parseFloat(stockData.change) >= 0 ? "+" : ""}
-// //                     {stockData.changePercent}%
-// //                   </div>
-// //                 </div>
-// //               </div>
-// //             </div>
-
-// //             <div className="stock-details-rows">
-// //               <div className="detail-row">
-// //                 <div className="detail-label">Open:</div>
-// //                 <div className="detail-value">${stockData.open}</div>
-// //               </div>
-// //               <div className="detail-row">
-// //                 <div className="detail-label">High:</div>
-// //                 <div className="detail-value">${stockData.high}</div>
-// //               </div>
-// //               <div className="detail-row">
-// //                 <div className="detail-label">Low:</div>
-// //                 <div className="detail-value">${stockData.low}</div>
-// //               </div>
-// //               <div className="detail-row">
-// //                 <div className="detail-label">Volume:</div>
-// //                 <div className="detail-value">
-// //                   {stockData.volume !== "NaN" ? stockData.volume : "NaN"}
-// //                 </div>
-// //               </div>
-// //               <div className="detail-row">
-// //                 <div className="detail-label">Prev Close:</div>
-// //                 <div className="detail-value">${stockData.prevClose}</div>
-// //               </div>
-// //             </div>
-
-// //             <div className="news-section-ticker">
-// //               <h4 className="news-title">Latest News on {stockData.symbol}</h4>
-
-// //               {/* Added beautiful loading animation */}
-// //               {isNewsLoading ? (
-// //                 <div className="news-loading-container">
-// //                   <div className="news-loading-spinner"></div>
-// //                   <div className="news-loading-text">
-// //                     Loading latest news
-// //                     <span className="news-loading-dots"></span>
-// //                   </div>
-// //                 </div>
-// //               ) : newsArticles.length > 0 ? (
-// //                 newsArticles.map((article, index) => (
-// //                   <div key={index} className="news-article">
-// //                     <div className="news-headline">
-// //                       <a
-// //                         href={article.url}
-// //                         target="_blank"
-// //                         rel="noopener noreferrer"
-// //                       >
-// //                         {article.title}
-// //                       </a>
-// //                     </div>
-// //                     <div className="news-meta">
-// //                       <span>
-// //                         {new Date(article.time_published).toLocaleString()}
-// //                       </span>
-// //                       <span className="news-source"> | {article.source}</span>
-// //                     </div>
-// //                   </div>
-// //                 ))
-// //               ) : (
-// //                 <div
-// //                   style={{
-// //                     padding: "20px",
-// //                     textAlign: "center",
-// //                     color: "#666",
-// //                     fontStyle: "italic",
-// //                   }}
-// //                 >
-// //                   No news articles found for {stockData.symbol}
-// //                 </div>
-// //               )}
-// //             </div>
-// //           </div>
-// //         </>
-// //       )}
-// //     </div>
-// //   );
-// // };
-
-// // export default StockTicker;
-
-// import { useState } from "react";
-
-// const API_KEY = "04RGF1U9PAJ49VYI";
-
-// const StockTicker = () => {
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [suggestions, setSuggestions] = useState([]);
-//   const [stockData, setStockData] = useState(null);
-//   const [newsArticles, setNewsArticles] = useState([]);
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [isNewsLoading, setIsNewsLoading] = useState(false);
-//   const [error, setError] = useState("");
-//   const [showSuggestions, setShowSuggestions] = useState(false);
-
-//   const handleInputChange = async (e) => {
-//     const value = e.target.value;
-//     setSearchQuery(value);
-
+//   const fetchSuggestions = async (value) => {
+//     setQuery(value);
 //     if (value.length < 1) {
-//       setSuggestions([]);
-//       setShowSuggestions(false);
+//       setResults([]);
+//       setShowResults(false);
 //       return;
 //     }
 
 //     try {
 //       const res = await fetch(
-//         https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${API_KEY}
+//         `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${API_KEY}`
 //       );
 //       const data = await res.json();
+//       console.log("Alpha Vantage Response:", data);
 
 //       if (data.bestMatches) {
-//         setSuggestions(data.bestMatches.slice(0, 5));
-//         setShowSuggestions(true);
+//         setResults(data.bestMatches.slice(0, 5));
+//         setShowResults(true);
 //       } else {
-//         setSuggestions([]);
-//         setShowSuggestions(false);
+//         setResults([]);
+//         setShowResults(false);
 //       }
 //     } catch (err) {
-//       console.error("Failed to fetch suggestions", err);
-//       setSuggestions([]);
-//       setShowSuggestions(false);
+//       console.error("Fetch error:", err);
+//       setResults([]);
+//       setShowResults(false);
 //     }
 //   };
 
-//   const fetchStock = async (symbol) => {
-//     if (!symbol) return;
-
-//     setIsLoading(true);
-//     setError("");
-//     setNewsArticles([]);
-//     setSuggestions([]);
-//     setShowSuggestions(false);
-
-//     try {
-//       const res = await fetch(
-//         https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}
-//       );
-//       const data = await res.json();
-
-//       if (data["Global Quote"] && Object.keys(data["Global Quote"]).length > 0) {
-//         const quote = data["Global Quote"];
-
-//         setStockData({
-//           symbol: quote["01. symbol"],
-//           price: parseFloat(quote["05. price"]).toFixed(2),
-//           change: parseFloat(quote["09. change"]).toFixed(2),
-//           changePercent: quote["10. change percent"].replace("%", ""),
-//           open: parseFloat(quote["02. open"]).toFixed(4),
-//           high: parseFloat(quote["03. high"]).toFixed(4),
-//           low: parseFloat(quote["04. low"]).toFixed(4),
-//           volume: quote["06. volume"],
-//           prevClose: parseFloat(quote["08. previous close"]).toFixed(4),
-//           companyName: getCompanyName(quote["01. symbol"]),
-//         });
-
-//         fetchNews(symbol);
-//       } else {
-//         setError("Stock not found");
-//         setStockData(null);
-//       }
-//     } catch (err) {
-//       setError("Failed to fetch stock data");
-//       setStockData(null);
-//     } finally {
-//       setIsLoading(false);
-//     }
+//   const handleSelect = (symbol) => {
+//     navigate(`/trading-tools?symbol=${symbol}`);
+//     setQuery("");
+//     setResults([]);
+//     setShowResults(false);
 //   };
 
-//   const fetchNews = async (symbol) => {
-//     setIsNewsLoading(true);
-//     try {
-//       const res = await fetch(
-//         https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${symbol}&apikey=${API_KEY}
-//       );
-//       const data = await res.json();
-//       const feed = data.feed || [];
-//       setNewsArticles(feed.slice(0, 5));
-//     } catch (err) {
-//       console.error("Failed to fetch news", err);
-//     } finally {
-//       setIsNewsLoading(false);
-//     }
+//   const styles = {
+//     searchContainer: {
+//       position: "relative",
+//       width: "100%",
+//       maxWidth: "500px",
+//       margin: "0 auto",
+//       zIndex: 50,
+//     },
+//     searchWrapper: {
+//       position: "relative",
+//       width: "100%",
+//     },
+//     searchInputGroup: {
+//       position: "relative",
+//       display: "flex",
+//       alignItems: "center",
+//       background: "white",
+//       border: "2px solid #e5e7eb",
+//       borderRadius: "16px",
+//       boxShadow:
+//         "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+//       transition: "all 0.2s ease",
+//       overflow: "hidden",
+//     },
+//     searchInputGroupFocus: {
+//       borderColor: "#3b82f6",
+//       boxShadow:
+//         "0 0 0 3px rgba(59, 130, 246, 0.1), 0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+//       transform: "translateY(-1px)",
+//     },
+//     searchIcon: {
+//       position: "absolute",
+//       left: "16px",
+//       width: "20px",
+//       height: "20px",
+//       color: "#6b7280",
+//       zIndex: 1,
+//     },
+//     searchInput: {
+//       width: "100%",
+//       padding: "16px 60px 16px 48px",
+//       border: "none",
+//       outline: "none",
+//       fontSize: "16px",
+//       background: "transparent",
+//       color: "#1f2937",
+//       fontWeight: "500",
+//     },
+//     resultsDropdown: {
+//       position: "absolute",
+//       top: "calc(100% + 8px)",
+//       left: 0,
+//       right: 0,
+//       background: "white",
+//       border: "1px solid #e5e7eb",
+//       borderRadius: "16px",
+//       boxShadow:
+//         "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+//       zIndex: 50,
+//       maxHeight: "320px",
+//       overflowY: "auto",
+//       animation: "fadeIn 0.2s ease-out",
+//     },
+//     resultItem: {
+//       display: "flex",
+//       alignItems: "center",
+//       padding: "16px",
+//       cursor: "pointer",
+//       borderBottom: "1px solid #f3f4f6",
+//       transition: "all 0.2s ease",
+//       gap: "12px",
+//     },
+//     resultItemHover: {
+//       background: "#f8fafc",
+//       transform: "translateX(4px)",
+//     },
+//     resultIcon: {
+//       width: "24px",
+//       height: "24px",
+//       color: "#3b82f6",
+//       flexShrink: 0,
+//     },
+//     resultContent: {
+//       flex: 1,
+//       minWidth: 0,
+//     },
+//     resultMain: {
+//       display: "flex",
+//       alignItems: "center",
+//       gap: "12px",
+//       marginBottom: "4px",
+//     },
+//     resultSymbol: {
+//       fontWeight: "700",
+//       color: "#1f2937",
+//       fontSize: "16px",
+//     },
+//     resultName: {
+//       fontSize: "14px",
+//       color: "#4b5563",
+//       fontWeight: "500",
+//       whiteSpace: "nowrap",
+//       overflow: "hidden",
+//       textOverflow: "ellipsis",
+//       maxWidth: "200px",
+//     },
+//     resultDetails: {
+//       display: "flex",
+//       alignItems: "center",
+//       gap: "8px",
+//     },
+//     resultType: {
+//       background: "#dbeafe",
+//       color: "#1d4ed8",
+//       padding: "2px 8px",
+//       borderRadius: "12px",
+//       fontSize: "11px",
+//       fontWeight: "600",
+//       textTransform: "uppercase",
+//     },
+//     resultArrow: {
+//       width: "16px",
+//       height: "16px",
+//       color: "#9ca3af",
+//       flexShrink: 0,
+//       opacity: 0,
+//       transition: "opacity 0.2s ease",
+//     },
+//     resultArrowVisible: {
+//       opacity: 1,
+//     },
 //   };
 
-//   const getCompanyName = (symbol) => {
-//     const companies = {
-//       AAPL: "Apple Inc.",
-//       MSFT: "Microsoft Corp.",
-//       GOOGL: "Alphabet Inc.",
-//       AMZN: "Amazon.com Inc.",
-//       META: "Meta Platforms Inc.",
-//       TSLA: "Tesla Inc.",
-//       NVDA: "NVIDIA Corp.",
-//       JPM: "JPMorgan Chase & Co.",
-//     };
-//     return companies[symbol] || ${symbol} Stock;
-//   };
-
-//   const handleSearch = () => {
-//     if (searchQuery.trim()) {
-//       fetchStock(searchQuery.trim().toUpperCase());
-//     }
-//   };
-
-//   const handleKeyDown = (e) => {
-//     if (e.key === "Enter") {
-//       handleSearch();
-//     }
-//   };
-
-//   const handleBack = () => {
-//     setStockData(null);
-//     setSearchQuery("");
-//     setNewsArticles([]);
-//   };
+//   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
 //   return (
-//     <div className="stock-ticker max-w-xl mx-auto p-4">
-//       <div className="relative">
-//         <input
-//           type="text"
-//           className="w-full border p-2 rounded"
-//           placeholder="Search ticker (e.g., AMZN, AAPL)"
-//           value={searchQuery}
-//           onChange={handleInputChange}
-//           onKeyDown={handleKeyDown}
-//         />
-//         {showSuggestions && suggestions.length > 0 && (
-//           <div className="absolute bg-white border w-full mt-1 rounded shadow z-50 max-h-60 overflow-y-auto">
-//             {suggestions.map((sugg, index) => (
-//               <div
-//                 key={index}
-//                 onClick={() => {
-//                   const symbol = sugg["1. symbol"];
-//                   setSearchQuery(symbol);
-//                   fetchStock(symbol);
-//                 }}
-//                 className="p-2 hover:bg-gray-100 cursor-pointer flex justify-between items-center"
-//               >
-//                 <span className="font-medium text-blue-600">{sugg["1. symbol"]}</span>
-//                 <span className="text-sm text-gray-600">{sugg["2. name"]}</span>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </div>
+//     <>
+//       <style>
+//         {`
+//           @keyframes fadeIn {
+//             from {
+//               opacity: 0;
+//               transform: translateY(-10px);
+//             }
+//             to {
+//               opacity: 1;
+//               transform: translateY(0);
+//             }
+//           }
 
-//       {isLoading && <div className="text-center mt-4">Loading stock data...</div>}
-//       {error && <div className="text-red-500 text-center mt-4">{error}</div>}
+//           .search-input::placeholder {
+//             color: #9ca3af;
+//             font-weight: 400;
+//           }
 
-//       {stockData && (
-//         <div className="mt-6 border p-4 rounded shadow-md bg-white">
-//           <div className="flex justify-between items-start">
-//             <div>
-//               <h2 className="text-2xl font-bold">{stockData.symbol}</h2>
-//               <p className="text-gray-600">{stockData.companyName}</p>
+//           .results-dropdown::-webkit-scrollbar {
+//             width: 6px;
+//           }
+
+//           .results-dropdown::-webkit-scrollbar-track {
+//             background: #f1f5f9;
+//           }
+
+//           .results-dropdown::-webkit-scrollbar-thumb {
+//             background: #cbd5e1;
+//             border-radius: 3px;
+//           }
+
+//           .results-dropdown::-webkit-scrollbar-thumb:hover {
+//             background: #94a3b8;
+//           }
+
+//           @media (max-width: 640px) {
+//             .search-container {
+//               max-width: 100% !important;
+//               margin: 0 16px !important;
+//             }
+
+//             .search-input {
+//               font-size: 16px !important;
+//               padding: 14px 50px 14px 44px !important;
+//             }
+
+//             .search-icon {
+//               left: 14px !important;
+//               width: 18px !important;
+//               height: 18px !important;
+//             }
+
+//             .result-item {
+//               padding: 14px !important;
+//             }
+
+//             .result-name {
+//               max-width: 150px !important;
+//             }
+//           }
+//         `}
+//       </style>
+
+//       <div style={styles.searchContainer} className="search-container">
+//         <div style={styles.searchWrapper}>
+//           <div style={styles.searchInputGroup}>
+//             <div style={styles.searchIcon} className="search-icon">
+//               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+//                 <circle cx="11" cy="11" r="8"></circle>
+//                 <path d="m21 21-4.35-4.35"></path>
+//               </svg>
 //             </div>
-//             <button onClick={handleBack} className="text-red-500 text-xl font-bold">
-//               ×
-//             </button>
+
+//             <input
+//               type="text"
+//               value={query}
+//               placeholder="Search stocks (e.g., AAPL, AMZN, TSLA)"
+//               onChange={(e) => fetchSuggestions(e.target.value)}
+//               style={styles.searchInput}
+//               className="search-input"
+//             />
 //           </div>
 
-//           <div className="mt-4">
-//             <div className="text-3xl font-bold">${stockData.price}</div>
-//             <div
-//               className={`mt-1 text-sm font-semibold ${
-//                 parseFloat(stockData.change) >= 0 ? "text-green-600" : "text-red-500"
-//               }`}
-//             >
-//               {parseFloat(stockData.change) >= 0 ? "+" : ""}
-//               {stockData.change} ({stockData.changePercent}%)
-//             </div>
-//           </div>
+//           {showResults && results.length > 0 && (
+//             <div style={styles.resultsDropdown} className="results-dropdown">
+//               {results.map((s, i) => (
+//                 <div
+//                   key={i}
+//                   onClick={() => handleSelect(s["1. symbol"])}
+//                   style={{
+//                     ...styles.resultItem,
+//                     ...(hoveredIndex === i ? styles.resultItemHover : {}),
+//                     ...(i === results.length - 1
+//                       ? { borderBottom: "none" }
+//                       : {}),
+//                   }}
+//                   className="result-item"
+//                   onMouseEnter={() => setHoveredIndex(i)}
+//                   onMouseLeave={() => setHoveredIndex(-1)}
+//                 >
+//                   <div style={styles.resultIcon}>
+//                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+//                       <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
+//                     </svg>
+//                   </div>
 
-//           <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-700">
-//             <div>Open: ${stockData.open}</div>
-//             <div>High: ${stockData.high}</div>
-//             <div>Low: ${stockData.low}</div>
-//             <div>Volume: {stockData.volume}</div>
-//             <div>Prev Close: ${stockData.prevClose}</div>
-//           </div>
-
-//           <div className="mt-6">
-//             <h3 className="text-lg font-semibold mb-2">
-//               Latest News on {stockData.symbol}
-//             </h3>
-//             {isNewsLoading ? (
-//               <div className="text-center text-gray-500">Loading news...</div>
-//             ) : newsArticles.length > 0 ? (
-//               <ul className="space-y-2">
-//                 {newsArticles.map((article, i) => (
-//                   <li key={i} className="border-b pb-2">
-//                     <a
-//                       href={article.url}
-//                       target="_blank"
-//                       rel="noopener noreferrer"
-//                       className="font-medium text-blue-600 hover:underline"
-//                     >
-//                       {article.title}
-//                     </a>
-//                     <div className="text-xs text-gray-500">
-//                       {new Date(article.time_published).toLocaleString()} |{" "}
-//                       {article.source}
+//                   <div style={styles.resultContent}>
+//                     <div style={styles.resultMain}>
+//                       <span
+//                         style={styles.resultSymbol}
+//                         className="result-symbol"
+//                       >
+//                         {s["1. symbol"]}
+//                       </span>
+//                       <span style={styles.resultName} className="result-name">
+//                         {s["2. name"]}
+//                       </span>
 //                     </div>
-//                   </li>
-//                 ))}
-//               </ul>
-//             ) : (
-//               <div className="text-gray-500 italic">No recent news found.</div>
-//             )}
-//           </div>
+//                     <div style={styles.resultDetails}>
+//                       <span style={styles.resultType}>{s["3. type"]}</span>
+//                     </div>
+//                   </div>
+
+//                   <div
+//                     style={{
+//                       ...styles.resultArrow,
+//                       ...(hoveredIndex === i ? styles.resultArrowVisible : {}),
+//                     }}
+//                   >
+//                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+//                       <path d="m9 18 6-6-6-6" />
+//                     </svg>
+//                   </div>
+//                 </div>
+//               ))}
+//             </div>
+//           )}
 //         </div>
-//       )}
-//     </div>
+//       </div>
+//     </>
 //   );
-// };
+// }
 
-// export default StockTicker;
-
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 const API_KEY = "04RGF1U9PAJ49VYI";
 
-export default function SearchStockBar() {
+export default function TradingTools() {
+  const containerRef = useRef(null);
+
+  // Search states
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
-  const navigate = useNavigate();
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
 
+  // Dashboard states
+  const [selectedSymbol, setSelectedSymbol] = useState(null); // Initially null - no dashboard
+  const [overview, setOverview] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [sentiment, setSentiment] = useState(null);
+  const [newsSentiment, setNewsSentiment] = useState(null);
+  const [latestNews, setLatestNews] = useState(null);
+  const [newsSlider, setNewsSlider] = useState([]);
+  const [embedUrl, setEmbedUrl] = useState("");
+  const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
+
+  // Search functionality
   const fetchSuggestions = async (value) => {
     setQuery(value);
     if (value.length < 1) {
@@ -972,7 +363,6 @@ export default function SearchStockBar() {
         `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${value}&apikey=${API_KEY}`
       );
       const data = await res.json();
-      console.log("Alpha Vantage Response:", data);
 
       if (data.bestMatches) {
         setResults(data.bestMatches.slice(0, 5));
@@ -989,18 +379,226 @@ export default function SearchStockBar() {
   };
 
   const handleSelect = (symbol) => {
-    navigate(`/trading-tools?symbol=${symbol}`);
-    setQuery("");
+    setQuery(symbol);
+    setSelectedSymbol(symbol); // This will trigger dashboard to show
     setResults([]);
     setShowResults(false);
   };
 
+  // Clear dashboard and go back to search only
+  const clearDashboard = () => {
+    setSelectedSymbol(null);
+    setQuery("");
+    setOverview(null);
+    setPrice(null);
+    setSentiment(null);
+    setNewsSentiment(null);
+    setLatestNews(null);
+    setNewsSlider([]);
+  };
+
+  const loadWidget = (symbol) => {
+    if (!window.TradingView) return;
+    new window.TradingView.widget({
+      width: "100%",
+      height: 500,
+      symbol: `NASDAQ:${symbol}`,
+      interval: "15",
+      timezone: "Etc/UTC",
+      theme: "dark",
+      style: "1",
+      locale: "en",
+      toolbar_bg: "#0e0e0e",
+      enable_publishing: false,
+      allow_symbol_change: false,
+      container_id: "tradingview_widget",
+    });
+  };
+
+  useEffect(() => {
+    if (!selectedSymbol) return;
+
+    const container = document.getElementById("financials_widget");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const script = document.createElement("script");
+    script.src =
+      "https://s3.tradingview.com/external-embedding/embed-widget-financials.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = JSON.stringify({
+      symbol: `NASDAQ:${selectedSymbol}`,
+      colorTheme: "dark",
+      isTransparent: false,
+      largeChartUrl: "",
+      displayMode: "regular",
+      width: "100%",
+      height: 600,
+    });
+
+    container.appendChild(script);
+  }, [selectedSymbol]);
+
+  useEffect(() => {
+    if (!selectedSymbol) return;
+
+    if (
+      !document.querySelector("script[src='https://s3.tradingview.com/tv.js']")
+    ) {
+      const script = document.createElement("script");
+      script.src = "https://s3.tradingview.com/tv.js";
+      script.async = true;
+      script.onload = () => loadWidget(selectedSymbol);
+      document.body.appendChild(script);
+    } else {
+      loadWidget(selectedSymbol);
+    }
+  }, [selectedSymbol]);
+
+  useEffect(() => {
+    if (!selectedSymbol) return;
+    if (containerRef.current) containerRef.current.innerHTML = "";
+    loadWidget(selectedSymbol);
+  }, [selectedSymbol]);
+
+  useEffect(() => {
+    if (!selectedSymbol) return;
+
+    const fetchData = async () => {
+      const [overviewRes, priceRes, sentimentRes, newsRes] = await Promise.all([
+        fetch(
+          `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${selectedSymbol}&apikey=${API_KEY}`
+        ),
+        fetch(
+          `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${selectedSymbol}&interval=15min&apikey=${API_KEY}`
+        ),
+        fetch(
+          `https://www.alphavantage.co/query?function=SENTIMENT_ANALYSIS&symbol=${selectedSymbol}&apikey=${API_KEY}`
+        ),
+        fetch(
+          `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${selectedSymbol}&apikey=${API_KEY}`
+        ),
+      ]);
+
+      const overview = await overviewRes.json();
+      const priceData = await priceRes.json();
+      const sentimentData = await sentimentRes.json();
+      const newsData = await newsRes.json();
+
+      const ts = priceData["Time Series (15min)"];
+      const latest = ts ? ts[Object.keys(ts)[0]] : null;
+      const prev = ts ? ts[Object.keys(ts)[1]] : null;
+
+      const current = latest ? parseFloat(latest["4. close"]) : null;
+      const previous = prev ? parseFloat(prev["4. close"]) : current;
+      const change = ((current - previous) / previous) * 100;
+
+      setPrice({
+        current: current?.toFixed(2),
+        change: change?.toFixed(2),
+        open: latest?.["1. open"],
+        high: latest?.["2. high"],
+        low: latest?.["3. low"],
+        close: latest?.["4. close"],
+      });
+
+      setOverview(overview);
+      setSentiment({
+        score: sentimentData?.overall_sentiment_score || 0.625,
+        label: "Bullish",
+      });
+      setNewsSentiment(newsData?.feed?.[0]?.overall_sentiment_score ?? 0.115);
+      setLatestNews(newsData?.feed?.[0]);
+
+      const sampleNews = [
+        {
+          title: "S&P 500 Bulls Remain in Control, but for How Long?",
+          summary:
+            "The S&P 500 continues its bullish rally driven by AI euphoria, potential tariff delays, and anticipation of Federal Reserve rate cuts. Market momentum remains strong, but potential risks include trade tensions and upcoming economic data releases.",
+          source: "MarketWatch",
+          time: "Jul 10th 2025",
+        },
+        {
+          title: "Tesla Stock Surges 8% on Robotaxi Breakthrough Announcement",
+          summary:
+            "Tesla shares jumped after the company announced a major breakthrough in autonomous driving technology, bringing its robotaxi service closer to commercial deployment.",
+          source: "Bloomberg",
+          time: "Jul 10th 2025",
+        },
+        {
+          title:
+            "Fed Officials Signal Dovish Stance Ahead of September Meeting",
+          summary:
+            "Federal Reserve officials indicated a more accommodative monetary policy stance, raising expectations for potential rate cuts in the upcoming September FOMC meeting.",
+          source: "Reuters",
+          time: "Jul 10th 2025",
+        },
+        {
+          title: "AI Chip Demand Drives Semiconductor Rally Across Markets",
+          summary:
+            "Semiconductor stocks continue their upward trajectory as artificial intelligence chip demand reaches unprecedented levels, benefiting major players in the industry.",
+          source: "TechCrunch",
+          time: "Jul 10th 2025",
+        },
+      ];
+      setNewsSlider(sampleNews);
+    };
+    setEmbedUrl(
+      `https://www.tradingview.com/symbols/NASDAQ-${selectedSymbol}/financials-overview/?utm_campaign=financials&utm_medium=widget&utm_source=dashboard.tradealgo.com`
+    );
+
+    fetchData();
+  }, [selectedSymbol]);
+
+  const nextNews = () => {
+    setCurrentNewsIndex((prev) => (prev + 1) % newsSlider.length);
+  };
+
+  const prevNews = () => {
+    setCurrentNewsIndex(
+      (prev) => (prev - 1 + newsSlider.length) % newsSlider.length
+    );
+  };
+
   const styles = {
+    // Search only container (centered on screen)
+    searchOnlyContainer: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    searchOnlyTitle: {
+      fontSize: "3.5rem",
+      fontWeight: "900",
+      color: "white",
+      textAlign: "center",
+      marginBottom: "2rem",
+      textShadow: "0 4px 8px rgba(0,0,0,0.3)",
+    },
+    searchOnlySubtitle: {
+      fontSize: "1.3rem",
+      color: "rgba(255,255,255,0.9)",
+      textAlign: "center",
+      marginBottom: "3rem",
+      fontWeight: "500",
+    },
+    // Dashboard container (full page, scrollable)
+    dashboardContainer: {
+      background: "#000",
+      minHeight: "100vh",
+      padding: "20px",
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      overflowY: "auto", // Make it scrollable
+    },
+    // Search bar styles
     searchContainer: {
       position: "relative",
       width: "100%",
-      maxWidth: "500px",
-      margin: "0 auto",
+      maxWidth: "600px",
       zIndex: 50,
     },
     searchWrapper: {
@@ -1012,68 +610,59 @@ export default function SearchStockBar() {
       display: "flex",
       alignItems: "center",
       background: "white",
-      border: "2px solid #e5e7eb",
-      borderRadius: "16px",
-      boxShadow:
-        "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-      transition: "all 0.2s ease",
+      border: "3px solid rgba(255,255,255,0.3)",
+      borderRadius: "20px",
+      boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+      transition: "all 0.3s ease",
       overflow: "hidden",
-    },
-    searchInputGroupFocus: {
-      borderColor: "#3b82f6",
-      boxShadow:
-        "0 0 0 3px rgba(59, 130, 246, 0.1), 0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-      transform: "translateY(-1px)",
     },
     searchIcon: {
       position: "absolute",
-      left: "16px",
-      width: "20px",
-      height: "20px",
+      left: "20px",
+      width: "24px",
+      height: "24px",
       color: "#6b7280",
       zIndex: 1,
     },
     searchInput: {
       width: "100%",
-      padding: "16px 60px 16px 48px",
+      padding: "12px 40px 10px 50px",
       border: "none",
       outline: "none",
-      fontSize: "16px",
+      fontSize: "18px",
       background: "transparent",
       color: "#1f2937",
       fontWeight: "500",
     },
     resultsDropdown: {
       position: "absolute",
-      top: "calc(100% + 8px)",
+      top: "calc(100% + 12px)",
       left: 0,
       right: 0,
       background: "white",
       border: "1px solid #e5e7eb",
-      borderRadius: "16px",
-      boxShadow:
-        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      borderRadius: "20px",
+      boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)",
       zIndex: 50,
-      maxHeight: "320px",
+      maxHeight: "400px",
       overflowY: "auto",
-      animation: "fadeIn 0.2s ease-out",
     },
     resultItem: {
       display: "flex",
       alignItems: "center",
-      padding: "16px",
+      padding: "20px",
       cursor: "pointer",
       borderBottom: "1px solid #f3f4f6",
       transition: "all 0.2s ease",
-      gap: "12px",
+      gap: "16px",
     },
     resultItemHover: {
       background: "#f8fafc",
-      transform: "translateX(4px)",
+      transform: "translateX(6px)",
     },
     resultIcon: {
-      width: "24px",
-      height: "24px",
+      width: "28px",
+      height: "28px",
       color: "#3b82f6",
       flexShrink: 0,
     },
@@ -1084,189 +673,776 @@ export default function SearchStockBar() {
     resultMain: {
       display: "flex",
       alignItems: "center",
-      gap: "12px",
-      marginBottom: "4px",
+      gap: "16px",
+      marginBottom: "6px",
     },
     resultSymbol: {
-      fontWeight: "700",
+      fontWeight: "800",
       color: "#1f2937",
-      fontSize: "16px",
+      fontSize: "18px",
     },
     resultName: {
-      fontSize: "14px",
+      fontSize: "15px",
       color: "#4b5563",
       fontWeight: "500",
       whiteSpace: "nowrap",
       overflow: "hidden",
       textOverflow: "ellipsis",
-      maxWidth: "200px",
-    },
-    resultDetails: {
-      display: "flex",
-      alignItems: "center",
-      gap: "8px",
+      maxWidth: "250px",
     },
     resultType: {
       background: "#dbeafe",
       color: "#1d4ed8",
-      padding: "2px 8px",
+      padding: "4px 12px",
       borderRadius: "12px",
-      fontSize: "11px",
+      fontSize: "12px",
       fontWeight: "600",
       textTransform: "uppercase",
     },
-    resultArrow: {
-      width: "16px",
-      height: "16px",
-      color: "#9ca3af",
-      flexShrink: 0,
-      opacity: 0,
-      transition: "opacity 0.2s ease",
+    // Dashboard header (when stock is selected)
+    dashboardHeader: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "30px",
+      padding: "0 20px",
     },
-    resultArrowVisible: {
-      opacity: 1,
+    dashboardTitle: {
+      fontSize: "2.5rem",
+      fontWeight: "800",
+      color: "white",
+      textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+    },
+    backButton: {
+      background: "linear-gradient(45deg, #ef4444, #dc2626)",
+      color: "white",
+      border: "none",
+      borderRadius: "12px",
+      padding: "12px 24px",
+      fontSize: "16px",
+      fontWeight: "600",
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      boxShadow: "0 4px 12px rgba(239, 68, 68, 0.3)",
+    },
+    // Original dashboard styles
+    priceCard: {
+      backgroundImage: `linear-gradient(rgb(45 45 45 / 60%), rgb(7 4 4 / 60%))`,
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      borderRadius: "24px",
+      padding: "32px",
+      marginBottom: "32px",
+      boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      backdropFilter: "blur(10px)",
+      color: "#fff",
+    },
+    priceHeader: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: "24px",
+    },
+    symbolSection: {
+      display: "flex",
+      alignItems: "center",
+      gap: "16px",
+    },
+    symbol: {
+      fontSize: "2.5rem",
+      fontWeight: "900",
+      color: "white",
+      margin: 0,
+    },
+    liveBadge: {
+      background: "linear-gradient(45deg, #22c55e, #16a34a)",
+      color: "white",
+      padding: "8px 16px",
+      borderRadius: "20px",
+      fontSize: "0.85rem",
+      fontWeight: "700",
+      boxShadow: "0 4px 8px rgba(34,197,94,0.3)",
+      animation: "pulse 2s infinite",
+    },
+    priceDisplay: {
+      textAlign: "right",
+    },
+    currentPrice: {
+      fontSize: "3.5rem",
+      fontWeight: "900",
+      color: "white",
+      marginBottom: "8px",
+      textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+    },
+    priceChange: {
+      fontSize: "1.5rem",
+      fontWeight: "700",
+      textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+    },
+    priceMetrics: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+      gap: "24px",
+      marginTop: "24px",
+    },
+    metricCard: {
+      background: "rgba(255,255,255,0.1)",
+      backdropFilter: "blur(10px)",
+      borderRadius: "16px",
+      padding: "20px",
+      textAlign: "center",
+      border: "1px solid rgba(255,255,255,0.2)",
+    },
+    metricLabel: {
+      fontSize: "0.9rem",
+      color: "rgba(255,255,255,0.8)",
+      marginBottom: "8px",
+      fontWeight: "600",
+    },
+    metricValue: {
+      fontSize: "1.5rem",
+      fontWeight: "800",
+      color: "white",
+    },
+    chartCard: {
+      borderRadius: "24px",
+      marginBottom: "32px",
+      overflow: "hidden",
+      boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+      border: "1px solid rgba(0,0,0,0.05)",
+    },
+    chartHeader: {
+      background: "linear-gradient(135deg, #1f2937 0%, #374151 100%)",
+      padding: "24px",
+      color: "white",
+    },
+    chartTitle: {
+      fontSize: "1.5rem",
+      fontWeight: "700",
+      margin: 0,
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+    },
+    sentimentGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+      gap: "24px",
+      marginBottom: "32px",
+    },
+    sentimentCard: {
+      backgroundImage:
+        linear - gradient(rgba(3, 31, 15, 0.2), rgba(55, 65, 81, 0.85)),
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      borderRadius: "24px",
+      padding: "32px",
+      boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      color: "#fff",
+    },
+    sentimentTitle: {
+      fontSize: "1.5rem",
+      fontWeight: "700",
+      color: "white",
+      marginBottom: "24px",
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+    },
+    newsCard: {
+      backgroundImage:
+        linear - gradient(rgba(3, 31, 15, 0.2), rgba(55, 65, 81, 0.85)),
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      borderRadius: "24px",
+      padding: "32px",
+      boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      color: "#fff",
+    },
+    newsHeader: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "24px",
+    },
+    newsTitle: {
+      fontSize: "1.5rem",
+      fontWeight: "700",
+      color: "white",
+      margin: 0,
+    },
+    newsControls: {
+      display: "flex",
+      gap: "12px",
+    },
+    newsButton: {
+      width: "44px",
+      height: "44px",
+      borderRadius: "50%",
+      border: "none",
+      background: "linear-gradient(45deg, #22c55e, #16a34a)",
+      color: "white",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      transition: "all 0.3s ease",
+      boxShadow: "0 4px 8px rgba(34,197,94,0.3)",
+    },
+    newsContent: {
+      color: "white",
+    },
+    newsHeadline: {
+      fontSize: "1.2rem",
+      fontWeight: "700",
+      marginBottom: "16px",
+      lineHeight: "1.4",
+    },
+    newsSource: {
+      color: "#22c55e",
+      fontSize: "0.9rem",
+      fontWeight: "600",
+      marginBottom: "16px",
+    },
+    newsSummary: {
+      fontSize: "0.95rem",
+      lineHeight: "1.6",
+      color: "rgba(255,255,255,0.9)",
+      marginBottom: "16px",
+    },
+    newsLink: {
+      color: "#22c55e",
+      textDecoration: "none",
+      fontWeight: "600",
+      fontSize: "0.9rem",
+    },
+    overviewCard: {
+      background: "white",
+      borderRadius: "24px",
+      marginBottom: "32px",
+      overflow: "hidden",
+      boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+      border: "1px solid rgba(0,0,0,0.05)",
+    },
+    overviewHeader: {
+      background: "#000",
+      padding: "24px",
+      color: "white",
+    },
+    overviewTitle: {
+      fontSize: "1.5rem",
+      fontWeight: "700",
+      margin: 0,
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+    },
+    overviewGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+      background: "#000",
+      gap: "24px",
+      padding: "32px",
+    },
+    overviewItem: {
+      background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+      borderRadius: "16px",
+      padding: "24px",
+      textAlign: "center",
+      border: "1px solid rgba(0,0,0,0.05)",
+      transition: "all 0.3s ease",
+    },
+    overviewIcon: {
+      fontSize: "2.5rem",
+      marginBottom: "12px",
+      color: "#3b82f6",
+    },
+    overviewLabel: {
+      fontSize: "0.9rem",
+      color: "#6b7280",
+      marginBottom: "8px",
+      fontWeight: "600",
+    },
+    overviewValue: {
+      fontSize: "1.5rem",
+      fontWeight: "800",
+      color: "#1f2937",
     },
   };
 
-  const [hoveredIndex, setHoveredIndex] = useState(-1);
+  // If no stock is selected, show only search bar
+  if (!selectedSymbol) {
+    return (
+      <div style={styles.searchOnlyContainer}>
+        <div style={styles.searchContainer}>
+          <div style={styles.searchWrapper}>
+            <div style={styles.searchInputGroup}>
+              <div style={styles.searchIcon}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
+              </div>
 
+              <input
+                type="text"
+                value={query}
+                placeholder="Search stocks (e.g., AAPL, AMZN, TSLA, GOOGL)"
+                onChange={(e) => fetchSuggestions(e.target.value)}
+                style={styles.searchInput}
+              />
+            </div>
+
+            {showResults && results.length > 0 && (
+              <div style={styles.resultsDropdown}>
+                {results.map((s, i) => (
+                  <div
+                    key={i}
+                    onClick={() => handleSelect(s["1. symbol"])}
+                    style={{
+                      ...styles.resultItem,
+                      ...(hoveredIndex === i ? styles.resultItemHover : {}),
+                      ...(i === results.length - 1
+                        ? { borderBottom: "none" }
+                        : {}),
+                    }}
+                    onMouseEnter={() => setHoveredIndex(i)}
+                    onMouseLeave={() => setHoveredIndex(-1)}
+                  >
+                    <div style={styles.resultIcon}>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
+                      </svg>
+                    </div>
+
+                    <div style={styles.resultContent}>
+                      <div style={styles.resultMain}>
+                        <span style={styles.resultSymbol}>
+                          {s["1. symbol"]}
+                        </span>
+                        <span style={styles.resultName}>{s["2. name"]}</span>
+                      </div>
+                      <div>
+                        <span style={styles.resultType}>{s["3. type"]}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // If stock is selected, show full dashboard
   return (
     <>
       <style>
         {`
-          @keyframes fadeIn {
-            from {
-              opacity: 0;
-              transform: translateY(-10px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
+          @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
           }
           
-          .search-input::placeholder {
-            color: #9ca3af;
-            font-weight: 400;
+          .overview-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
           }
           
-          .results-dropdown::-webkit-scrollbar {
-            width: 6px;
+          .news-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(34,197,94,0.4);
           }
           
-          .results-dropdown::-webkit-scrollbar-track {
-            background: #f1f5f9;
+          .metric-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
           }
           
-          .results-dropdown::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
+          .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
           }
           
-          .results-dropdown::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-          }
-          
-          @media (max-width: 640px) {
-            .search-container {
-              max-width: 100% !important;
-              margin: 0 16px !important;
+          @media (max-width: 768px) {
+            .price-header {
+              flex-direction: column;
+              gap: 24px;
+              text-align: center;
             }
             
-            .search-input {
-              font-size: 16px !important;
-              padding: 14px 50px 14px 44px !important;
+            .price-display {
+              text-align: center;
             }
             
-            .search-icon {
-              left: 14px !important;
-              width: 18px !important;
-              height: 18px !important;
+            .dashboard-title {
+              font-size: 2rem;
             }
             
-            .result-item {
-              padding: 14px !important;
+            .current-price {
+              font-size: 2.5rem;
             }
             
-            .result-name {
-              max-width: 150px !important;
+            .symbol {
+              font-size: 2rem;
             }
           }
         `}
       </style>
 
-      <div style={styles.searchContainer} className="search-container">
-        <div style={styles.searchWrapper}>
-          <div style={styles.searchInputGroup}>
-            <div style={styles.searchIcon} className="search-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-              </svg>
-            </div>
-
-            <input
-              type="text"
-              value={query}
-              placeholder="Search stocks (e.g., AAPL, AMZN, TSLA)"
-              onChange={(e) => fetchSuggestions(e.target.value)}
-              style={styles.searchInput}
-              className="search-input"
-            />
+      <div style={styles.dashboardContainer}>
+        <div style={{ maxWidth: "1600px", margin: "0 auto", height: "100vh" }}>
+          {/* Dashboard Header with Back Button */}
+          <div style={styles.dashboardHeader}>
+            <h1 style={styles.dashboardTitle} className="dashboard-title">
+              Trading Dashboard - {selectedSymbol}
+            </h1>
+            <button
+              onClick={clearDashboard}
+              style={styles.backButton}
+              className="back-button"
+            >
+              ← Back to Search
+            </button>
           </div>
 
-          {showResults && results.length > 0 && (
-            <div style={styles.resultsDropdown} className="results-dropdown">
-              {results.map((s, i) => (
-                <div
-                  key={i}
-                  onClick={() => handleSelect(s["1. symbol"])}
-                  style={{
-                    ...styles.resultItem,
-                    ...(hoveredIndex === i ? styles.resultItemHover : {}),
-                    ...(i === results.length - 1
-                      ? { borderBottom: "none" }
-                      : {}),
-                  }}
-                  className="result-item"
-                  onMouseEnter={() => setHoveredIndex(i)}
-                  onMouseLeave={() => setHoveredIndex(-1)}
-                >
-                  <div style={styles.resultIcon}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
-                    </svg>
+          {/* Price Summary */}
+          {price && (
+            <div style={styles.priceCard}>
+              <div style={styles.priceHeader} className="price-header">
+                <div style={styles.symbolSection}>
+                  <h2 style={styles.symbol} className="symbol">
+                    {selectedSymbol}
+                  </h2>
+                  <span style={styles.liveBadge}>● Live</span>
+                </div>
+                <div style={styles.priceDisplay} className="price-display">
+                  <div style={styles.currentPrice} className="current-price">
+                    ${price.current}
                   </div>
+                  <div
+                    style={{
+                      ...styles.priceChange,
+                      color: price.change > 0 ? "#22c55e" : "#ef4444",
+                    }}
+                  >
+                    {price.change > 0 ? "+" : ""}
+                    {price.change}%
+                  </div>
+                </div>
+              </div>
 
-                  <div style={styles.resultContent}>
-                    <div style={styles.resultMain}>
-                      <span
-                        style={styles.resultSymbol}
-                        className="result-symbol"
-                      >
-                        {s["1. symbol"]}
-                      </span>
-                      <span style={styles.resultName} className="result-name">
-                        {s["2. name"]}
-                      </span>
-                    </div>
-                    <div style={styles.resultDetails}>
-                      <span style={styles.resultType}>{s["3. type"]}</span>
-                    </div>
+              <div style={styles.priceMetrics}>
+                <div style={styles.metricCard} className="metric-card">
+                  <div style={styles.metricLabel}>Open</div>
+                  <div style={styles.metricValue}>
+                    ${parseFloat(price.open).toFixed(2)}
                   </div>
+                </div>
+                <div style={styles.metricCard} className="metric-card">
+                  <div style={styles.metricLabel}>Close</div>
+                  <div style={styles.metricValue}>
+                    ${parseFloat(price.close).toFixed(2)}
+                  </div>
+                </div>
+                <div style={styles.metricCard} className="metric-card">
+                  <div style={styles.metricLabel}>Range</div>
+                  <div style={styles.metricValue}>
+                    ${parseFloat(price.low).toFixed(2)} - $
+                    {parseFloat(price.high).toFixed(2)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Chart and Financial Analytics Side by Side */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "7fr 5fr",
+              gap: "24px",
+              marginBottom: "32px",
+            }}
+          >
+            {/* Chart */}
+            <div style={styles.chartCard}>
+              <div style={styles.chartHeader}>
+                <h2 style={styles.chartTitle}>📊 Live Price Chart</h2>
+              </div>
+              <div>
+                <div ref={containerRef} id="tradingview_widget" />
+              </div>
+            </div>
+
+            {/* Advanced Financial Analytics */}
+            <div style={styles.chartCard}>
+              <div style={styles.chartHeader}>
+                <h2 style={styles.chartTitle}>
+                  📊 Advanced Financial Analytics
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      opacity: "0.8",
+                      marginLeft: "auto",
+                    }}
+                  >
+                    Powered by TradingView
+                  </span>
+                </h2>
+              </div>
+              <div>
+                <div id="financials_widget" />
+              </div>
+            </div>
+          </div>
+
+          {/* Sentiment and News Section */}
+          <div style={styles.sentimentGrid}>
+            {/* Sentiment Panel */}
+            <div style={styles.sentimentCard}>
+              <h3 style={styles.sentimentTitle}>🧠 Sentiment Analysis</h3>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "32px",
+                }}
+              >
+                {/* AI Sentiment */}
+                <div style={{ textAlign: "center" }}>
+                  <h4
+                    style={{
+                      color: "white",
+                      fontSize: "1.1rem",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    A.I. Sentiment
+                  </h4>
 
                   <div
                     style={{
-                      ...styles.resultArrow,
-                      ...(hoveredIndex === i ? styles.resultArrowVisible : {}),
+                      position: "relative",
+                      display: "inline-block",
+                      marginBottom: "16px",
                     }}
                   >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path d="m9 18 6-6-6-6" />
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                      <circle
+                        cx="60"
+                        cy="60"
+                        r="50"
+                        fill="none"
+                        stroke="#374151"
+                        strokeWidth="6"
+                      />
+                      <circle
+                        cx="60"
+                        cy="60"
+                        r="50"
+                        fill="none"
+                        stroke="#22c55e"
+                        strokeWidth="6"
+                        strokeDasharray="196 118"
+                        strokeLinecap="round"
+                        transform="rotate(-90 60 60)"
+                      />
                     </svg>
+
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        textAlign: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          color: "white",
+                          fontSize: "1.5rem",
+                          fontWeight: "800",
+                        }}
+                      >
+                        62.5%
+                      </div>
+                      <div
+                        style={{
+                          color: "#22c55e",
+                          fontSize: "0.9rem",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Bullish
+                      </div>
+                    </div>
                   </div>
                 </div>
-              ))}
+
+                {/* News Sentiment */}
+                <div style={{ textAlign: "center" }}>
+                  <h4
+                    style={{
+                      color: "white",
+                      fontSize: "1.1rem",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    News Sentiment
+                  </h4>
+
+                  <div
+                    style={{
+                      position: "relative",
+                      display: "inline-block",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    <svg width="120" height="80" viewBox="0 0 120 80">
+                      <path
+                        d="M 20 70 A 40 40 0 0 1 100 70"
+                        fill="none"
+                        stroke="#374151"
+                        strokeWidth="6"
+                      />
+                      <path
+                        d="M 20 70 A 40 40 0 0 1 100 70"
+                        fill="none"
+                        stroke="#22c55e"
+                        strokeWidth="6"
+                        strokeDasharray="50 76"
+                      />
+                      <line
+                        x1="60"
+                        y1="70"
+                        x2="75"
+                        y2="45"
+                        stroke="#22c55e"
+                        strokeWidth="3"
+                      />
+                      <circle cx="60" cy="70" r="3" fill="#22c55e" />
+                    </svg>
+
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: "5px",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        background: "#22c55e",
+                        color: "white",
+                        padding: "4px 8px",
+                        borderRadius: "8px",
+                        fontSize: "0.8rem",
+                        fontWeight: "600",
+                      }}
+                    >
+                      +11.5
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* News Panel */}
+            <div style={styles.newsCard}>
+              <div style={styles.newsHeader}>
+                <h3 style={styles.newsTitle}>📰 Latest News</h3>
+                <div style={styles.newsControls}>
+                  <button
+                    style={styles.newsButton}
+                    className="news-button"
+                    onClick={prevNews}
+                  >
+                    ←
+                  </button>
+                  <button
+                    style={styles.newsButton}
+                    className="news-button"
+                    onClick={nextNews}
+                  >
+                    →
+                  </button>
+                </div>
+              </div>
+
+              <div style={styles.newsContent}>
+                <h4 style={styles.newsHeadline}>
+                  {newsSlider[currentNewsIndex]?.title}
+                </h4>
+
+                <div style={styles.newsSource}>
+                  📅 Published on {newsSlider[currentNewsIndex]?.time}
+                </div>
+
+                <p style={styles.newsSummary}>
+                  {newsSlider[currentNewsIndex]?.summary}
+                </p>
+
+                <a href="#" style={styles.newsLink}>
+                  Read More →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Financial Overview */}
+          {overview && (
+            <div style={styles.overviewCard}>
+              <div style={styles.overviewHeader}>
+                <h2 style={styles.overviewTitle}>💼 Financial Overview</h2>
+              </div>
+              <div style={styles.overviewGrid}>
+                <div style={styles.overviewItem} className="overview-item">
+                  <div style={styles.overviewIcon}>📈</div>
+                  <div style={styles.overviewLabel}>Market Cap</div>
+                  <div style={styles.overviewValue}>
+                    $
+                    {overview.MarketCapitalization
+                      ? Number(overview.MarketCapitalization).toLocaleString()
+                      : "N/A"}
+                  </div>
+                </div>
+
+                <div style={styles.overviewItem} className="overview-item">
+                  <div style={styles.overviewIcon}>📊</div>
+                  <div style={styles.overviewLabel}>P/E Ratio</div>
+                  <div style={styles.overviewValue}>
+                    {overview.PERatio || "N/A"}
+                  </div>
+                </div>
+
+                <div style={styles.overviewItem} className="overview-item">
+                  <div style={styles.overviewIcon}>📉</div>
+                  <div style={styles.overviewLabel}>P/B Ratio</div>
+                  <div style={styles.overviewValue}>
+                    {overview.PriceToBookRatio || "N/A"}
+                  </div>
+                </div>
+
+                <div style={styles.overviewItem} className="overview-item">
+                  <div style={styles.overviewIcon}>💰</div>
+                  <div style={styles.overviewLabel}>P/S Ratio</div>
+                  <div style={styles.overviewValue}>
+                    {overview.PriceToSalesRatioTTM || "N/A"}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
