@@ -1584,27 +1584,19 @@ const Journal = () => {
                       {item.tradeCount} trades
                     </span>
                     <span
-                      className={
-                        analytics -
-                        win -
-                        rate -
-                        badge`${
-                          item.winPercentage === 100
-                            ? "bg-primary"
-                            : "bg-secondary"
-                        }`
-                      }
+                      className={`analytics-win-rate-badge ${
+                        item.winPercentage === 100
+                          ? "bg-primary"
+                          : "bg-secondary"
+                      }`}
                     >
                       {item.winPercentage}% win rate
                     </span>
                   </div>
                   <div
-                    className={
-                      fw -
-                      bold`${
-                        item.totalProfit >= 0 ? "profit-color" : "loss-color"
-                      }`
-                    }
+                    className={`fw-bold ${
+                      item.totalProfit >= 0 ? "profit-color" : "loss-color"
+                    }`}
                   >
                     {item.totalProfit >= 0 ? "+" : ""}$
                     {item.totalProfit.toFixed(2)}
@@ -1655,15 +1647,11 @@ const Journal = () => {
                   </div>
                   <div className="reports-metric-label">Total P&L</div>
                   <span
-                    className={
-                      reports -
-                      profitability -
-                      badge`${
-                        reportsData.performanceSummary.isProfitable
-                          ? "profitable-badge"
-                          : "unprofitable-badge"
-                      }`
-                    }
+                    className={`reports-profitability-badge ${
+                      reportsData.performanceSummary.isProfitable
+                        ? "profitable-badge"
+                        : "unprofitable-badge"
+                    }`}
                   >
                     Profitable
                   </span>

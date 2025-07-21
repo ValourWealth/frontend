@@ -728,6 +728,7 @@ export default function TradingTools() {
     // Original dashboard styles
     priceCard: {
       backgroundImage: `linear-gradient(rgb(45 45 45 / 60%), rgb(7 4 4 / 60%))`,
+
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
@@ -833,8 +834,7 @@ export default function TradingTools() {
       marginBottom: "32px",
     },
     sentimentCard: {
-      backgroundImage:
-        linear - gradient(rgba(3, 31, 15, 0.2), rgba(55, 65, 81, 0.85)),
+      backgroundImage: `linear-gradient(rgba(3, 31, 15, 0.2), rgba(55, 65, 81, 0.85))`,
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
@@ -854,8 +854,7 @@ export default function TradingTools() {
       gap: "12px",
     },
     newsCard: {
-      backgroundImage:
-        linear - gradient(rgba(3, 31, 15, 0.2), rgba(55, 65, 81, 0.85)),
+      backgroundImage: `linear-gradient(rgba(3, 31, 15, 0.2), rgba(55, 65, 81, 0.85))`,
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center",
