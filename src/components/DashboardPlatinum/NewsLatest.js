@@ -186,7 +186,7 @@ const LatestNews = () => {
       case "Economy":
         return "#3b82f6"; // Blue
       case "Stocks":
-        return "#10b981"; // Green
+        return "var(--theme-color)"; // Green
       case "Commodities":
         return "#f59e0b"; // Orange
       case "Crypto":

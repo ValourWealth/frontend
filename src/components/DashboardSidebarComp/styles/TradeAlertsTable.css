@@ -99,7 +99,7 @@
 /* Volume column */
 .volume-col {
   font-weight: 700;
-  color: #10b981;
+  color: var(--theme-color);
 }
 
 /* Action buttons */
@@ -125,7 +125,7 @@
 }
 
 .chart-btn {
-  background-color: #10b981;
+  background-color: var(--theme-color);
 }
 
 .chart-btn:hover {

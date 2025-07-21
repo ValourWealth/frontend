@@ -1731,8 +1731,8 @@ export default function FinancialDashboard() {
 
         .full-info-btn {
           background: transparent;
-          border: 1px solid #10B981;
-        //   color: #10B981;
+          border: 1px solid var(--theme-color);
+        //   color: var(--theme-color);
         color: var(--theme-color) !important;
           padding: 12px 20px;
           border-radius: 10px;
@@ -1908,7 +1908,7 @@ export default function FinancialDashboard() {
         }
 
         .contracts-header {
-          background: #047857;
+          background: var(--theme-color);
           color: #FFFFFF;
           padding: 1.2rem 1.5rem;
           font-weight: 600;
@@ -1921,14 +1921,14 @@ export default function FinancialDashboard() {
         }
 
         .contracts-table th {
-          background: #047857;
+          background: var(--theme-color);
           color: #FFFFFF;
           padding: 14px 16px;
           text-align: left;
           font-weight: 600;
           font-size: 0.9rem;
           position: relative;
-          border-bottom: 1px solid #065F46;
+          border-bottom: 1px solid var(--theme-color);
         }
 
         .sort-indicator {
@@ -1959,7 +1959,7 @@ export default function FinancialDashboard() {
         }
 
         .itm-percentage {
-        //   color: #10B981;
+        //   color: var(--theme-color);
         color: var(--theme-color) !important;
           font-weight: 600;
         }
@@ -1976,7 +1976,7 @@ export default function FinancialDashboard() {
           width: 32px;
           height: 32px;
           border: 3px solid #2D2D35;
-          border-top: 3px solid #10B981;
+          border-top: 3px solid var(--theme-color);
           border-radius: 50%;
           animation: spin 1s linear infinite;
           margin-right: 1rem;

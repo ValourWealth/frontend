@@ -238,7 +238,7 @@ const StockDashboard = () => {
         }
 
         .ticker-item.positive::before {
-          background: linear-gradient(180deg, #10b981, #059669);
+          background: linear-gradient(180deg, var(--theme-color), #059669);
         }
 
         .ticker-item.negative::before {
@@ -276,7 +276,7 @@ const StockDashboard = () => {
         }
 
         .ticker-change.positive {
-          color: #10b981;
+          color: var(--theme-color);
           background: rgba(16, 185, 129, 0.1);
         }
 

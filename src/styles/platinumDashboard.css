@@ -5549,7 +5549,7 @@ h4 {
 }
 
 .preview-dots span:last-child {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .preview-content {
@@ -5622,7 +5622,7 @@ h4 {
 }
 
 .stat-card:nth-child(2)::before {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .stat-card:nth-child(3)::before {
@@ -5712,7 +5712,7 @@ h4 {
   content: "✓";
   position: absolute;
   left: 0;
-  color: #10b981;
+  color: var(--theme-color);
   font-weight: bold;
 }
 
@@ -5774,7 +5774,7 @@ h4 {
 }
 
 .solution-card:nth-child(2) .solution-badge {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .solution-card:nth-child(3) .solution-badge {
@@ -5835,7 +5835,7 @@ h4 {
 }
 
 .legend-item.moderate::before {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .legend-item.growth::before {
@@ -5885,7 +5885,7 @@ h4 {
 }
 
 .bar.moderate {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .bar.growth {
@@ -6040,7 +6040,7 @@ h4 {
 }
 
 .pricing-features i {
-  color: #10b981;
+  color: var(--theme-color);
   font-size: 0.9rem;
 }
 
@@ -6536,7 +6536,7 @@ h4 {
 }
 
 .preview-dots span:last-child {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .preview-content {
@@ -6609,7 +6609,7 @@ h4 {
 }
 
 .stat-card:nth-child(2)::before {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .stat-card:nth-child(3)::before {
@@ -6699,7 +6699,7 @@ h4 {
   content: "✓";
   position: absolute;
   left: 0;
-  color: #10b981;
+  color: var(--theme-color);
   font-weight: bold;
 }
 
@@ -6761,7 +6761,7 @@ h4 {
 }
 
 .solution-card:nth-child(2) .solution-badge {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .solution-card:nth-child(3) .solution-badge {
@@ -6822,7 +6822,7 @@ h4 {
 }
 
 .legend-item.moderate::before {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .legend-item.growth::before {
@@ -6872,7 +6872,7 @@ h4 {
 }
 
 .bar.moderate {
-  background: #10b981;
+  background: var(--theme-color);
 }
 
 .bar.growth {
@@ -7027,7 +7027,7 @@ h4 {
 }
 
 .pricing-features i {
-  color: #10b981;
+  color: var(--theme-color);
   font-size: 0.9rem;
 }
 
@@ -8663,9 +8663,8 @@ h4 {
   padding: 20px;
 }
 
-
 .nft-card .card-image {
   transform: none !important;
-    transition: none !important;
-    pointer-events: none;
+  transition: none !important;
+  pointer-events: none;
 }

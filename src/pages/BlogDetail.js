@@ -44,7 +44,7 @@
 //   const getCategoryColor = (category) => {
 //     const colors = {
 //       Technology: "#3b82f6",
-//       Markets: "#10b981",
+//       Markets: "var(--theme-color)",
 //       Wealth: "#f59e0b",
 //       Events: "#8b5cf6",
 //     };
@@ -95,7 +95,7 @@ function BlogDetail() {
 
   const getCategoryColor = (category) => {
     const colors = {
-      Markets: "#10b981",
+      Markets: "var(--theme-color)",
       Crypto: "#8b5cf6",
       Forex: "#3b82f6",
       Stocks: "#f59e0b",

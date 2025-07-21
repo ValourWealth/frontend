@@ -1464,6 +1464,9 @@ body .dark {
 .dark-mode-btn {
   color: var(--theme-color) !important;
 }
+.bg-light .feature-item {
+  color: #000 !important;
+}
 
 .bg-light .dashboard-head {
   top: 0 !important;

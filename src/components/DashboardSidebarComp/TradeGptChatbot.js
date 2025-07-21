@@ -1108,7 +1108,7 @@ Would you like me to analyze any specific aspect in more detail?`,
 
         .message-content {
           display: inline-block;
-          max-width: 80%;
+          max-width: 100%;
           padding: 12px 16px;
           border-radius: 18px;
           font-size: 14px;
@@ -1116,7 +1116,7 @@ Would you like me to analyze any specific aspect in more detail?`,
         }
 
         .message-user .message-content {
-          linear-gradient(135deg, #040805 0%, #38a739 100%)
+          background: linear-gradient(135deg, #040805 0%, #38a739 100%)
           color: white;
         }
 

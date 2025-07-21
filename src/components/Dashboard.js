@@ -202,7 +202,7 @@ const Dashboard = () => {
     },
     {
       id: "releasenotes",
-      label: "Release Notes",
+      label: "Release Notes  (new)",
       icon: <FileText size={20} />,
       isNew: true,
     },
