@@ -207,7 +207,7 @@
 //         }
 
 //         .beta-badge {
-//           background: #10B981;
+//           background: var(--theme-color);
 //           color: #FFFFFF;
 //           padding: 6px 14px;
 //           border-radius: 16px;
@@ -242,7 +242,7 @@
 //         }
 
 //         .refresh-icon {
-//           color: #10B981;
+//           color: var(--theme-color);
 //           cursor: pointer;
 //           padding: 8px;
 //           border-radius: 8px;
@@ -276,7 +276,7 @@
 //         }
 
 //         .tab.active {
-//           background: #10B981;
+//           background: var(--theme-color);
 //           color: #FFFFFF;
 //           box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
 //           font-weight: 600;
@@ -312,22 +312,22 @@
 
 //         .ticker-item:hover {
 //           background: #252529;
-//           border-color: #10B981;
+//           border-color: var(--theme-color);
 //           transform: translateX(4px);
 //         }
 
 //         .ticker-item:hover::before {
-//           background: #10B981;
+//           background: var(--theme-color);
 //         }
 
 //         .ticker-item.selected {
 //           background: #252529;
-//           border-color: #10B981;
+//           border-color: var(--theme-color);
 //           box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
 //         }
 
 //         .ticker-item.selected::before {
-//           background: #10B981;
+//           background: var(--theme-color);
 //         }
 
 //         // light mode
@@ -433,7 +433,7 @@
 // }
 
 // .bg-light .sentiment-label {
-// //   color: #10B981 !important;
+// //   color: var(--theme-color) !important;
 //   color: var(--theme-color) !important;
 // }
 
@@ -474,7 +474,7 @@
 
 // .bg-light .spinner {
 //   border: 3px solid #E5E7EB !important;
-//   border-top: 3px solid #10B981 !important;
+//   border-top: 3px solid var(--theme-color) !important;
 // //   color: var(--theme-color) !important;
 // }
 
@@ -513,7 +513,7 @@
 
 //         .change.positive {
 //         color: var(--theme-color) !important;
-//         //   color: #10B981;
+//         //   color: var(--theme-color);
 //           background: rgba(16, 185, 129, 0.1);
 //         }
 
@@ -545,8 +545,8 @@
 
 //         .full-info-btn {
 //           background: transparent;
-//           border: 1px solid #10B981;
-//         //   color: #10B981;
+//           border: 1px solid var(--theme-color);
+//         //   color: var(--theme-color);
 //         color: var(--theme-color) !important;
 //           padding: 12px 20px;
 //           border-radius: 10px;
@@ -561,7 +561,7 @@
 //         }
 
 //         .full-info-btn:hover {
-//         //   background: #10B981;
+//         //   background: var(--theme-color);
 //         color: var(--theme-color) !important;
 //           color: #FFFFFF;
 //           transform: translateY(-2px);
@@ -610,7 +610,7 @@
 //           background: conic-gradient(
 //             from 0deg,
 //             #EF4444 0deg 60deg,
-//             #10B981 60deg 310deg,
+//             var(--theme-color) 60deg 310deg,
 //             #374151 310deg 360deg
 //           );
 //           display: flex;
@@ -637,7 +637,7 @@
 //         }
 
 //         .sentiment-label {
-//         //   color: #10B981;
+//         //   color: var(--theme-color);
 //         color: var(--theme-color) !important;
 //           font-weight: 600;
 //           font-size: 1rem;
@@ -666,7 +666,7 @@
 //         }
 
 //         .sentiment-tab:first-child {
-//         //   background: #10B981;
+//         //   background: var(--theme-color);
 //         color: var(--theme-color) !important;
 //           color: #FFFFFF;
 //         }
@@ -691,7 +691,7 @@
 //           height: 60px;
 //           margin: 0 auto 1rem;
 //           position: relative;
-//           background: linear-gradient(90deg, #EF4444 0%, #F59E0B 50%, #10B981 100%);
+//           background: linear-gradient(90deg, #EF4444 0%, #F59E0B 50%, var(--theme-color) 100%);
 //           border-radius: 60px 60px 0 0;
 //         }
 
@@ -709,7 +709,7 @@
 //         .news-value {
 //           font-size: 2rem;
 //           font-weight: 700;
-//         //   color: #10B981;
+//         //   color: var(--theme-color);
 //         color: var(--theme-color) !important;
 //           margin: 1rem 0;
 //         }
@@ -773,7 +773,7 @@
 //         }
 
 //         .itm-percentage {
-//         //   color: #10B981;
+//         //   color: var(--theme-color);
 //         color: var(--theme-color) !important;
 //           font-weight: 600;
 //         }
@@ -790,7 +790,7 @@
 //           width: 32px;
 //           height: 32px;
 //           border: 3px solid #2D2D35;
-//           border-top: 3px solid #10B981;
+//           border-top: 3px solid var(--theme-color);
 //           border-radius: 50%;
 //           animation: spin 1s linear infinite;
 //           margin-right: 1rem;
@@ -1393,7 +1393,7 @@ export default function FinancialDashboard() {
         }
 
         .beta-badge {
-          background: #10B981;
+          background: var(--theme-color);
           color: #FFFFFF;
           padding: 6px 14px;
           border-radius: 16px;
@@ -1428,7 +1428,7 @@ export default function FinancialDashboard() {
         }
 
         .refresh-icon {
-          color: #10B981;
+          color: var(--theme-color);
           cursor: pointer;
           padding: 8px;
           border-radius: 8px;
@@ -1462,7 +1462,7 @@ export default function FinancialDashboard() {
         }
 
         .tab.active {
-          background: #10B981;
+          background: var(--theme-color);
           color: #FFFFFF;
           box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
           font-weight: 600;
@@ -1498,22 +1498,22 @@ export default function FinancialDashboard() {
 
         .ticker-item:hover {
           background: #252529;
-          border-color: #10B981;
+          border-color: var(--theme-color);
           transform: translateX(4px);
         }
 
         .ticker-item:hover::before {
-          background: #10B981;
+          background: var(--theme-color);
         }
 
         .ticker-item.selected {
           background: #252529;
-          border-color: #10B981;
+          border-color: var(--theme-color);
           box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
         }
 
         .ticker-item.selected::before {
-          background: #10B981;
+          background: var(--theme-color);
         }
 
         // light mode
@@ -1619,7 +1619,7 @@ export default function FinancialDashboard() {
 }
 
 .bg-light .sentiment-label {
-//   color: #10B981 !important;
+//   color: var(--theme-color) !important;
   color: var(--theme-color) !important;
 }
 
@@ -1660,7 +1660,7 @@ export default function FinancialDashboard() {
 
 .bg-light .spinner {
   border: 3px solid #E5E7EB !important;
-  border-top: 3px solid #10B981 !important;
+  border-top: 3px solid var(--theme-color) !important;
 //   color: var(--theme-color) !important;
 }
 
@@ -1699,7 +1699,7 @@ export default function FinancialDashboard() {
 
         .change.positive {
         color: var(--theme-color) !important;
-        //   color: #10B981;
+        //   color: var(--theme-color);
           background: rgba(16, 185, 129, 0.1);
         }
 
@@ -1747,7 +1747,7 @@ export default function FinancialDashboard() {
         }
 
         .full-info-btn:hover {
-        //   background: #10B981;
+        //   background: var(--theme-color);
         color: var(--theme-color) !important;
           color: #FFFFFF;
           transform: translateY(-2px);
@@ -1796,7 +1796,7 @@ export default function FinancialDashboard() {
           background: conic-gradient(
             from 0deg,
             #EF4444 0deg 60deg,
-            #10B981 60deg 310deg,
+            var(--theme-color) 60deg 310deg,
             #374151 310deg 360deg
           );
           display: flex;
@@ -1823,7 +1823,7 @@ export default function FinancialDashboard() {
         }
 
         .sentiment-label {
-        //   color: #10B981;
+        //   color: var(--theme-color);
         color: var(--theme-color) !important;
           font-weight: 600;
           font-size: 1rem;
@@ -1852,7 +1852,7 @@ export default function FinancialDashboard() {
         }
 
         .sentiment-tab:first-child {
-        //   background: #10B981;
+        //   background: var(--theme-color);
         color: var(--theme-color) !important;
           color: #FFFFFF;
         }
@@ -1877,7 +1877,7 @@ export default function FinancialDashboard() {
           height: 60px;
           margin: 0 auto 1rem;
           position: relative;
-          background: linear-gradient(90deg, #EF4444 0%, #F59E0B 50%, #10B981 100%);
+          background: linear-gradient(90deg, #EF4444 0%, #F59E0B 50%, var(--theme-color) 100%);
           border-radius: 60px 60px 0 0;
         }
 
@@ -1895,7 +1895,7 @@ export default function FinancialDashboard() {
         .news-value {
           font-size: 2rem;
           font-weight: 700;
-        //   color: #10B981;
+        //   color: var(--theme-color);
         color: var(--theme-color) !important;
           margin: 1rem 0;
         }

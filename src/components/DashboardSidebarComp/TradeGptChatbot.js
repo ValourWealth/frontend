@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 
 const TradeGPT = () => {
   const [inputText, setInputText] = useState("");
-  const [ticker, setTicker] = useState("COIN");
+  const [ticker, setTicker] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -863,7 +863,7 @@ Would you like me to analyze any specific aspect in more detail?`,
   const handleNewChat = () => {
     setMessages([]);
     setInputText("");
-    setTicker("COIN");
+    setTicker("");
     setIsAnalyzing(false);
   };
 
