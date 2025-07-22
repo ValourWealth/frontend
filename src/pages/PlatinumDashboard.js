@@ -9,18 +9,18 @@ import JournalPage from "../components/DashboardPlatinum/JournalPage";
 import Leaderboard from "../components/DashboardPlatinum/Leaderboard";
 import MarketInsights from "../components/DashboardPlatinum/MarketInsights";
 import MarketNews from "../components/DashboardPlatinum/MarketNews";
+import MarketOverview from "../components/DashboardPlatinum/MarketOverview";
 import PlatinumMembershipNFT from "../components/DashboardPlatinum/MembershipNft";
+import LatestNews from "../components/DashboardPlatinum/NewsLatest";
 import PortfolioHeatmap from "../components/DashboardPlatinum/PortfolioHeatmap";
 import RealtimeQuotes from "../components/DashboardPlatinum/RealtimeQuotes";
 import ScheduleCall from "../components/DashboardPlatinum/ScheduleCall";
+import StockDashboard from "../components/DashboardPlatinum/StockDashboard";
 import TradingChallenges from "../components/DashboardPlatinum/TradingChallenge";
 import Wabinars from "../components/DashboardPlatinum/Wabinars";
 import WeeklyBriefing from "../components/DashboardPlatinum/WeeklyBriefing";
-
-import MarketOverview from "../components/DashboardPlatinum/MarketOverview";
-import LatestNews from "../components/DashboardPlatinum/NewsLatest";
-import StockDashboard from "../components/DashboardPlatinum/StockDashboard";
 import EditProfile from "../components/DashboardSidebarComp/EditProfile";
+import TradeGPTChatbot from "../components/DashboardSidebarComp/TradeGptChatbot";
 import "../styles/platinumDashboard.css";
 
 const PlatinumDashboard = () => {
@@ -132,7 +132,6 @@ const PlatinumDashboard = () => {
         });
         setUserData(res.data);
         setIsAnalyst(res.data.role === "analyst");
-
       } catch (err) {
         console.error("Failed to fetch user", err);
       }
@@ -782,6 +781,10 @@ const PlatinumDashboard = () => {
         {activeSection === "feature-voting" && <FeatureVoting />}
         {activeSection === "membership-nft" && <PlatinumMembershipNFT />}
         {activeSection === "journal-page" && <JournalPage />}
+
+        <div style={{ marginRight: "70px" }}>
+          <TradeGPTChatbot />
+        </div>
       </div>
       <ChatFeature />
       <CreditRequestPopup

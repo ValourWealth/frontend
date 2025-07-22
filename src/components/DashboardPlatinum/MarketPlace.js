@@ -1088,6 +1088,142 @@
 
 // export default NFTMarketplace;
 
+
+
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+
+// const CATEGORIES = [
+//   { key: "6month", label: "6 Month Anniversary" },
+//   { key: "epic", label: "Epic" },
+//   { key: "first", label: "First Place" },
+//   { key: "legendary", label: "Legendary" },
+//   { key: "founder", label: "Founder" },
+//   { key: "rare", label: "Rare" },
+//   { key: "second", label: "Second Place" },
+//   { key: "third", label: "Third Place" },
+//   { key: "uncommon", label: "Uncommon" },
+// ];
+
+// const NFTMarketplace = () => {
+//   const [nfts, setNfts] = useState({});
+//   const token = localStorage.getItem("accessToken");
+
+//   useEffect(() => {
+//     const fetchAllCategories = async () => {
+//       const categoryData = {};
+//       for (const cat of CATEGORIES) {
+//         try {
+//           const res = await axios.get(
+//             `https://backend-production-1e63.up.railway.app/api/nfts/?category=${cat.key}`,
+//             {
+//               headers: {
+//                 Authorization: `Bearer ${token}`,
+//               },
+//             }
+//           );
+//           categoryData[cat.key] = res.data;
+//         } catch (err) {
+//           console.error(`Error fetching category ${cat.key}:`, err);
+//           categoryData[cat.key] = [];
+//         }
+//       }
+//       setNfts(categoryData);
+//     };
+
+//     fetchAllCategories();
+//   }, [token]);
+
+//   const collectBadge = async (badgeId) => {
+//     try {
+//       await axios.post(
+//         `https://backend-production-1e63.up.railway.app/api/collect-badge/${badgeId}/`,
+//         {},
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+//       alert("🎉 Badge collected!");
+//       window.location.reload(); // optional: re-fetch only that category instead
+//     } catch (err) {
+//       console.error("Collect error:", err.response?.data || err);
+//       alert("❌ Already collected or not eligible");
+//     }
+//   };
+
+//   return (
+//     <div className="main-container">
+//       <div className="container">
+//         <div className="text-center mb-5">
+//           <h1 className="main-title">NFT Marketplace</h1>
+//           <p className="main-description">
+//             Discover and collect exclusive digital badges. Trade special edition
+//             badges, achievement trophies, and limited-time collectibles with
+//             other platinum members.
+//           </p>
+//         </div>
+
+//         {CATEGORIES.map((cat) => (
+//           <div key={cat.key} className="category-section">
+//             <div className="category-header">
+//               <h2>{cat.label}</h2>
+//               <div className="category-line"></div>
+//             </div>
+//             <div className="row g-4">
+//               {(nfts[cat.key] || []).map((badge) => (
+//                 <div className="col-lg-4 col-md-6" key={badge.id}>
+//                   <div className="card nft-card">
+//                     <div className="card-image">
+//                       <img
+//                         className="obj_contain"
+//                         src={badge.image_url}
+//                         alt={badge.name}
+//                       />
+//                     </div>
+//                     <div className="card-body text-center">
+//                       <h5 className="card-title">{badge.name}</h5>
+//                       <p className="card-subtitle">{badge.description}</p>
+//                       <p className="token-id">Badge #{badge.id}</p>
+
+//                       {badge.can_collect ? (
+//                         <button
+//                           className="btn btn-primary w-100"
+//                           onClick={() => collectBadge(badge.id)}
+//                         >
+//                           Collect it
+//                         </button>
+//                       ) : badge.linked_user ? (
+//                         <button className="btn btn-secondary w-100" disabled>
+//                           ✅ Collected
+//                         </button>
+//                       ) : (
+//                         <button
+//                           className="btn btn-outline-secondary w-100"
+//                           disabled
+//                         >
+//                           🔒 Not eligible
+//                         </button>
+//                       )}
+//                     </div>
+//                   </div>
+//                 </div>
+//               ))}
+//               {nfts[cat.key]?.length === 0 && (
+//                 <p className="text-muted">No NFTs in this category yet.</p>
+//               )}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default NFTMarketplace;
+
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -1105,10 +1241,12 @@ const CATEGORIES = [
 
 const NFTMarketplace = () => {
   const [nfts, setNfts] = useState({});
+  const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchAllCategories = async () => {
+      setLoading(true);
       const categoryData = {};
       for (const cat of CATEGORIES) {
         try {
@@ -1127,6 +1265,7 @@ const NFTMarketplace = () => {
         }
       }
       setNfts(categoryData);
+      setLoading(false);
     };
 
     fetchAllCategories();
@@ -1170,45 +1309,59 @@ const NFTMarketplace = () => {
               <div className="category-line"></div>
             </div>
             <div className="row g-4">
-              {(nfts[cat.key] || []).map((badge) => (
-                <div className="col-lg-4 col-md-6" key={badge.id}>
-                  <div className="card nft-card">
-                    <div className="card-image">
-                      <img
-                        className="obj_contain"
-                        src={badge.image_url}
-                        alt={badge.name}
-                      />
+              {loading
+                ? Array.from({ length: 3 }).map((_, idx) => (
+                    <div className="col-lg-4 col-md-6" key={idx}>
+                      <div className="card nft-card shimmer-card">
+                        <div className="card-image shimmer-card"></div>
+                        <div className="card-body text-center">
+                          <div className="card-title shimmer-card mb-2"></div>
+                          <div className="card-subtitle shimmer-card mb-2"></div>
+                          <div className="token-id shimmer-card mb-3"></div>
+                          <div className="btn shimmer-card w-100"></div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="card-body text-center">
-                      <h5 className="card-title">{badge.name}</h5>
-                      <p className="card-subtitle">{badge.description}</p>
-                      <p className="token-id">Badge #{badge.id}</p>
+                  ))
+                : (nfts[cat.key] || []).map((badge) => (
+                    <div className="col-lg-4 col-md-6" key={badge.id}>
+                      <div className="card nft-card">
+                        <div className="card-image">
+                          <img
+                            className="obj_contain"
+                            src={badge.image_url}
+                            alt={badge.name}
+                          />
+                        </div>
+                        <div className="card-body text-center">
+                          <h5 className="card-title">{badge.name}</h5>
+                          <p className="card-subtitle">{badge.description}</p>
+                          <p className="token-id">Badge #{badge.id}</p>
 
-                      {badge.can_collect ? (
-                        <button
-                          className="btn btn-primary w-100"
-                          onClick={() => collectBadge(badge.id)}
-                        >
-                          Collect it
-                        </button>
-                      ) : badge.linked_user ? (
-                        <button className="btn btn-secondary w-100" disabled>
-                          ✅ Collected
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-outline-secondary w-100"
-                          disabled
-                        >
-                          🔒 Not eligible
-                        </button>
-                      )}
+                          {badge.can_collect ? (
+                            <button
+                              className="btn btn-primary w-100"
+                              onClick={() => collectBadge(badge.id)}
+                            >
+                              Collect it
+                            </button>
+                          ) : badge.linked_user ? (
+                            <button className="btn btn-secondary w-100" disabled>
+                              ✅ Collected
+                            </button>
+                          ) : (
+                            <button
+                              className="btn btn-outline-secondary w-100"
+                              disabled
+                            >
+                              🔒 Not eligible
+                            </button>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-              {nfts[cat.key]?.length === 0 && (
+                  ))}
+              {!loading && nfts[cat.key]?.length === 0 && (
                 <p className="text-muted">No NFTs in this category yet.</p>
               )}
             </div>

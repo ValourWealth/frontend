@@ -86,7 +86,7 @@ const MainTable = () => {
         {/* Tab Selection */}
         <div className="d-flex justify-content-between align-items-center mb-3">
           <ul className="nav nav-tabs gap-2 mt-4 historic-table">
-            <li className="nav-item">
+            <li className="nav-item nav-intradey">
               <button
                 className={`nav-link active ${
                   activeTab === "intraday" ? "active" : ""
@@ -96,7 +96,7 @@ const MainTable = () => {
                 Intraday Activity
               </button>
             </li>
-            <li className="nav-item">
+            <li className="nav-item nav-intradey">
               <button
                 className={`nav-link ${activeTab === "weekly" ? "active" : ""}`}
                 onClick={() => setActiveTab("weekly")}
@@ -147,7 +147,7 @@ const MainTable = () => {
 
         {/* Trend Buttons */}
         <div
-          className="d-flex gap-3 align-items-center mb-3"
+          className="d-flex gap-1 align-items-center mb-3"
           style={{ justifyContent: "end" }}
         >
           <button
@@ -156,7 +156,7 @@ const MainTable = () => {
             }`}
             onClick={() => setTrend("up")}
           >
-            Up Trend
+            <i className="bi bi-arrow-up"></i>
           </button>
           <button
             className={`btn ${
@@ -164,7 +164,7 @@ const MainTable = () => {
             }`}
             onClick={() => setTrend("down")}
           >
-            Down Trend
+            <i className="bi bi-arrow-down"></i>
           </button>
         </div>
       </div>

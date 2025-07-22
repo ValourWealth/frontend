@@ -516,13 +516,14 @@ const PlatinumBriefing = () => {
               {!isPlaying ? (
                 <div style={styles.thumbnailContainer} onClick={handlePlay}>
                   <img
-                    src={current.thumbnail || "/api/placeholder/800/400"}
+                    src={current.thumbnail_url}
                     alt="Video thumbnail"
                     style={styles.thumbnailImage}
                     onError={(e) => {
-                      e.target.style.display = "none";
-                      e.target.parentElement.style.background =
-                        "radial-gradient(circle, #444444 10%, #333333 70%)";
+                      // e.target.style.display = "none";
+                      console.error("Image failed to load:", e);
+                      // e.target.parentElement.style.background =
+                      //   "radial-gradient(circle, #444444 10%, #333333 70%)";
                     }}
                   />
                   <div style={styles.playButtonOverlay}>
@@ -556,7 +557,7 @@ const PlatinumBriefing = () => {
                     }}
                     preload="metadata"
                     playsInline
-                    poster={current.thumbnail}
+                    poster={current.thumbnail_url}
                   >
                     <source src={current.public_url} type="video/mp4" />
                     <source src={current.public_url} type="video/webm" />

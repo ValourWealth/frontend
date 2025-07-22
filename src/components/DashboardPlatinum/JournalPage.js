@@ -9,7 +9,6 @@ import {
   Calendar,
   CheckCircle,
   DollarSign,
-  Download,
   Plus,
   Target,
   TrendingUp,
@@ -463,10 +462,26 @@ const Journal = () => {
             <p className="dashboard-subtitle-text">10 trades recorded</p>
           </div>
 
-          <button onClick={() => setIsAddModalOpen(true)}>
-            <Plus size={16} className="me-2" />
-            Add New Trade
-          </button>
+          <div className="d-flex gap-2">
+            <button
+              onClick={() => setIsAddModalOpen(true)}
+              style={{
+                backgroundColor: "#ffff",
+                color: "#000",
+                padding: "10px 16px",
+                borderRadius: "6px",
+                border: "none",
+                display: "flex",
+                alignItems: "center",
+                fontSize: "14px",
+                fontWeight: "500",
+                cursor: "pointer",
+              }}
+            >
+              <Plus size={16} className="me-2" />
+              Add New Trade
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1000,10 +1015,6 @@ const Journal = () => {
               Comprehensive trading performance report (10 trades)
             </p>
           </div>
-          <button className="export-csv-button">
-            <Download size={16} className="me-2" />
-            Export CSV
-          </button>
         </div>
       </div>
 
@@ -1232,7 +1243,7 @@ const Journal = () => {
   return (
     <div className="trading-platform-main">
       {/* Primary Navigation */}
-      <nav className="platform-navigation-bar px-2">
+      <nav className="platform-navigation-bar px-2 p-0">
         <div className="row">
           <div className="container-fluid d-flex justify-content-between align-items-center py-3">
             <div className="platform-nav-content">
@@ -1300,11 +1311,21 @@ const Journal = () => {
               </ul>
             </div>
             <div className="d-flex gap-2">
-              <button className="secondary-action-button">
-                <Download size={16} className="me-2" />
-                Export Data
-              </button>
-              <button onClick={() => setIsAddModalOpen(true)}>
+              <button
+                onClick={() => setIsAddModalOpen(true)}
+                style={{
+                  backgroundColor: "#1a1a1a",
+                  color: "white",
+                  padding: "10px 16px",
+                  borderRadius: "6px",
+                  border: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  cursor: "pointer",
+                }}
+              >
                 <Plus size={16} className="me-2" />
                 Add New Trade
               </button>

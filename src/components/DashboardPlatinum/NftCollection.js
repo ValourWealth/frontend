@@ -137,11 +137,112 @@
 // };
 
 // export default NFTCollection;
+
+// import axios from "axios";
+// import { useEffect, useState } from "react";
+
+// const NFTCollection = ({ onPrimarySet }) => {
+//   const [badges, setBadges] = useState([]);
+//   const [loadingId, setLoadingId] = useState(null);
+
+//   useEffect(() => {
+//     const fetchUserBadges = async () => {
+//       try {
+//         const token = localStorage.getItem("accessToken");
+//         const res = await axios.get(
+//           "https://backend-production-1e63.up.railway.app/api/my-recent-badges/",
+//           {
+//             headers: {
+//               Authorization: `Bearer ${token}`,
+//             },
+//           }
+//         );
+//         setBadges(res.data);
+//       } catch (error) {
+//         console.error("Error fetching badges", error);
+//       }
+//     };
+
+//     fetchUserBadges();
+//   }, []);
+
+//   const setPrimaryBadge = async (badgeId) => {
+//     try {
+//       setLoadingId(badgeId);
+//       const token = localStorage.getItem("accessToken");
+
+//       await axios.post(
+//         "https://backend-production-1e63.up.railway.app/api/set-primary-badge/",
+//         { badge_id: badgeId },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+
+//       alert("Primary badge set successfully!");
+
+//       if (onPrimarySet) onPrimarySet(); // trigger profile refetch from parent
+//     } catch (error) {
+//       console.error(
+//         "Failed to set primary badge:",
+//         error.response?.data || error
+//       );
+//       alert(error.response?.data?.error || "Something went wrong.");
+//     } finally {
+//       setLoadingId(null);
+//     }
+//   };
+
+//   return (
+//     <div className="nft-collection-container">
+//       <h2 className="collection-title">Your NFT Collection</h2>
+
+//       <div className="nft-grid">
+//         {badges.length === 0 && <p className="text-gray-400">Loading/....</p>}
+
+//         {badges.map((badge) => (
+//           <div className="nft-card" key={badge.id}>
+//             <div className={`nft-badge ${badge.category}`}>
+//               <img
+//                 src={badge.image_url}
+//                 alt={badge.name}
+//                 className="w-24 h-24 object-contain mx-auto"
+//               />
+//             </div>
+
+//             <div className={`nft-rarity ${badge.category}`}>
+//               {badge.category.toUpperCase()}
+//             </div>
+
+//             <h3 className="nft-title">{badge.name}</h3>
+//             <p className="nft-issue-date">
+//               Issued: {new Date(badge.assigned_at).toLocaleDateString()}
+//             </p>
+
+//             <button
+//               className="view-details-btn"
+//               onClick={() => setPrimaryBadge(badge.id)}
+//               disabled={loadingId === badge.id}
+//             >
+//               {loadingId === badge.id ? "Setting..." : "Set as Primary Badge"}
+//             </button>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default NFTCollection;
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const NFTCollection = ({ onPrimarySet }) => {
   const [badges, setBadges] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [loadingId, setLoadingId] = useState(null);
 
   useEffect(() => {
@@ -159,6 +260,8 @@ const NFTCollection = ({ onPrimarySet }) => {
         setBadges(res.data);
       } catch (error) {
         console.error("Error fetching badges", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -181,8 +284,7 @@ const NFTCollection = ({ onPrimarySet }) => {
       );
 
       alert("Primary badge set successfully!");
-
-      if (onPrimarySet) onPrimarySet(); // trigger profile refetch from parent
+      if (onPrimarySet) onPrimarySet();
     } catch (error) {
       console.error(
         "Failed to set primary badge:",
@@ -195,40 +297,42 @@ const NFTCollection = ({ onPrimarySet }) => {
   };
 
   return (
-    <div className="nft-collection-container">
-      <h2 className="collection-title">Your NFT Collection</h2>
+    <div className="badge-container">
+      <h2 className="badge-heading">Your NFT Collection</h2>
 
-      <div className="nft-grid">
-        {badges.length === 0 && <p className="text-gray-400">Loading/....</p>}
+      <div className="badge-grid">
+        {loading
+          ? Array.from({ length: 3 }).map((_, idx) => (
+              <div className="badge-card shimmer-card" key={idx}></div>
+            ))
+          : badges.map((badge) => (
+              <div className="badge-card" key={badge.id}>
+                <img
+                  src={badge.image_url}
+                  alt={badge.name}
+                  className="badge-img"
+                />
 
-        {badges.map((badge) => (
-          <div className="nft-card" key={badge.id}>
-            <div className={`nft-badge ${badge.category}`}>
-              <img
-                src={badge.image_url}
-                alt={badge.name}
-                className="w-24 h-24 object-contain mx-auto"
-              />
-            </div>
+                <div className={`badge-rarity ${badge.category}`}>
+                  {badge.category.toUpperCase()}
+                </div>
 
-            <div className={`nft-rarity ${badge.category}`}>
-              {badge.category.toUpperCase()}
-            </div>
+                <h3 className="badge-title">{badge.name}</h3>
+                <p className="badge-date">
+                  Issued: {new Date(badge.assigned_at).toLocaleDateString()}
+                </p>
 
-            <h3 className="nft-title">{badge.name}</h3>
-            <p className="nft-issue-date">
-              Issued: {new Date(badge.assigned_at).toLocaleDateString()}
-            </p>
-
-            <button
-              className="view-details-btn"
-              onClick={() => setPrimaryBadge(badge.id)}
-              disabled={loadingId === badge.id}
-            >
-              {loadingId === badge.id ? "Setting..." : "Set as Primary Badge"}
-            </button>
-          </div>
-        ))}
+                <button
+                  className="badge-btn"
+                  onClick={() => setPrimaryBadge(badge.id)}
+                  disabled={loadingId === badge.id}
+                >
+                  {loadingId === badge.id
+                    ? "Setting..."
+                    : "Set as Primary Badge"}
+                </button>
+              </div>
+            ))}
       </div>
     </div>
   );

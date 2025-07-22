@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import img1 from "../assets/images/1.svg";
 import img2 from "../assets/images/2.svg";
 import img3 from "../assets/images/3.svg";
 import AffiliateGrid from "../components/affiliateGrid";
+import Navbar from "../components/Navbar";
 
 const TradervueHeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <style jsx>{`
@@ -241,6 +245,7 @@ const TradervueHeroSection = () => {
       >
         {/* Hero Section */}
         <div className="hero-section-affiliate">
+          <Navbar />
           <div
             className="row justify-content-center py-5"
             style={{
@@ -299,7 +304,10 @@ const TradervueHeroSection = () => {
                 Program
               </p>
 
-              <button className="btn btn-custom">
+              <button
+                onClick={() => navigate("/customer-support")}
+                className="btn btn-custom"
+              >
                 Join the ValourWealth Affiliate Program
                 <span className="ms-2" style={{ fontSize: "18px" }}>
                   →

@@ -774,6 +774,28 @@ h3 {
   text-decoration: none;
   transition: 0.2s;
 }
+.nav-intradey .nav-link:hover {
+  color: #fff !important;
+}
+.play-button-resources {
+  padding: 0;
+  width: 70px;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  height: 50px;
+  background: var(--theme-color);
+  color: #fff;
+}
+.ticker-header a {
+  text-decoration: none;
+}
+.search-main input {
+  background-color: #161616 !important;
+  border: none !important;
+}
 
 .menu-item:hover {
   background-color: #f8f9fa;
@@ -1499,7 +1521,7 @@ video::-webkit-media-controls {
 
 .author-name {
   font-weight: 600;
-  color: #374151;
+  color: #1a1a1a;
   font-size: 0.9rem;
 }
 
@@ -1699,7 +1721,7 @@ video::-webkit-media-controls {
 }
 
 .blog-post .blog-content {
-  color: #374151;
+  color: #1a1a1a;
   line-height: 1.7;
   font-size: 1.1rem;
 }
@@ -1922,12 +1944,12 @@ video::-webkit-media-controls {
 }
 
 .platform-nav-button:hover {
-  background-color: #374151;
+  background-color: #333;
   color: #ffffff;
 }
 
 .platform-nav-button.platform-nav-active {
-  background-color: #3b82f6 !important;
+  background-color: #121212 !important;
   color: #ffffff !important;
 }
 
@@ -1944,7 +1966,7 @@ video::-webkit-media-controls {
 }
 
 .secondary-action-button:hover {
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-color: #9ca3af;
   color: #ffffff;
 }
@@ -2071,7 +2093,7 @@ video::-webkit-media-controls {
 
 /* Custom Progress Bar */
 .custom-progress-container {
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-radius: 0.5rem;
   height: 0.5rem;
   overflow: hidden;
@@ -2090,16 +2112,16 @@ video::-webkit-media-controls {
 
 /* Activity Row Items */
 .activity-row-item {
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-radius: 0.75rem;
   padding: 1rem;
   margin-bottom: 0.75rem;
-  border: 1px solid #4b5563;
+  border: 1px solid #333;
   transition: background-color 0.2s ease;
 }
 
 .activity-row-item:hover {
-  background-color: #4b5563;
+  background-color: #333;
 }
 
 .activity-row-item:last-child {
@@ -2149,7 +2171,7 @@ video::-webkit-media-controls {
 }
 
 .trading-tag-badge {
-  background-color: #374151;
+  background-color: #1a1a1a;
   color: #9ca3af;
   padding: 0.25rem 0.5rem;
   border-radius: 0.375rem;
@@ -2184,7 +2206,7 @@ video::-webkit-media-controls {
 /* Exit Performance Distribution */
 .exit-performance-distribution {
   padding: 1rem;
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-radius: 0.75rem;
 }
 
@@ -2197,7 +2219,7 @@ video::-webkit-media-controls {
 }
 
 .performance-progress-bar {
-  background-color: #4b5563;
+  background-color: #333;
   border-radius: 0.25rem;
   height: 0.5rem;
   overflow: hidden;
@@ -2227,16 +2249,16 @@ video::-webkit-media-controls {
 
 /* Worst Performer Item */
 .worst-performer-item {
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-radius: 0.75rem;
   padding: 1rem;
   margin-bottom: 0.75rem;
-  border: 1px solid #4b5563;
+  border: 1px solid #333;
   transition: background-color 0.2s ease;
 }
 
 .worst-performer-item:hover {
-  background-color: #4b5563;
+  background-color: #333;
 }
 
 .worst-performer-item:last-child {
@@ -2251,8 +2273,8 @@ video::-webkit-media-controls {
 }
 
 .analysis-table-header {
-  background-color: #374151;
-  border-bottom: 1px solid #4b5563;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
 }
 
 .analysis-table-body {
@@ -2291,7 +2313,7 @@ video::-webkit-media-controls {
 /* Win Loss Analytics */
 .win-loss-analytics {
   padding: 1rem;
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-radius: 0.75rem;
 }
 
@@ -2308,28 +2330,28 @@ video::-webkit-media-controls {
 /* Side Performance Analytics */
 .side-performance-analytics {
   padding: 1rem;
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-radius: 0.75rem;
 }
 
 .side-analytics-item {
   padding: 0.75rem;
-  background-color: #4b5563;
+  background-color: #333;
   border-radius: 0.5rem;
 }
 
 /* Symbol Analytics Performance Row */
 .symbol-analytics-performance-row {
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-radius: 0.75rem;
   padding: 1rem;
   margin-bottom: 0.75rem;
-  border: 1px solid #4b5563;
+  border: 1px solid #333;
   transition: background-color 0.2s ease;
 }
 
 .symbol-analytics-performance-row:hover {
-  background-color: #4b5563;
+  background-color: #333;
 }
 
 .symbol-analytics-performance-row:last-child {
@@ -2420,7 +2442,7 @@ video::-webkit-media-controls {
 }
 
 .reports-trade-details {
-  background-color: #374151;
+  background-color: #1a1a1a;
   border-radius: 0.75rem;
   padding: 1rem;
 }
@@ -2449,8 +2471,8 @@ video::-webkit-media-controls {
 }
 
 .reports-table-header {
-  background-color: #374151;
-  border-bottom: 1px solid #4b5563;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
 }
 
 .reports-table-body {
@@ -2492,7 +2514,7 @@ video::-webkit-media-controls {
 
 /* Color Classes */
 .profit-color {
-  color: var(--theme-color) !important;
+  color: #ffff !important;
 }
 
 .loss-color {
@@ -2508,7 +2530,7 @@ video::-webkit-media-controls {
 }
 
 .primary-color {
-  color: #3b82f6 !important;
+  color: #1a1a1a !important;
 }
 
 .bg-success {
@@ -2682,7 +2704,7 @@ video::-webkit-media-controls {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4b5563;
+  background: #333;
   border-radius: 4px;
 }
 
@@ -2695,7 +2717,6 @@ video::-webkit-media-controls {
 .primary-action-button:focus,
 .secondary-action-button:focus,
 .export-csv-button:focus {
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
   outline: none;
 }
 
@@ -2899,7 +2920,7 @@ video::-webkit-media-controls {
 
 .enhanced-close-button:hover {
   color: #ffffff;
-  background-color: #374151;
+  background-color: #1a1a1a;
   transform: scale(1.1);
 }
 
@@ -3067,8 +3088,8 @@ video::-webkit-media-controls {
 
 /* Trade Summary Card */
 .trade-summary-card {
-  background: linear-gradient(135deg, #374151 0%, #2d3748 100%);
-  border: 1px solid #4b5563;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+  border: 1px solid #333;
   border-radius: 12px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
@@ -3137,8 +3158,8 @@ video::-webkit-media-controls {
 }
 
 .popular-tag-button {
-  background: linear-gradient(135deg, #374151 0%, #2d3748 100%);
-  border: 1px solid #4b5563;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+  border: 1px solid #333;
   color: #9ca3af;
   padding: 0.375rem 0.75rem;
   border-radius: 20px;
@@ -3151,7 +3172,7 @@ video::-webkit-media-controls {
 }
 
 .popular-tag-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+  background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
   color: #ffffff;
   transform: translateY(-1px);
 }
@@ -3227,7 +3248,7 @@ video::-webkit-media-controls {
 /* Cancel Button */
 .enhanced-cancel-button {
   background: transparent;
-  border: 2px solid #4b5563;
+  border: 2px solid #333;
   color: #9ca3af;
   padding: 0.875rem 1.75rem;
   border-radius: 10px;
@@ -3238,7 +3259,7 @@ video::-webkit-media-controls {
 }
 
 .enhanced-cancel-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #374151 0%, #2d3748 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
   border-color: #6b7280;
   color: #ffffff;
   transform: translateY(-2px);
@@ -3246,8 +3267,8 @@ video::-webkit-media-controls {
 
 /* Submit Button */
 .enhanced-submit-button {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  border: 2px solid #3b82f6;
+  border: 2px solid #111;
+  background-color: #1a1a1a;
   color: #ffffff;
   padding: 0.875rem 1.75rem;
   border-radius: 10px;
@@ -3262,15 +3283,15 @@ video::-webkit-media-controls {
 }
 
 .enhanced-submit-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  border-color: #2563eb;
+  background: linear-gradient(135deg, #1a1a1a 0%, #1a1a1a 100%);
+  border-color: #1a1a1a;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px 0 rgba(59, 130, 246, 0.4);
 }
 
 .enhanced-submit-button:disabled {
-  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
-  border-color: #4b5563;
+  background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
+  border-color: #333;
   color: #9ca3af;
   cursor: not-allowed;
   transform: none;
@@ -3389,9 +3410,8 @@ video::-webkit-media-controls {
   border-radius: 20px;
 }
 .message-content p {
-    margin-bottom: 0 !important;
-      text-align: left;
-
+  margin-bottom: 0 !important;
+  text-align: left;
 }
 .right-panel {
   padding: 2.5rem;
@@ -3401,12 +3421,12 @@ video::-webkit-media-controls {
 }
 
 .enhanced-modal-container::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+  background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
   border-radius: 3px;
 }
 
 .enhanced-modal-container::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  background: linear-gradient(135deg, #6b7280 0%, #333 100%);
 }
 
 /* Focus Management */
@@ -3456,3 +3476,111 @@ video::-webkit-media-controls {
     display: none;
   }
 }
+
+.badge-container {
+  padding: 2rem;
+  color: #fff;
+}
+
+.badge-heading {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.badge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.badge-card {
+  background-color: #111;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge-card:hover {
+  transform: scale(1.02);
+}
+
+.badge-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0.5rem 0 0;
+  text-align: center;
+}
+
+.badge-rarity {
+  font-size: 0.75rem;
+  text-align: center;
+  font-weight: bold;
+  color: #ffd700;
+  margin-top: 0.5rem;
+}
+
+.badge-date {
+  font-size: 0.75rem;
+  color: #aaa;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.badge-btn {
+  background-color: #222;
+  color: white;
+  border: 1px solid #444;
+  padding: 8px 12px;
+  width: 90%;
+  margin: 0.5rem auto 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s ease-in-out;
+}
+
+.badge-btn:hover {
+  background-color: #333;
+  border-color: #666;
+}
+
+.shimmer-card {
+  background: linear-gradient(110deg, #2a2a2a 8%, #3a3a3a 18%, #2a2a2a 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+.shimmer-card {
+  background: linear-gradient(110deg, #2a2a2a 8%, #3a3a3a 18%, #2a2a2a 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+

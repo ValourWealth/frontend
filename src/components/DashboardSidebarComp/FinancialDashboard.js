@@ -1349,7 +1349,6 @@ export default function FinancialDashboard() {
 
   const contractsData = selectedTicker?.contracts || [];
 
-  
   return (
     <>
       <style>{`
@@ -1409,7 +1408,6 @@ export default function FinancialDashboard() {
         }
 
         .left-panel {
-          background: #151519;
           border-right: 1px solid #2D2D35;
           padding: 2rem;
         }
