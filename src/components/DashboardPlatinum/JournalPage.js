@@ -153,7 +153,7 @@ const Journal = () => {
     const fetchTradingAnalysis = async () => {
       try {
         const res = await fetch(
-          "https://backend-production-1e63.up.railway.app/api/trade-journal-dashboard/",
+          "https://backend-production-1e63.up.railway.app/api/dashboard/",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -161,46 +161,20 @@ const Journal = () => {
           }
         );
         const data = await res.json();
-
-        // 💡 Format data for the frontend structure
-        const exitDist = data.exit_performance.distribution;
-        const total = data.total_trades || 1;
+        const analysis = data.trading_analysis; // ✅ take nested object
 
         setTradingAnalysisData({
-          averageExitPerformance: data.exit_performance.average,
-          missedProfitOpportunities: data.exit_performance.missed_profits,
-          optimalExitTrades: data.exit_performance.optimal_exits,
-          earlyExitTrades: data.exit_performance.early_exits,
-          exitPerformanceDistribution: {
-            excellent: {
-              count: exitDist.excellent,
-              percentage: ((exitDist.excellent / total) * 100).toFixed(1),
-            },
-            good: {
-              count: exitDist.good,
-              percentage: ((exitDist.good / total) * 100).toFixed(1),
-            },
-            average: {
-              count: exitDist.average,
-              percentage: ((exitDist.average / total) * 100).toFixed(1),
-            },
-            poor: {
-              count: exitDist.poor,
-              percentage: ((exitDist.poor / total) * 100).toFixed(1),
-            },
-          },
-          worstExitPerformers: data.exit_performance.worst_exit
-            ? [
-                {
-                  ticker: data.exit_performance.worst_exit.symbol,
-                  position: data.exit_performance.worst_exit.side,
-                  missedAmount: data.exit_performance.worst_exit.missed_profit,
-                  exitPerformance: data.exit_performance.worst_exit.performance,
-                },
-              ]
-            : [],
-          detailedExitAnalysis: data.detailed_exit_analysis || [],
+          averageExitPerformance: analysis.averageExitPerformance,
+          missedProfitOpportunities: analysis.missedProfitOpportunities,
+          optimalExitTrades: analysis.optimalExitTrades,
+          earlyExitTrades: analysis.earlyExitTrades,
+          exitPerformanceDistribution: analysis.exitPerformanceDistribution,
+          worstExitPerformers: analysis.worstExitPerformers,
+          detailedExitAnalysis: analysis.detailedExitAnalysis,
         });
+
+        // Optional: set AI summary if you want to show
+        // setAiExitSummary(analysis.ai_exit_summary);
       } catch (error) {
         console.error("Failed to fetch trading analysis:", error);
       }
