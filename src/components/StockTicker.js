@@ -326,6 +326,7 @@
 // }
 
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const API_KEY = "04RGF1U9PAJ49VYI";
 
@@ -337,9 +338,14 @@ export default function TradingTools() {
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const symbolFromUrl = queryParams.get("symbol");
+
+  const [selectedSymbol, setSelectedSymbol] = useState(symbolFromUrl); // Default value from URL
 
   // Dashboard states
-  const [selectedSymbol, setSelectedSymbol] = useState(null); // Initially null - no dashboard
+  // const [selectedSymbol, setSelectedSymbol] = useState(null); // Initially null - no dashboard
   const [overview, setOverview] = useState(null);
   const [price, setPrice] = useState(null);
   const [sentiment, setSentiment] = useState(null);
