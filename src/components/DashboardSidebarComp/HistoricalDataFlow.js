@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom"; // ⬅️ Add this
 import "../DashboardSidebarComp/styles/historicalDataFlow.css";
 
 const API_BASE_URL = "https://backend-production-1e63.up.railway.app/";
@@ -8,6 +9,7 @@ const HistoricalDataFlow = ({ darkMode }) => {
   const [activeTab, setActiveTab] = useState("largeCaps");
   const [trend, setTrend] = useState("up");
   const [tableData, setTableData] = useState([]);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [active, setActive] = useState("up");
@@ -107,8 +109,6 @@ const HistoricalDataFlow = ({ darkMode }) => {
             }}
           />
         </div>
-
-        
       </ul>
 
       <div className="table-responsive mt-3">
@@ -159,7 +159,19 @@ const HistoricalDataFlow = ({ darkMode }) => {
             ) : tableData.length > 0 ? (
               tableData.map((item, idx) => (
                 <tr key={idx}>
-                  <td>{item.ticker || "-"}</td>
+                  {/* <td>{item.ticker || "-"}</td> */}
+                  <td
+                    onClick={() =>
+                      navigate(`/trading-tools?symbol=${item.ticker}`)
+                    }
+                    style={{
+                      cursor: "pointer",
+                      color: "#2563eb",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {item.ticker || "-"}
+                  </td>
                   <td>
                     {item.from_price && item.from_time ? (
                       <>
