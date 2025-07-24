@@ -111,7 +111,6 @@ const Journal = () => {
     const fetchTrades = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-
         const res = await fetch(
           "https://backend-production-1e63.up.railway.app/api/trades/",
           {
@@ -125,21 +124,22 @@ const Journal = () => {
 
         const data = await res.json();
 
-        const formatted = data.map((t) => ({
-          ticker: t.symbol,
-          positionType: t.side,
-          tradingTags: t.tags || [],
-          netProfit: parseFloat(t.profit_loss),
-          openPrice: parseFloat(t.entry_price),
-          closePrice: parseFloat(t.exit_price),
-          shareQuantity: parseFloat(t.quantity),
-          holdingPeriod: `${t.duration} day${t.duration === 1 ? "" : "s"}`,
-          tradeNotes: t.notes || "No notes",
+        // Transform the response for UI format
+        const formatted = data.map((trade) => ({
+          ticker: trade.symbol,
+          positionType: trade.side,
+          tradingTags: trade.tags || [],
+          netProfit: trade.profit_loss,
+          openPrice: trade.entry_price,
+          closePrice: trade.exit_price,
+          shareQuantity: trade.quantity,
+          holdingPeriod: `${trade.duration} days`,
+          tradeNotes: trade.notes,
         }));
 
         setJournalEntries(formatted);
       } catch (err) {
-        console.error("Trade fetch error:", err);
+        console.error("Error loading trades:", err);
       }
     };
 
@@ -604,7 +604,10 @@ const Journal = () => {
                 </div>
                 <div className="profit-color h5 mb-0">
                   <TrendingUp size={16} className="me-1" />$
-                  {trade.netProfit.toFixed(2)}
+                  {/* {trade.netProfit.toFixed(2)} */}
+                  {typeof trade.netProfit === "number"
+                    ? trade.netProfit.toFixed(2)
+                    : "0.00"}
                 </div>
               </div>
 
