@@ -19,37 +19,6 @@ const Journal = () => {
   const [currentActiveTab, setCurrentActiveTab] = useState("dashboard");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // const portfolioMetrics = {
-  //   totalProfitLoss: 7881.0,
-  //   successRate: 90.0,
-  //   totalExecutedTrades: 10,
-  //   averageWinningTrade: 949.56,
-  //   averageLosingTrade: 665.0,
-  //   riskRewardRatio: 1.43,
-  //   successfulTrades: 9,
-  //   failedTrades: 1,
-  //   latestTradeActivity: [
-  //     {
-  //       ticker: "AAPL",
-  //       position: "LONG",
-  //       tradeDate: "18/01/2024",
-  //       profitAmount: 730.0,
-  //     },
-  //     {
-  //       ticker: "NVDA",
-  //       position: "LONG",
-  //       tradeDate: "16/01/2024",
-  //       profitAmount: 1637.5,
-  //     },
-  //     {
-  //       ticker: "BTC-USD",
-  //       position: "LONG",
-  //       tradeDate: "14/01/2024",
-  //       profitAmount: 1350.0,
-  //     },
-  //   ],
-  // };
-
   const [portfolioMetrics, setPortfolioMetrics] = useState({
     totalProfitLoss: 0,
     successRate: 0,
@@ -99,49 +68,89 @@ const Journal = () => {
     fetchDashboardMetrics();
   }, []);
 
-  const [journalEntries, setJournalEntries] = useState([
-    {
-      ticker: "AAPL",
-      positionType: "LONG",
-      tradingTags: [
-        "breakout",
-        "tech",
-        "swing",
-        "high-confidence",
-        "earnings-play",
-      ],
-      openPrice: 185.5,
-      closePrice: 192.8,
-      shareQuantity: 100,
-      holdingPeriod: "3 days",
-      netProfit: 730.0,
-      tradeNotes:
-        "Strong breakout above resistance with high volume. Held through earnings announcement.",
-    },
-    {
-      ticker: "NVDA",
-      positionType: "LONG",
-      tradingTags: ["ai-trend", "momentum", "swing", "high-confidence", "tech"],
-      openPrice: 825,
-      closePrice: 890.5,
-      shareQuantity: 25,
-      holdingPeriod: "6 days",
-      netProfit: 1637.5,
-      tradeNotes:
-        "AI momentum trade. Strong institutional buying. Exit at resistance level.",
-    },
-    {
-      ticker: "BTC-USD",
-      positionType: "LONG",
-      tradingTags: ["crypto", "scalp", "btc-dominance", "medium-confidence"],
-      openPrice: 42500,
-      closePrice: 45200,
-      shareQuantity: 0.5,
-      holdingPeriod: "2 days",
-      netProfit: 1350.0,
-      tradeNotes: "Quick scalp on Bitcoin bounce off support. Tight stop loss.",
-    },
-  ]);
+  useEffect(() => {
+    const fetchTrades = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+        const res = await fetch(
+          "https://backend-production-1e63.up.railway.app/api/trades/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!res.ok) throw new Error("Failed to fetch trades");
+
+        const data = await res.json();
+
+        // Map backend fields to frontend expectations
+        const formattedTrades = data.map((t) => ({
+          ticker: t.symbol,
+          positionType: t.side,
+          tradingTags: t.tags || [],
+          netProfit: t.profit_loss,
+          openPrice: parseFloat(t.entry_price),
+          closePrice: parseFloat(t.exit_price),
+          shareQuantity: parseFloat(t.quantity),
+          holdingPeriod: `${t.duration} day${t.duration === 1 ? "" : "s"}`,
+          tradeNotes: t.notes || "",
+        }));
+
+        setJournalEntries(formattedTrades);
+      } catch (err) {
+        console.error("Error loading trade journal:", err);
+      }
+    };
+
+    fetchTrades();
+  }, []);
+
+  const [journalEntries, setJournalEntries] = useState([]);
+  // const [journalEntries, setJournalEntries] = useState([
+  //   {
+  //     ticker: "AAPL",
+  //     positionType: "LONG",
+  //     tradingTags: [
+  //       "breakout",
+  //       "tech",
+  //       "swing",
+  //       "high-confidence",
+  //       "earnings-play",
+  //     ],
+  //     openPrice: 185.5,
+  //     closePrice: 192.8,
+  //     shareQuantity: 100,
+  //     holdingPeriod: "3 days",
+  //     netProfit: 730.0,
+  //     tradeNotes:
+  //       "Strong breakout above resistance with high volume. Held through earnings announcement.",
+  //   },
+  //   {
+  //     ticker: "NVDA",
+  //     positionType: "LONG",
+  //     tradingTags: ["ai-trend", "momentum", "swing", "high-confidence", "tech"],
+  //     openPrice: 825,
+  //     closePrice: 890.5,
+  //     shareQuantity: 25,
+  //     holdingPeriod: "6 days",
+  //     netProfit: 1637.5,
+  //     tradeNotes:
+  //       "AI momentum trade. Strong institutional buying. Exit at resistance level.",
+  //   },
+  //   {
+  //     ticker: "BTC-USD",
+  //     positionType: "LONG",
+  //     tradingTags: ["crypto", "scalp", "btc-dominance", "medium-confidence"],
+  //     openPrice: 42500,
+  //     closePrice: 45200,
+  //     shareQuantity: 0.5,
+  //     holdingPeriod: "2 days",
+  //     netProfit: 1350.0,
+  //     tradeNotes: "Quick scalp on Bitcoin bounce off support. Tight stop loss.",
+  //   },
+  // ]);
 
   const performanceAnalytics = {
     winLossBreakdown: {
@@ -508,7 +517,9 @@ const Journal = () => {
         <div className="col-12 d-flex justify-content-between align-items-center">
           <div>
             <h2 className="dashboard-main-title">Trade Journal</h2>
-            <p className="dashboard-subtitle-text">10 trades recorded</p>
+            <p className="dashboard-subtitle-text">
+              {journalEntries.length} trades recorded
+            </p>
           </div>
 
           <div className="d-flex gap-2">
