@@ -19,36 +19,85 @@ const Journal = () => {
   const [currentActiveTab, setCurrentActiveTab] = useState("dashboard");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const portfolioMetrics = {
-    totalProfitLoss: 7881.0,
-    successRate: 90.0,
-    totalExecutedTrades: 10,
-    averageWinningTrade: 949.56,
-    averageLosingTrade: 665.0,
-    riskRewardRatio: 1.43,
-    successfulTrades: 9,
-    failedTrades: 1,
-    latestTradeActivity: [
-      {
-        ticker: "AAPL",
-        position: "LONG",
-        tradeDate: "18/01/2024",
-        profitAmount: 730.0,
-      },
-      {
-        ticker: "NVDA",
-        position: "LONG",
-        tradeDate: "16/01/2024",
-        profitAmount: 1637.5,
-      },
-      {
-        ticker: "BTC-USD",
-        position: "LONG",
-        tradeDate: "14/01/2024",
-        profitAmount: 1350.0,
-      },
-    ],
-  };
+  // const portfolioMetrics = {
+  //   totalProfitLoss: 7881.0,
+  //   successRate: 90.0,
+  //   totalExecutedTrades: 10,
+  //   averageWinningTrade: 949.56,
+  //   averageLosingTrade: 665.0,
+  //   riskRewardRatio: 1.43,
+  //   successfulTrades: 9,
+  //   failedTrades: 1,
+  //   latestTradeActivity: [
+  //     {
+  //       ticker: "AAPL",
+  //       position: "LONG",
+  //       tradeDate: "18/01/2024",
+  //       profitAmount: 730.0,
+  //     },
+  //     {
+  //       ticker: "NVDA",
+  //       position: "LONG",
+  //       tradeDate: "16/01/2024",
+  //       profitAmount: 1637.5,
+  //     },
+  //     {
+  //       ticker: "BTC-USD",
+  //       position: "LONG",
+  //       tradeDate: "14/01/2024",
+  //       profitAmount: 1350.0,
+  //     },
+  //   ],
+  // };
+
+  const [portfolioMetrics, setPortfolioMetrics] = useState({
+    totalProfitLoss: 0,
+    successRate: 0,
+    successfulTrades: 0,
+    failedTrades: 0,
+    totalExecutedTrades: 0,
+    averageWinningTrade: 0,
+    averageLosingTrade: 0,
+    riskRewardRatio: 0,
+    latestTradeActivity: [], // optional if you're rendering latest trades
+  });
+
+  useEffect(() => {
+    const fetchDashboardMetrics = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+        const res = await fetch(
+          "https://backend-production-1e63.up.railway.app/api/dashboard/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!res.ok) throw new Error("Failed to fetch");
+
+        const data = await res.json();
+
+        // Map backend data to frontend state
+        setPortfolioMetrics({
+          totalProfitLoss: data.total_pnl,
+          successRate: data.win_rate,
+          successfulTrades: data.win_trades,
+          failedTrades: data.loss_trades,
+          totalExecutedTrades: data.total_trades,
+          averageWinningTrade: data.avg_win,
+          averageLosingTrade: data.avg_loss,
+          riskRewardRatio: data.risk_reward,
+          latestTradeActivity: [], // optional, map from /api/trades/ if needed
+        });
+      } catch (err) {
+        console.error("Error loading dashboard metrics:", err);
+      }
+    };
+
+    fetchDashboardMetrics();
+  }, []);
 
   const [journalEntries, setJournalEntries] = useState([
     {

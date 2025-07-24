@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom"; // ⬅️ Add this
 import "../DashboardSidebarComp/styles/atsflow.css";
 
 const API_BASE_URL = "https://backend-production-1e63.up.railway.app/";
@@ -11,6 +12,7 @@ const AtsFlow = ({ darkMode }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [active, setActive] = useState("up");
+  const navigate = useNavigate();
 
   const apiPaths = {
     up: {
@@ -153,7 +155,19 @@ const AtsFlow = ({ darkMode }) => {
             ) : tableData.length > 0 ? (
               tableData.slice(0, 5).map((item, idx) => (
                 <tr key={idx}>
-                  <td>{item.ticker || "-"}</td>
+                  {/* <td>{item.ticker || "-"}</td> */}
+                  <td
+                    onClick={() =>
+                      navigate(`/trading-tools?symbol=${item.ticker}`)
+                    }
+                    style={{
+                      cursor: "pointer",
+                      color: "#2563eb",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {item.ticker || "-"}
+                  </td>
                   <td>
                     {item.from_price && item.from_time ? (
                       <>

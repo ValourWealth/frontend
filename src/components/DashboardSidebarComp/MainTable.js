@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // ⬅️ Add this
 import "../DashboardSidebarComp/styles/mainTable.css";
 
 const API_BASE_URL = "https://backend-production-1e63.up.railway.app/";
@@ -37,6 +38,7 @@ const MainTable = () => {
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {

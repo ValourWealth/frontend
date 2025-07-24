@@ -472,6 +472,87 @@ export default function TradingTools() {
   useEffect(() => {
     if (!selectedSymbol) return;
 
+    // const fetchData = async () => {
+    //   const [overviewRes, priceRes, sentimentRes, newsRes] = await Promise.all([
+    //     fetch(
+    //       `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${selectedSymbol}&apikey=${API_KEY}`
+    //     ),
+    //     fetch(
+    //       `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${selectedSymbol}&interval=15min&apikey=${API_KEY}`
+    //     ),
+    //     fetch(
+    //       `https://www.alphavantage.co/query?function=SENTIMENT_ANALYSIS&symbol=${selectedSymbol}&apikey=${API_KEY}`
+    //     ),
+    //     fetch(
+    //       `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=${selectedSymbol}&apikey=${API_KEY}`
+    //     ),
+    //   ]);
+
+    //   const overview = await overviewRes.json();
+    //   const priceData = await priceRes.json();
+    //   const sentimentData = await sentimentRes.json();
+    //   const newsData = await newsRes.json();
+
+    //   const ts = priceData["Time Series (15min)"];
+    //   const latest = ts ? ts[Object.keys(ts)[0]] : null;
+    //   const prev = ts ? ts[Object.keys(ts)[1]] : null;
+
+    //   const current = latest ? parseFloat(latest["4. close"]) : null;
+    //   const previous = prev ? parseFloat(prev["4. close"]) : current;
+    //   const change = ((current - previous) / previous) * 100;
+
+    //   setPrice({
+    //     current: current?.toFixed(2),
+    //     change: change?.toFixed(2),
+    //     open: latest?.["1. open"],
+    //     high: latest?.["2. high"],
+    //     low: latest?.["3. low"],
+    //     close: latest?.["4. close"],
+    //   });
+
+    //   setOverview(overview);
+    //   setSentiment({
+    //     score: sentimentData?.overall_sentiment_score || 0.625,
+    //     label: "Bullish",
+    //   });
+    //   setNewsSentiment(newsData?.feed?.[0]?.overall_sentiment_score ?? 0.115);
+    //   setLatestNews(newsData?.feed?.[0]);
+
+    //   const sampleNews = [
+    //     {
+    //       title: "S&P 500 Bulls Remain in Control, but for How Long?",
+    //       summary:
+    //         "The S&P 500 continues its bullish rally driven by AI euphoria, potential tariff delays, and anticipation of Federal Reserve rate cuts. Market momentum remains strong, but potential risks include trade tensions and upcoming economic data releases.",
+    //       source: "MarketWatch",
+    //       time: "Jul 10th 2025",
+    //     },
+    //     {
+    //       title: "Tesla Stock Surges 8% on Robotaxi Breakthrough Announcement",
+    //       summary:
+    //         "Tesla shares jumped after the company announced a major breakthrough in autonomous driving technology, bringing its robotaxi service closer to commercial deployment.",
+    //       source: "Bloomberg",
+    //       time: "Jul 10th 2025",
+    //     },
+    //     {
+    //       title:
+    //         "Fed Officials Signal Dovish Stance Ahead of September Meeting",
+    //       summary:
+    //         "Federal Reserve officials indicated a more accommodative monetary policy stance, raising expectations for potential rate cuts in the upcoming September FOMC meeting.",
+    //       source: "Reuters",
+    //       time: "Jul 10th 2025",
+    //     },
+    //     {
+    //       title: "AI Chip Demand Drives Semiconductor Rally Across Markets",
+    //       summary:
+    //         "Semiconductor stocks continue their upward trajectory as artificial intelligence chip demand reaches unprecedented levels, benefiting major players in the industry.",
+    //       source: "TechCrunch",
+    //       time: "Jul 10th 2025",
+    //     },
+    //   ];
+    //   // setNewsSlider(sampleNews);
+    //   setNewsSlider(newsData?.feed ?? []);
+
+    // };
     const fetchData = async () => {
       const [overviewRes, priceRes, sentimentRes, newsRes] = await Promise.all([
         fetch(
@@ -517,40 +598,9 @@ export default function TradingTools() {
       });
       setNewsSentiment(newsData?.feed?.[0]?.overall_sentiment_score ?? 0.115);
       setLatestNews(newsData?.feed?.[0]);
-
-      const sampleNews = [
-        {
-          title: "S&P 500 Bulls Remain in Control, but for How Long?",
-          summary:
-            "The S&P 500 continues its bullish rally driven by AI euphoria, potential tariff delays, and anticipation of Federal Reserve rate cuts. Market momentum remains strong, but potential risks include trade tensions and upcoming economic data releases.",
-          source: "MarketWatch",
-          time: "Jul 10th 2025",
-        },
-        {
-          title: "Tesla Stock Surges 8% on Robotaxi Breakthrough Announcement",
-          summary:
-            "Tesla shares jumped after the company announced a major breakthrough in autonomous driving technology, bringing its robotaxi service closer to commercial deployment.",
-          source: "Bloomberg",
-          time: "Jul 10th 2025",
-        },
-        {
-          title:
-            "Fed Officials Signal Dovish Stance Ahead of September Meeting",
-          summary:
-            "Federal Reserve officials indicated a more accommodative monetary policy stance, raising expectations for potential rate cuts in the upcoming September FOMC meeting.",
-          source: "Reuters",
-          time: "Jul 10th 2025",
-        },
-        {
-          title: "AI Chip Demand Drives Semiconductor Rally Across Markets",
-          summary:
-            "Semiconductor stocks continue their upward trajectory as artificial intelligence chip demand reaches unprecedented levels, benefiting major players in the industry.",
-          source: "TechCrunch",
-          time: "Jul 10th 2025",
-        },
-      ];
-      setNewsSlider(sampleNews);
+      setNewsSlider(newsData?.feed ?? []);
     };
+
     setEmbedUrl(
       `https://www.tradingview.com/symbols/NASDAQ-${selectedSymbol}/financials-overview/?utm_campaign=financials&utm_medium=widget&utm_source=dashboard.tradealgo.com`
     );
@@ -1399,9 +1449,12 @@ export default function TradingTools() {
                   {newsSlider[currentNewsIndex]?.summary}
                 </p>
 
-                <a href="#" style={styles.newsLink}>
-                  Read More →
-                </a>
+                <a
+                  href={newsSlider[currentNewsIndex]?.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={styles.newsLink}
+                ></a>
               </div>
             </div>
           </div>

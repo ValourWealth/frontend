@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../DashboardSidebarComp/styles/historicalDataFlow.css";
 
 const API_BASE_URL = "https://backend-production-1e63.up.railway.app/";
@@ -23,6 +24,7 @@ const TradeAlertsTable = ({ darkMode }) => {
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -153,7 +155,20 @@ const TradeAlertsTable = ({ darkMode }) => {
               tableData.map((item, idx) => (
                 <tr key={idx}>
                   <td>{item.time_entered || "-"}</td>
-                  <td>{item.ticker || "-"}</td>
+                  {/* <td>{item.ticker || "-"}</td>
+                   */}
+                  <td
+                    onClick={() =>
+                      navigate(`/trading-tools?symbol=${item.ticker}`)
+                    }
+                    style={{
+                      cursor: "pointer",
+                      color: "#2563eb",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {item.ticker || "-"}
+                  </td>
                   <td>{item.company_name || "-"}</td>
                   <td>{item.irregular_volume || "-"}</td>
                   <td>{item.price_detected || "-"}</td>
