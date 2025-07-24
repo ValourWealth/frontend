@@ -448,7 +448,6 @@
 // };
 
 // export default Resources;
-
 import { useEffect, useState } from "react";
 import "../DashboardSidebarComp/styles/resources.css";
 
@@ -456,8 +455,8 @@ const API_URL =
   "https://backend-production-1e63.up.railway.app/api/platform-walkthrough/";
 
 const Resources = ({ darkMode }) => {
-  const [videos, setVideos] = useState([]);
-  const [playingIndex, setPlayingIndex] = useState(null); // which video is playing
+  const [video, setVideo] = useState(null);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -474,26 +473,23 @@ const Resources = ({ darkMode }) => {
       })
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
-          setVideos(data);
+          setVideo(data[0]); // ✅ Only set latest video
         }
       })
       .catch((err) => console.error("Failed to load video:", err));
   }, []);
 
-  const handlePlay = (index) => {
-    setPlayingIndex(index);
-  };
-
-  const handleCloseVideo = (index) => {
-    const video = document.getElementById(`platform-video-${index}`);
-    if (video) {
-      video.pause();
-      video.currentTime = 0;
+  const handlePlay = () => setPlaying(true);
+  const handleCloseVideo = () => {
+    const videoElement = document.getElementById(`platform-video`);
+    if (videoElement) {
+      videoElement.pause();
+      videoElement.currentTime = 0;
     }
-    setPlayingIndex(null);
+    setPlaying(false);
   };
 
-  if (!videos.length) return null;
+  if (!video) return null;
 
   return (
     <div
@@ -501,117 +497,280 @@ const Resources = ({ darkMode }) => {
         darkMode ? "" : "light-mode"
       }`}
     >
-      {videos.map((videoData, index) => (
-        <div key={index} className="mb-5">
-          <div className="video-container video-resource">
-            <h4 className="video-title my-3">{videoData.title}</h4>
-
-            <div
-              className={`video-wrapper ${
-                darkMode ? "dark-mode" : "light-mode"
-              }`}
-            >
-              <div
-                className="video-thumbnail-overlay"
-                onClick={() => handlePlay(index)}
-                style={{
-                  display: playingIndex === index ? "none" : "block",
-                  position: "relative",
-                  width: "100%",
-                  cursor: "pointer",
-                }}
-              >
-                <img
-                  src={videoData.thumbnail_url}
-                  alt="Thumbnail"
-                  className="video-thumbnail"
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                />
-                <button className="play-button-resources">▶</button>
-              </div>
-
-              <div style={{ position: "relative" }}>
-                <video
-                  id={`platform-video-${index}`}
-                  controls
-                  preload="metadata"
-                  style={{
-                    display: playingIndex === index ? "block" : "none",
-                    width: "100%",
-                    backgroundColor: "#000",
-                  }}
-                  poster={videoData.thumbnail_url}
-                  onContextMenu={(e) => e.preventDefault()}
-                  autoPlay={playingIndex === index}
-                >
-                  <source src={videoData.video_url} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-
-                {playingIndex === index && (
-                  <button
-                    onClick={() => handleCloseVideo(index)}
-                    className="close-button"
-                    style={{
-                      position: "absolute",
-                      top: "10px",
-                      right: "10px",
-                      color: "#000",
-                      border: "none",
-                      borderRadius: "4px",
-                      width: "30px",
-                      height: "30px",
-                      cursor: "pointer",
-                      fontSize: "16px",
-                      fontWeight: "bold",
-                      zIndex: 100,
-                    }}
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
+      <div className="mb-5">
+        <div className="video-container video-resource">
+          <h4 className="video-title my-3">{video.title}</h4>
 
           <div
-            className={`resources-details mt-3 ${darkMode ? "" : "light-mode"}`}
+            className={`video-wrapper ${darkMode ? "dark-mode" : "light-mode"}`}
           >
-            <div className="author-info d-flex align-items-center">
+            <div
+              className="video-thumbnail-overlay"
+              onClick={handlePlay}
+              style={{
+                display: playing ? "none" : "block",
+                position: "relative",
+                width: "100%",
+                cursor: "pointer",
+              }}
+            >
               <img
-                src={videoData.author_image}
-                alt="Author"
-                className="author-img me-2"
+                src={video.thumbnail_url}
+                alt="Thumbnail"
+                className="video-thumbnail"
+                style={{ width: "100%", height: "auto", display: "block" }}
               />
-              <div>
-                <h6 className="author-name m-0">
-                  {videoData.author_name}
-                  {videoData.is_verified && (
-                    <span className="verified-badge">✔</span>
-                  )}
-                </h6>
-                <p className="author-role m-0">{videoData.author_role}</p>
-              </div>
+              <button className="play-button-resources">▶</button>
             </div>
 
-            <h5 className="session-title mt-3">{videoData.title} Sessions</h5>
-            <p className="session-description">{videoData.description}</p>
+            <div style={{ position: "relative" }}>
+              <video
+                id="platform-video"
+                controls
+                preload="metadata"
+                style={{
+                  display: playing ? "block" : "none",
+                  width: "100%",
+                  backgroundColor: "#000",
+                }}
+                poster={video.thumbnail_url}
+                onContextMenu={(e) => e.preventDefault()}
+                autoPlay={playing}
+              >
+                <source src={video.video_url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
 
-            <div
-              className={`live-schedule p-3 mt-3 ${
-                darkMode ? "dark-mode" : "light-mode"
-              }`}
-            >
-              <h6>LIVE Schedule</h6>
-              <p>{videoData.schedule_days}</p>
-              <p>Time: {videoData.schedule_time}</p>
-              <p className="replay-text">Replays are available at any time.</p>
+              {playing && (
+                <button
+                  onClick={handleCloseVideo}
+                  className="close-button"
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "4px",
+                    width: "30px",
+                    height: "30px",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    zIndex: 100,
+                  }}
+                >
+                  ✕
+                </button>
+              )}
             </div>
           </div>
         </div>
-      ))}
+
+        <div
+          className={`resources-details mt-3 ${darkMode ? "" : "light-mode"}`}
+        >
+          <div className="author-info d-flex align-items-center">
+            <img
+              src={video.author_image}
+              alt="Author"
+              className="author-img me-2"
+            />
+            <div>
+              <h6 className="author-name m-0">
+                {video.author_name}
+                {video.is_verified && (
+                  <span className="verified-badge">✔</span>
+                )}
+              </h6>
+              <p className="author-role m-0">{video.author_role}</p>
+            </div>
+          </div>
+
+          <h5 className="session-title mt-3">{video.title} Sessions</h5>
+          <p className="session-description">{video.description}</p>
+
+          <div
+            className={`live-schedule p-3 mt-3 ${
+              darkMode ? "dark-mode" : "light-mode"
+            }`}
+          >
+            <h6>LIVE Schedule</h6>
+            <p>{video.schedule_days}</p>
+            <p>Time: {video.schedule_time}</p>
+            <p className="replay-text">Replays are available at any time.</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Resources;
+
+// import { useEffect, useState } from "react";
+// import "../DashboardSidebarComp/styles/resources.css";
+
+// const API_URL =
+//   "https://backend-production-1e63.up.railway.app/api/platform-walkthrough/";
+
+// const Resources = ({ darkMode }) => {
+//   const [videos, setVideos] = useState([]);
+//   const [playingIndex, setPlayingIndex] = useState(null);
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("accessToken");
+
+//     fetch(API_URL, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "application/json",
+//       },
+//     })
+//       .then((res) => {
+//         if (!res.ok) throw new Error("Failed to fetch");
+//         return res.json();
+//       })
+//       .then((data) => {
+//         if (Array.isArray(data) && data.length > 0) {
+//           setVideos(data);
+//         }
+//       })
+//       .catch((err) => console.error("Failed to load video:", err));
+//   }, []);
+
+//   const handlePlay = (index) => {
+//     setPlayingIndex(index);
+//   };
+
+//   const handleCloseVideo = (index) => {
+//     const video = document.getElementById(`platform-video-${index}`);
+//     if (video) {
+//       video.pause();
+//       video.currentTime = 0;
+//     }
+//     setPlayingIndex(null);
+//   };
+
+//   if (!videos.length) return null;
+
+//   return (
+//     <div
+//       className={`container mt-4 resources-section ${
+//         darkMode ? "" : "light-mode"
+//       }`}
+//     >
+//       {videos.map((videoData, index) => (
+//         <div key={index} className="mb-5">
+//           <div className="video-container video-resource">
+//             <h4 className="video-title my-3">{videoData.title}</h4>
+
+//             <div
+//               className={`video-wrapper ${
+//                 darkMode ? "dark-mode" : "light-mode"
+//               }`}
+//             >
+//               <div
+//                 className="video-thumbnail-overlay"
+//                 onClick={() => handlePlay(index)}
+//                 style={{
+//                   display: playingIndex === index ? "none" : "block",
+//                   position: "relative",
+//                   width: "100%",
+//                   cursor: "pointer",
+//                 }}
+//               >
+//                 <img
+//                   src={videoData.thumbnail_url}
+//                   alt="Thumbnail"
+//                   className="video-thumbnail"
+//                   style={{ width: "100%", height: "auto", display: "block" }}
+//                 />
+//                 <button className="play-button-resources">▶</button>
+//               </div>
+
+//               <div style={{ position: "relative" }}>
+//                 <video
+//                   id={`platform-video-${index}`}
+//                   controls
+//                   preload="metadata"
+//                   style={{
+//                     display: playingIndex === index ? "block" : "none",
+//                     width: "100%",
+//                     backgroundColor: "#000",
+//                   }}
+//                   poster={videoData.thumbnail_url}
+//                   onContextMenu={(e) => e.preventDefault()}
+//                   autoPlay={playingIndex === index}
+//                 >
+//                   <source src={videoData.video_url} type="video/mp4" />
+//                   Your browser does not support the video tag.
+//                 </video>
+
+//                 {playingIndex === index && (
+//                   <button
+//                     onClick={() => handleCloseVideo(index)}
+//                     className="close-button"
+//                     style={{
+//                       position: "absolute",
+//                       top: "10px",
+//                       right: "10px",
+//                       color: "#000",
+//                       border: "none",
+//                       borderRadius: "4px",
+//                       width: "30px",
+//                       height: "30px",
+//                       cursor: "pointer",
+//                       fontSize: "16px",
+//                       fontWeight: "bold",
+//                       zIndex: 100,
+//                     }}
+//                   >
+//                     ✕
+//                   </button>
+//                 )}
+//               </div>
+//             </div>
+//           </div>
+
+//           <div
+//             className={`resources-details mt-3 ${darkMode ? "" : "light-mode"}`}
+//           >
+//             <div className="author-info d-flex align-items-center">
+//               <img
+//                 src={videoData.author_image}
+//                 alt="Author"
+//                 className="author-img me-2"
+//               />
+//               <div>
+//                 <h6 className="author-name m-0">
+//                   {videoData.author_name}
+//                   {videoData.is_verified && (
+//                     <span className="verified-badge">✔</span>
+//                   )}
+//                 </h6>
+//                 <p className="author-role m-0">{videoData.author_role}</p>
+//               </div>
+//             </div>
+
+//             <h5 className="session-title mt-3">{videoData.title} Sessions</h5>
+//             <p className="session-description">{videoData.description}</p>
+
+//             <div
+//               className={`live-schedule p-3 mt-3 ${
+//                 darkMode ? "dark-mode" : "light-mode"
+//               }`}
+//             >
+//               <h6>LIVE Schedule</h6>
+//               <p>{videoData.schedule_days}</p>
+//               <p>Time: {videoData.schedule_time}</p>
+//               <p className="replay-text">Replays are available at any time.</p>
+//             </div>
+//           </div>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default Resources;

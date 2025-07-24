@@ -2657,7 +2657,10 @@
 // export default ValourAcademy;
 
 // ==================================================================================
+
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import {
   FaBookOpen,
   FaBookReader,
@@ -2666,7 +2669,7 @@ import {
   FaLock,
   FaSignal,
 } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import videoImg from "../assets/images/crypto-latest.png";
 import ProgressBarsDisplay from "../components/DashboardSidebarComp/ProgressBar";
 import "../styles/academy.css";

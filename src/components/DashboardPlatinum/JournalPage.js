@@ -18,7 +18,7 @@ import {
 const Journal = () => {
   const [currentActiveTab, setCurrentActiveTab] = useState("dashboard");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [tradingAnalysisData, setTradingAnalysisData] = useState(null);
+  // const [tradingAnalysisData, setTradingAnalysisData] = useState(null);
 
   const [portfolioMetrics, setPortfolioMetrics] = useState({
     totalProfitLoss: 0,
@@ -149,39 +149,39 @@ const Journal = () => {
 
   const [journalEntries, setJournalEntries] = useState([]);
 
-  useEffect(() => {
-    const fetchTradingAnalysis = async () => {
-      try {
-        const res = await fetch(
-          "https://backend-production-1e63.up.railway.app/api/dashboard/",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
-        const data = await res.json();
-        const analysis = data.trading_analysis; // ✅ take nested object
+  // useEffect(() => {
+  //   const fetchTradingAnalysis = async () => {
+  //     try {
+  //       const res = await fetch(
+  //         "https://backend-production-1e63.up.railway.app/api/dashboard/",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //           },
+  //         }
+  //       );
+  //       const data = await res.json();
+  //       const analysis = data.trading_analysis; // ✅ take nested object
 
-        setTradingAnalysisData({
-          averageExitPerformance: analysis.averageExitPerformance,
-          missedProfitOpportunities: analysis.missedProfitOpportunities,
-          optimalExitTrades: analysis.optimalExitTrades,
-          earlyExitTrades: analysis.earlyExitTrades,
-          exitPerformanceDistribution: analysis.exitPerformanceDistribution,
-          worstExitPerformers: analysis.worstExitPerformers,
-          detailedExitAnalysis: analysis.detailedExitAnalysis,
-        });
+  //       setTradingAnalysisData({
+  //         averageExitPerformance: analysis.averageExitPerformance,
+  //         missedProfitOpportunities: analysis.missedProfitOpportunities,
+  //         optimalExitTrades: analysis.optimalExitTrades,
+  //         earlyExitTrades: analysis.earlyExitTrades,
+  //         exitPerformanceDistribution: analysis.exitPerformanceDistribution,
+  //         worstExitPerformers: analysis.worstExitPerformers,
+  //         detailedExitAnalysis: analysis.detailedExitAnalysis,
+  //       });
 
-        // Optional: set AI summary if you want to show
-        // setAiExitSummary(analysis.ai_exit_summary);
-      } catch (error) {
-        console.error("Failed to fetch trading analysis:", error);
-      }
-    };
+  //       // Optional: set AI summary if you want to show
+  //       // setAiExitSummary(analysis.ai_exit_summary);
+  //     } catch (error) {
+  //       console.error("Failed to fetch trading analysis:", error);
+  //     }
+  //   };
 
-    fetchTradingAnalysis();
-  }, []);
+  //   fetchTradingAnalysis();
+  // }, []);
 
   // const [journalEntries, setJournalEntries] = useState([
   //   {
@@ -335,6 +335,28 @@ const Journal = () => {
   //     },
   //   ],
   // };
+  const [tradingAnalysisData, setTradingAnalysisData] = useState(null);
+
+  useEffect(() => {
+    const fetchAnalysis = async () => {
+      try {
+        const res = await fetch(
+          "https://backend-production-1e63.up.railway.app/api/dashboard/",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        const data = await res.json();
+        setTradingAnalysisData(data.trading_analysis);
+      } catch (error) {
+        console.error("Error fetching trading analysis:", error);
+      }
+    };
+
+    fetchAnalysis();
+  }, []);
 
   const reportsData = {
     performanceSummary: {
@@ -685,302 +707,618 @@ const Journal = () => {
     </div>
   );
 
-  const renderTradingAnalysis = () => (
-    <div className="trading-analysis-wrapper">
-      <div className="row mb-4">
-        <div className="col-12">
-          <h2 className="dashboard-main-title">Trading Analysis</h2>
-          <p className="dashboard-subtitle-text">
-            Exit performance analysis and missed opportunity insights from 10
-            trades
-          </p>
-        </div>
-      </div>
+  // const renderTradingAnalysis = () => (
+  //   <div className="trading-analysis-wrapper">
+  //     <div className="row mb-4">
+  //       <div className="col-12">
+  //         <h2 className="dashboard-main-title">Trading Analysis</h2>
+  //         <p className="dashboard-subtitle-text">
+  //           Exit performance analysis and missed opportunity insights from 10
+  //           trades
+  //         </p>
+  //       </div>
+  //     </div>
 
-      {/* Analysis Metrics Row */}
-      <div className="row mb-4">
-        <div className="col-lg-3 col-md-6 mb-3">
-          <div className="analysis-metric-container">
-            <div className="metric-header-section">
-              <BarChart3 className="metric-icon-primary info-color" />
-              <span className="metric-label-text">Avg Exit Performance</span>
-            </div>
-            <div className="metric-value-display info-color">
-              {tradingAnalysisData.averageExitPerformance}%
-            </div>
-            <div className="metric-description-text">
-              of best possible exit achieved
-            </div>
-          </div>
-        </div>
-        <div className="col-lg-3 col-md-6 mb-3">
-          <div className="analysis-metric-container">
-            <div className="metric-header-section">
-              <AlertCircle className="metric-icon-primary warning-color" />
-              <span className="metric-label-text">Missed Profits</span>
-            </div>
-            <div className="metric-value-display warning-color">
-              ${tradingAnalysisData.missedProfitOpportunities.toFixed(2)}
-            </div>
-            <div className="metric-description-text">
-              potential profits left on table
-            </div>
-          </div>
-        </div>
-        <div className="col-lg-3 col-md-6 mb-3">
-          <div className="analysis-metric-container">
-            <div className="metric-header-section">
-              <CheckCircle className="metric-icon-primary profit-color" />
-              <span className="metric-label-text">Optimal Exits</span>
-            </div>
-            <div className="metric-value-display profit-color">
-              {tradingAnalysisData.optimalExitTrades}
-            </div>
-            <div className="metric-description-text">
-              trades with 80%+ exit performance
-            </div>
-          </div>
-        </div>
-        <div className="col-lg-3 col-md-6 mb-3">
-          <div className="analysis-metric-container">
-            <div className="metric-header-section">
-              <XCircle className="metric-icon-primary loss-color" />
-              <span className="metric-label-text">Early Exits</span>
-            </div>
-            <div className="metric-value-display loss-color">
-              {tradingAnalysisData.earlyExitTrades}
-            </div>
-            <div className="metric-description-text">
-              trades exited too early (less than 50%)
-            </div>
-          </div>
-        </div>
-      </div>
+  //     {/* Analysis Metrics Row */}
+  //     <div className="row mb-4">
+  //       <div className="col-lg-3 col-md-6 mb-3">
+  //         <div className="analysis-metric-container">
+  //           <div className="metric-header-section">
+  //             <BarChart3 className="metric-icon-primary info-color" />
+  //             <span className="metric-label-text">Avg Exit Performance</span>
+  //           </div>
+  //           <div className="metric-value-display info-color">
+  //             {tradingAnalysisData.averageExitPerformance}%
+  //           </div>
+  //           <div className="metric-description-text">
+  //             of best possible exit achieved
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="col-lg-3 col-md-6 mb-3">
+  //         <div className="analysis-metric-container">
+  //           <div className="metric-header-section">
+  //             <AlertCircle className="metric-icon-primary warning-color" />
+  //             <span className="metric-label-text">Missed Profits</span>
+  //           </div>
+  //           <div className="metric-value-display warning-color">
+  //             ${tradingAnalysisData.missedProfitOpportunities.toFixed(2)}
+  //           </div>
+  //           <div className="metric-description-text">
+  //             potential profits left on table
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="col-lg-3 col-md-6 mb-3">
+  //         <div className="analysis-metric-container">
+  //           <div className="metric-header-section">
+  //             <CheckCircle className="metric-icon-primary profit-color" />
+  //             <span className="metric-label-text">Optimal Exits</span>
+  //           </div>
+  //           <div className="metric-value-display profit-color">
+  //             {tradingAnalysisData.optimalExitTrades}
+  //           </div>
+  //           <div className="metric-description-text">
+  //             trades with 80%+ exit performance
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <div className="col-lg-3 col-md-6 mb-3">
+  //         <div className="analysis-metric-container">
+  //           <div className="metric-header-section">
+  //             <XCircle className="metric-icon-primary loss-color" />
+  //             <span className="metric-label-text">Early Exits</span>
+  //           </div>
+  //           <div className="metric-value-display loss-color">
+  //             {tradingAnalysisData.earlyExitTrades}
+  //           </div>
+  //           <div className="metric-description-text">
+  //             trades exited too early (less than 50%)
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
 
-      {/* Exit Performance Distribution and Worst Performers */}
-      <div className="row mb-4">
-        <div className="col-lg-8 mb-4">
-          <div className="analytics-chart-container">
-            <h5 className="chart-title-text">Exit Performance Distribution</h5>
-            <p className="chart-subtitle-text">
-              How well you time your exits compared to theoretical best
+  // {/* Exit Performance Distribution and Worst Performers */}
+  // <div className="row mb-4">
+  //   <div className="col-lg-8 mb-4">
+  //     <div className="analytics-chart-container">
+  //       <h5 className="chart-title-text">Exit Performance Distribution</h5>
+  //       <p className="chart-subtitle-text">
+  //         How well you time your exits compared to theoretical best
+  //       </p>
+
+  //       <div className="exit-performance-distribution">
+  //         <div className="performance-category-item">
+  //           <div className="d-flex justify-content-between align-items-center mb-2">
+  //             <span className="text-white">Excellent (80%+)</span>
+  //             <span className="text-white">
+  //               {
+  //                 tradingAnalysisData.exitPerformanceDistribution.excellent
+  //                   .count
+  //               }{" "}
+  //               trades (
+  //               {
+  //                 tradingAnalysisData.exitPerformanceDistribution.excellent
+  //                   .percentage
+  //               }
+  //               %)
+  //             </span>
+  //           </div>
+  //           <div className="performance-progress-bar">
+  //             <div
+  //               className="performance-progress-fill excellent-performance"
+  //               style={{
+  //                 width: `${tradingAnalysisData.exitPerformanceDistribution.excellent.percentage}%`,
+  //               }}
+  //             ></div>
+  //           </div>
+  //         </div>
+
+  //         <div className="performance-category-item">
+  //           <div className="d-flex justify-content-between align-items-center mb-2">
+  //             <span className="text-white">Good (60-80%)</span>
+  //             <span className="text-white">
+  //               {tradingAnalysisData.exitPerformanceDistribution.good.count}{" "}
+  //               trades (
+  //               {
+  //                 tradingAnalysisData.exitPerformanceDistribution.good
+  //                   .percentage
+  //               }
+  //               %)
+  //             </span>
+  //           </div>
+  //           <div className="performance-progress-bar">
+  //             <div
+  //               className="performance-progress-fill good-performance"
+  //               style={{
+  //                 width: `${tradingAnalysisData.exitPerformanceDistribution.good.percentage}%`,
+  //               }}
+  //             ></div>
+  //           </div>
+  //         </div>
+
+  //         <div className="performance-category-item">
+  //           <div className="d-flex justify-content-between align-items-center mb-2">
+  //             <span className="text-white">Average (40-60%)</span>
+  //             <span className="text-white">
+  //               {
+  //                 tradingAnalysisData.exitPerformanceDistribution.average
+  //                   .count
+  //               }{" "}
+  //               trades (
+  //               {
+  //                 tradingAnalysisData.exitPerformanceDistribution.average
+  //                   .percentage
+  //               }
+  //               %)
+  //             </span>
+  //           </div>
+  //           <div className="performance-progress-bar">
+  //             <div
+  //               className="performance-progress-fill average-performance"
+  //               style={{
+  //                 width: `${tradingAnalysisData.exitPerformanceDistribution.average.percentage}%`,
+  //               }}
+  //             ></div>
+  //           </div>
+  //         </div>
+
+  //         <div className="performance-category-item">
+  //           <div className="d-flex justify-content-between align-items-center mb-2">
+  //             <span className="text-white">Poor (40%)</span>
+  //             <span className="text-white">
+  //               {tradingAnalysisData.exitPerformanceDistribution.poor.count}{" "}
+  //               trades (
+  //               {
+  //                 tradingAnalysisData.exitPerformanceDistribution.poor
+  //                   .percentage
+  //               }
+  //               %)
+  //             </span>
+  //           </div>
+  //           <div className="performance-progress-bar">
+  //             <div
+  //               className="performance-progress-fill poor-performance"
+  //               style={{
+  //                 width: `${tradingAnalysisData.exitPerformanceDistribution.poor.percentage}%`,
+  //               }}
+  //             ></div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+
+  //   <div className="col-lg-4 mb-4">
+  //     <div className="analytics-chart-container">
+  //       <h5 className="chart-title-text">Worst Exit Performers</h5>
+  //       <p className="chart-subtitle-text">
+  //         Trades that could have been managed better
+  //       </p>
+
+  //       {tradingAnalysisData.worstExitPerformers.map((performer, index) => (
+  //         <div key={index} className="worst-performer-item">
+  //           <div className="d-flex justify-content-between align-items-center">
+  //             <div>
+  //               <div className="d-flex align-items-center gap-2">
+  //                 <span className="text-white fw-bold">
+  //                   {performer.ticker}
+  //                 </span>
+  //                 <span className="position-badge-long">
+  //                   {performer.position}
+  //                 </span>
+  //               </div>
+  //               <div className="progress-label-text small mt-1">
+  //                 Missed: ${performer.missedAmount.toFixed(2)}
+  //               </div>
+  //             </div>
+  //             <div className="loss-color fw-bold">
+  //               {performer.exitPerformance}%
+  //             </div>
+  //           </div>
+  //           <div className="progress-label-text small mt-1">
+  //             exit performance
+  //           </div>
+  //         </div>
+  //       ))}
+  //     </div>
+  //   </div>
+  // </div>
+
+  // {/* Detailed Exit Analysis */}
+  // <div className="row">
+  //   <div className="col-12">
+  //     <div className="analytics-chart-container">
+  //       <h5 className="chart-title-text">Detailed Exit Analysis</h5>
+  //       <p className="chart-subtitle-text">
+  //         Compare actual vs theoretical exits for each trade
+  //       </p>
+
+  //       <div className="detailed-analysis-table">
+  //         <div className="analysis-table-header">
+  //           <div className="analysis-table-row">
+  //             <div className="analysis-cell-symbol">Symbol</div>
+  //             <div className="analysis-cell-side">Side</div>
+  //             <div className="analysis-cell-exit">Actual Exit</div>
+  //             <div className="analysis-cell-best">Best Exit</div>
+  //             <div className="analysis-cell-performance">Performance</div>
+  //             <div className="analysis-cell-missed">Missed Profit</div>
+  //             <div className="analysis-cell-reason">Exit Reason</div>
+  //           </div>
+  //         </div>
+
+  //         <div className="analysis-table-body">
+  //           {tradingAnalysisData.detailedExitAnalysis.map(
+  //             (analysis, index) => (
+  //               <div key={index} className="analysis-table-row">
+  //                 <div className="analysis-cell-symbol">
+  //                   <span className="text-white fw-bold">
+  //                     {analysis.ticker}
+  //                   </span>
+  //                 </div>
+  //                 <div className="analysis-cell-side">
+  //                   <span className="position-badge-long">
+  //                     {analysis.side}
+  //                   </span>
+  //                 </div>
+  //                 <div className="analysis-cell-exit">
+  //                   <span className="text-white">
+  //                     ${analysis.actualExit}
+  //                   </span>
+  //                 </div>
+  //                 <div className="analysis-cell-best">
+  //                   <span className="text-white">${analysis.bestExit}</span>
+  //                 </div>
+  //                 <div className="analysis-cell-performance">
+  //                   <span
+  //                     className={
+  //                       analysis.performance >= 70
+  //                         ? "profit-color"
+  //                         : analysis.performance >= 40
+  //                         ? "warning-color"
+  //                         : "loss-color"
+  //                     }
+  //                   >
+  //                     {analysis.performance}%
+  //                   </span>
+  //                 </div>
+  //                 <div className="analysis-cell-missed">
+  //                   <span className="loss-color">
+  //                     ${analysis.missedProfit.toFixed(2)}
+  //                   </span>
+  //                 </div>
+  //                 <div className="analysis-cell-reason">
+  //                   <span className="progress-label-text small">
+  //                     {analysis.reason}
+  //                   </span>
+  //                 </div>
+  //               </div>
+  //             )
+  //           )}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
+  //   </div>
+  // );
+  const renderTradingAnalysis = () => {
+    if (!tradingAnalysisData) {
+      return <p>Loading analysis...</p>; // shows loading state inside the tab
+    }
+
+    return (
+      <div className="trading-analysis-wrapper">
+        <div className="row mb-4">
+          <div className="col-12">
+            <h2 className="dashboard-main-title">Trading Analysis</h2>
+            <p className="dashboard-subtitle-text">
+              Exit performance analysis and missed opportunity insights
             </p>
+          </div>
+        </div>
 
-            <div className="exit-performance-distribution">
-              <div className="performance-category-item">
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <span className="text-white">Excellent (80%+)</span>
-                  <span className="text-white">
-                    {
-                      tradingAnalysisData.exitPerformanceDistribution.excellent
-                        .count
-                    }{" "}
-                    trades (
-                    {
-                      tradingAnalysisData.exitPerformanceDistribution.excellent
-                        .percentage
-                    }
-                    %)
-                  </span>
-                </div>
-                <div className="performance-progress-bar">
-                  <div
-                    className="performance-progress-fill excellent-performance"
-                    style={{
-                      width: `${tradingAnalysisData.exitPerformanceDistribution.excellent.percentage}%`,
-                    }}
-                  ></div>
-                </div>
+        {/* metrics */}
+        <div className="row mb-4">
+          <div className="col-lg-3 col-md-6 mb-3">
+            <div className="analysis-metric-container">
+              <div className="metric-header-section">
+                <BarChart3 className="metric-icon-primary info-color" />
+                <span className="metric-label-text">Avg Exit Performance</span>
               </div>
-
-              <div className="performance-category-item">
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <span className="text-white">Good (60-80%)</span>
-                  <span className="text-white">
-                    {tradingAnalysisData.exitPerformanceDistribution.good.count}{" "}
-                    trades (
-                    {
-                      tradingAnalysisData.exitPerformanceDistribution.good
-                        .percentage
-                    }
-                    %)
-                  </span>
-                </div>
-                <div className="performance-progress-bar">
-                  <div
-                    className="performance-progress-fill good-performance"
-                    style={{
-                      width: `${tradingAnalysisData.exitPerformanceDistribution.good.percentage}%`,
-                    }}
-                  ></div>
-                </div>
+              <div className="metric-value-display info-color">
+                {tradingAnalysisData.averageExitPerformance}%
               </div>
-
-              <div className="performance-category-item">
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <span className="text-white">Average (40-60%)</span>
-                  <span className="text-white">
-                    {
-                      tradingAnalysisData.exitPerformanceDistribution.average
-                        .count
-                    }{" "}
-                    trades (
-                    {
-                      tradingAnalysisData.exitPerformanceDistribution.average
-                        .percentage
-                    }
-                    %)
-                  </span>
-                </div>
-                <div className="performance-progress-bar">
-                  <div
-                    className="performance-progress-fill average-performance"
-                    style={{
-                      width: `${tradingAnalysisData.exitPerformanceDistribution.average.percentage}%`,
-                    }}
-                  ></div>
-                </div>
+              <div className="metric-description-text">
+                of best possible exit achieved
               </div>
+            </div>
+          </div>
 
-              <div className="performance-category-item">
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <span className="text-white">Poor (40%)</span>
-                  <span className="text-white">
-                    {tradingAnalysisData.exitPerformanceDistribution.poor.count}{" "}
-                    trades (
-                    {
-                      tradingAnalysisData.exitPerformanceDistribution.poor
-                        .percentage
-                    }
-                    %)
-                  </span>
-                </div>
-                <div className="performance-progress-bar">
-                  <div
-                    className="performance-progress-fill poor-performance"
-                    style={{
-                      width: `${tradingAnalysisData.exitPerformanceDistribution.poor.percentage}%`,
-                    }}
-                  ></div>
-                </div>
+          <div className="col-lg-3 col-md-6 mb-3">
+            <div className="analysis-metric-container">
+              <div className="metric-header-section">
+                <AlertCircle className="metric-icon-primary warning-color" />
+                <span className="metric-label-text">Missed Profits</span>
+              </div>
+              <div className="metric-value-display warning-color">
+                ${tradingAnalysisData.missedProfitOpportunities.toFixed(2)}
+              </div>
+              <div className="metric-description-text">
+                potential profits left on table
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-6 mb-3">
+            <div className="analysis-metric-container">
+              <div className="metric-header-section">
+                <CheckCircle className="metric-icon-primary profit-color" />
+                <span className="metric-label-text">Optimal Exits</span>
+              </div>
+              <div className="metric-value-display profit-color">
+                {tradingAnalysisData.optimalExitTrades}
+              </div>
+              <div className="metric-description-text">
+                trades with 80%+ exit performance
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-3 col-md-6 mb-3">
+            <div className="analysis-metric-container">
+              <div className="metric-header-section">
+                <XCircle className="metric-icon-primary loss-color" />
+                <span className="metric-label-text">Early Exits</span>
+              </div>
+              <div className="metric-value-display loss-color">
+                {tradingAnalysisData.earlyExitTrades}
+              </div>
+              <div className="metric-description-text">
+                trades exited too early (less than 50%)
               </div>
             </div>
           </div>
         </div>
 
-        <div className="col-lg-4 mb-4">
-          <div className="analytics-chart-container">
-            <h5 className="chart-title-text">Worst Exit Performers</h5>
-            <p className="chart-subtitle-text">
-              Trades that could have been managed better
-            </p>
+        {/* Exit Performance Distribution and Worst Performers */}
+        <div className="row mb-4">
+          <div className="col-lg-8 mb-4">
+            <div className="analytics-chart-container">
+              <h5 className="chart-title-text">
+                Exit Performance Distribution
+              </h5>
+              <p className="chart-subtitle-text">
+                How well you time your exits compared to theoretical best
+              </p>
 
-            {tradingAnalysisData.worstExitPerformers.map((performer, index) => (
-              <div key={index} className="worst-performer-item">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div className="d-flex align-items-center gap-2">
-                      <span className="text-white fw-bold">
-                        {performer.ticker}
-                      </span>
-                      <span className="position-badge-long">
-                        {performer.position}
-                      </span>
+              <div className="exit-performance-distribution">
+                <div className="performance-category-item">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span className="text-white">Excellent (80%+)</span>
+                    <span className="text-white">
+                      {
+                        tradingAnalysisData.exitPerformanceDistribution
+                          .excellent.count
+                      }{" "}
+                      trades (
+                      {
+                        tradingAnalysisData.exitPerformanceDistribution
+                          .excellent.percentage
+                      }
+                      %)
+                    </span>
+                  </div>
+                  <div className="performance-progress-bar">
+                    <div
+                      className="performance-progress-fill excellent-performance"
+                      style={{
+                        width: `${tradingAnalysisData.exitPerformanceDistribution.excellent.percentage}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="performance-category-item">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span className="text-white">Good (60-80%)</span>
+                    <span className="text-white">
+                      {
+                        tradingAnalysisData.exitPerformanceDistribution.good
+                          .count
+                      }{" "}
+                      trades (
+                      {
+                        tradingAnalysisData.exitPerformanceDistribution.good
+                          .percentage
+                      }
+                      %)
+                    </span>
+                  </div>
+                  <div className="performance-progress-bar">
+                    <div
+                      className="performance-progress-fill good-performance"
+                      style={{
+                        width: `${tradingAnalysisData.exitPerformanceDistribution.good.percentage}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="performance-category-item">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span className="text-white">Average (40-60%)</span>
+                    <span className="text-white">
+                      {
+                        tradingAnalysisData.exitPerformanceDistribution.average
+                          .count
+                      }{" "}
+                      trades (
+                      {
+                        tradingAnalysisData.exitPerformanceDistribution.average
+                          .percentage
+                      }
+                      %)
+                    </span>
+                  </div>
+                  <div className="performance-progress-bar">
+                    <div
+                      className="performance-progress-fill average-performance"
+                      style={{
+                        width: `${tradingAnalysisData.exitPerformanceDistribution.average.percentage}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="performance-category-item">
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <span className="text-white">Poor (40%)</span>
+                    <span className="text-white">
+                      {
+                        tradingAnalysisData.exitPerformanceDistribution.poor
+                          .count
+                      }{" "}
+                      trades (
+                      {
+                        tradingAnalysisData.exitPerformanceDistribution.poor
+                          .percentage
+                      }
+                      %)
+                    </span>
+                  </div>
+                  <div className="performance-progress-bar">
+                    <div
+                      className="performance-progress-fill poor-performance"
+                      style={{
+                        width: `${tradingAnalysisData.exitPerformanceDistribution.poor.percentage}%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-lg-4 mb-4">
+            <div className="analytics-chart-container">
+              <h5 className="chart-title-text">Worst Exit Performers</h5>
+              <p className="chart-subtitle-text">
+                Trades that could have been managed better
+              </p>
+
+              {tradingAnalysisData.worstExitPerformers.map(
+                (performer, index) => (
+                  <div key={index} className="worst-performer-item">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="text-white fw-bold">
+                            {performer.ticker}
+                          </span>
+                          <span className="position-badge-long">
+                            {performer.position}
+                          </span>
+                        </div>
+                        <div className="progress-label-text small mt-1">
+                          Missed: ${performer.missedAmount.toFixed(2)}
+                        </div>
+                      </div>
+                      <div className="loss-color fw-bold">
+                        {performer.exitPerformance}%
+                      </div>
                     </div>
                     <div className="progress-label-text small mt-1">
-                      Missed: ${performer.missedAmount.toFixed(2)}
+                      exit performance
                     </div>
                   </div>
-                  <div className="loss-color fw-bold">
-                    {performer.exitPerformance}%
-                  </div>
-                </div>
-                <div className="progress-label-text small mt-1">
-                  exit performance
-                </div>
-              </div>
-            ))}
+                )
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Detailed Exit Analysis */}
-      <div className="row">
-        <div className="col-12">
-          <div className="analytics-chart-container">
-            <h5 className="chart-title-text">Detailed Exit Analysis</h5>
-            <p className="chart-subtitle-text">
-              Compare actual vs theoretical exits for each trade
-            </p>
+        {/* Detailed Exit Analysis */}
+        <div className="row">
+          <div className="col-12">
+            <div className="analytics-chart-container">
+              <h5 className="chart-title-text">Detailed Exit Analysis</h5>
+              <p className="chart-subtitle-text">
+                Compare actual vs theoretical exits for each trade
+              </p>
 
-            <div className="detailed-analysis-table">
-              <div className="analysis-table-header">
-                <div className="analysis-table-row">
-                  <div className="analysis-cell-symbol">Symbol</div>
-                  <div className="analysis-cell-side">Side</div>
-                  <div className="analysis-cell-exit">Actual Exit</div>
-                  <div className="analysis-cell-best">Best Exit</div>
-                  <div className="analysis-cell-performance">Performance</div>
-                  <div className="analysis-cell-missed">Missed Profit</div>
-                  <div className="analysis-cell-reason">Exit Reason</div>
+              <div className="detailed-analysis-table">
+                <div className="analysis-table-header">
+                  <div className="analysis-table-row">
+                    <div className="analysis-cell-symbol">Symbol</div>
+                    <div className="analysis-cell-side">Side</div>
+                    <div className="analysis-cell-exit">Actual Exit</div>
+                    <div className="analysis-cell-best">Best Exit</div>
+                    <div className="analysis-cell-performance">Performance</div>
+                    <div className="analysis-cell-missed">Missed Profit</div>
+                    <div className="analysis-cell-reason">Exit Reason</div>
+                  </div>
                 </div>
-              </div>
 
-              <div className="analysis-table-body">
-                {tradingAnalysisData.detailedExitAnalysis.map(
-                  (analysis, index) => (
-                    <div key={index} className="analysis-table-row">
-                      <div className="analysis-cell-symbol">
-                        <span className="text-white fw-bold">
-                          {analysis.ticker}
-                        </span>
+                <div className="analysis-table-body">
+                  {tradingAnalysisData.detailedExitAnalysis.map(
+                    (analysis, index) => (
+                      <div key={index} className="analysis-table-row">
+                        <div className="analysis-cell-symbol">
+                          <span className="text-white fw-bold">
+                            {analysis.ticker}
+                          </span>
+                        </div>
+                        <div className="analysis-cell-side">
+                          <span className="position-badge-long">
+                            {analysis.side}
+                          </span>
+                        </div>
+                        <div className="analysis-cell-exit">
+                          <span className="text-white">
+                            ${analysis.actualExit}
+                          </span>
+                        </div>
+                        <div className="analysis-cell-best">
+                          <span className="text-white">
+                            ${analysis.bestExit}
+                          </span>
+                        </div>
+                        <div className="analysis-cell-performance">
+                          <span
+                            className={
+                              analysis.performance >= 70
+                                ? "profit-color"
+                                : analysis.performance >= 40
+                                ? "warning-color"
+                                : "loss-color"
+                            }
+                          >
+                            {analysis.performance}%
+                          </span>
+                        </div>
+                        <div className="analysis-cell-missed">
+                          <span className="loss-color">
+                            ${analysis.missedProfit.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="analysis-cell-reason">
+                          <span className="progress-label-text small">
+                            {analysis.reason}
+                          </span>
+                        </div>
                       </div>
-                      <div className="analysis-cell-side">
-                        <span className="position-badge-long">
-                          {analysis.side}
-                        </span>
-                      </div>
-                      <div className="analysis-cell-exit">
-                        <span className="text-white">
-                          ${analysis.actualExit}
-                        </span>
-                      </div>
-                      <div className="analysis-cell-best">
-                        <span className="text-white">${analysis.bestExit}</span>
-                      </div>
-                      <div className="analysis-cell-performance">
-                        <span
-                          className={
-                            analysis.performance >= 70
-                              ? "profit-color"
-                              : analysis.performance >= 40
-                              ? "warning-color"
-                              : "loss-color"
-                          }
-                        >
-                          {analysis.performance}%
-                        </span>
-                      </div>
-                      <div className="analysis-cell-missed">
-                        <span className="loss-color">
-                          ${analysis.missedProfit.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="analysis-cell-reason">
-                        <span className="progress-label-text small">
-                          {analysis.reason}
-                        </span>
-                      </div>
-                    </div>
-                  )
-                )}
+                    )
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderAnalytics = () => (
     <div className="performance-analytics-wrapper">
