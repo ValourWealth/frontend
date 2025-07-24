@@ -18,6 +18,7 @@ import {
 const Journal = () => {
   const [currentActiveTab, setCurrentActiveTab] = useState("dashboard");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [tradingAnalysisData, setTradingAnalysisData] = useState(null);
 
   const [portfolioMetrics, setPortfolioMetrics] = useState({
     totalProfitLoss: 0,
@@ -147,6 +148,67 @@ const Journal = () => {
   }, []);
 
   const [journalEntries, setJournalEntries] = useState([]);
+
+  useEffect(() => {
+    const fetchTradingAnalysis = async () => {
+      try {
+        const res = await fetch(
+          "https://backend-production-1e63.up.railway.app/api/trade-journal-dashboard/",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        const data = await res.json();
+
+        // 💡 Format data for the frontend structure
+        const exitDist = data.exit_performance.distribution;
+        const total = data.total_trades || 1;
+
+        setTradingAnalysisData({
+          averageExitPerformance: data.exit_performance.average,
+          missedProfitOpportunities: data.exit_performance.missed_profits,
+          optimalExitTrades: data.exit_performance.optimal_exits,
+          earlyExitTrades: data.exit_performance.early_exits,
+          exitPerformanceDistribution: {
+            excellent: {
+              count: exitDist.excellent,
+              percentage: ((exitDist.excellent / total) * 100).toFixed(1),
+            },
+            good: {
+              count: exitDist.good,
+              percentage: ((exitDist.good / total) * 100).toFixed(1),
+            },
+            average: {
+              count: exitDist.average,
+              percentage: ((exitDist.average / total) * 100).toFixed(1),
+            },
+            poor: {
+              count: exitDist.poor,
+              percentage: ((exitDist.poor / total) * 100).toFixed(1),
+            },
+          },
+          worstExitPerformers: data.exit_performance.worst_exit
+            ? [
+                {
+                  ticker: data.exit_performance.worst_exit.symbol,
+                  position: data.exit_performance.worst_exit.side,
+                  missedAmount: data.exit_performance.worst_exit.missed_profit,
+                  exitPerformance: data.exit_performance.worst_exit.performance,
+                },
+              ]
+            : [],
+          detailedExitAnalysis: data.detailed_exit_analysis || [],
+        });
+      } catch (error) {
+        console.error("Failed to fetch trading analysis:", error);
+      }
+    };
+
+    fetchTradingAnalysis();
+  }, []);
+
   // const [journalEntries, setJournalEntries] = useState([
   //   {
   //     ticker: "AAPL",
@@ -230,75 +292,75 @@ const Journal = () => {
     ],
   };
 
-  const tradingAnalysisData = {
-    averageExitPerformance: 71.3,
-    missedProfitOpportunities: 4142.5,
-    optimalExitTrades: 4,
-    earlyExitTrades: 1,
-    exitPerformanceDistribution: {
-      excellent: { count: 4, percentage: 40.0 },
-      good: { count: 5, percentage: 50.0 },
-      average: { count: 0, percentage: 0.0 },
-      poor: { count: 1, percentage: 10.0 },
-    },
-    worstExitPerformers: [
-      {
-        ticker: "TSLA",
-        position: "LONG",
-        missedAmount: 990.0,
-        exitPerformance: 28.0,
-      },
-    ],
-    detailedExitAnalysis: [
-      {
-        ticker: "AAPL",
-        side: "LONG",
-        actualExit: 192.8,
-        bestExit: 198.5,
-        performance: 78.5,
-        missedProfit: 570.0,
-        reason:
-          "Target reached at 1.618 Fibonacci extension. Took profits before weekend.",
-      },
-      {
-        ticker: "NVDA",
-        side: "LONG",
-        actualExit: 890.5,
-        bestExit: 920,
-        performance: 69.2,
-        missedProfit: 737.5,
-        reason: "Hit resistance at $890. RSI overbought, taking profits.",
-      },
-      {
-        ticker: "BTC-USD",
-        side: "LONG",
-        actualExit: 45200,
-        bestExit: 46800,
-        performance: 85.4,
-        missedProfit: 800.0,
-        reason:
-          "Quick profit target hit. Crypto volatility requires fast exits.",
-      },
-      {
-        ticker: "TSLA",
-        side: "LONG",
-        actualExit: 235.2,
-        bestExit: 255,
-        performance: 28.0,
-        missedProfit: 990.0,
-        reason: "Stop loss hit. Failed breakout became breakdown.",
-      },
-      {
-        ticker: "SPY-C-510",
-        side: "LONG",
-        actualExit: 5.8,
-        bestExit: 7.2,
-        performance: 80.6,
-        missedProfit: 14.0,
-        reason: "Theta decay approaching. Secured 78% gain.",
-      },
-    ],
-  };
+  // const tradingAnalysisData = {
+  //   averageExitPerformance: 71.3,
+  //   missedProfitOpportunities: 4142.5,
+  //   optimalExitTrades: 4,
+  //   earlyExitTrades: 1,
+  //   exitPerformanceDistribution: {
+  //     excellent: { count: 4, percentage: 40.0 },
+  //     good: { count: 5, percentage: 50.0 },
+  //     average: { count: 0, percentage: 0.0 },
+  //     poor: { count: 1, percentage: 10.0 },
+  //   },
+  //   worstExitPerformers: [
+  //     {
+  //       ticker: "TSLA",
+  //       position: "LONG",
+  //       missedAmount: 990.0,
+  //       exitPerformance: 28.0,
+  //     },
+  //   ],
+  //   detailedExitAnalysis: [
+  //     {
+  //       ticker: "AAPL",
+  //       side: "LONG",
+  //       actualExit: 192.8,
+  //       bestExit: 198.5,
+  //       performance: 78.5,
+  //       missedProfit: 570.0,
+  //       reason:
+  //         "Target reached at 1.618 Fibonacci extension. Took profits before weekend.",
+  //     },
+  //     {
+  //       ticker: "NVDA",
+  //       side: "LONG",
+  //       actualExit: 890.5,
+  //       bestExit: 920,
+  //       performance: 69.2,
+  //       missedProfit: 737.5,
+  //       reason: "Hit resistance at $890. RSI overbought, taking profits.",
+  //     },
+  //     {
+  //       ticker: "BTC-USD",
+  //       side: "LONG",
+  //       actualExit: 45200,
+  //       bestExit: 46800,
+  //       performance: 85.4,
+  //       missedProfit: 800.0,
+  //       reason:
+  //         "Quick profit target hit. Crypto volatility requires fast exits.",
+  //     },
+  //     {
+  //       ticker: "TSLA",
+  //       side: "LONG",
+  //       actualExit: 235.2,
+  //       bestExit: 255,
+  //       performance: 28.0,
+  //       missedProfit: 990.0,
+  //       reason: "Stop loss hit. Failed breakout became breakdown.",
+  //     },
+  //     {
+  //       ticker: "SPY-C-510",
+  //       side: "LONG",
+  //       actualExit: 5.8,
+  //       bestExit: 7.2,
+  //       performance: 80.6,
+  //       missedProfit: 14.0,
+  //       reason: "Theta decay approaching. Secured 78% gain.",
+  //     },
+  //   ],
+  // };
 
   const reportsData = {
     performanceSummary: {
