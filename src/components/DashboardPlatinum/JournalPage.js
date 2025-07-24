@@ -68,10 +68,50 @@ const Journal = () => {
     fetchDashboardMetrics();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchTrades = async () => {
+  //     try {
+  //       const token = localStorage.getItem("accessToken");
+  //       const res = await fetch(
+  //         "https://backend-production-1e63.up.railway.app/api/trades/",
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+
+  //       if (!res.ok) throw new Error("Failed to fetch trades");
+
+  //       const data = await res.json();
+
+  //       // Map backend fields to frontend expectations
+  //       const formattedTrades = data.map((t) => ({
+  //         ticker: t.symbol,
+  //         positionType: t.side,
+  //         tradingTags: t.tags || [],
+  //         netProfit: t.profit_loss,
+  //         openPrice: parseFloat(t.entry_price),
+  //         closePrice: parseFloat(t.exit_price),
+  //         shareQuantity: parseFloat(t.quantity),
+  //         holdingPeriod: `${t.duration} day${t.duration === 1 ? "" : "s"}`,
+  //         tradeNotes: t.notes || "",
+  //       }));
+
+  //       setJournalEntries(formattedTrades);
+  //     } catch (err) {
+  //       console.error("Error loading trade journal:", err);
+  //     }
+  //   };
+
+  //   fetchTrades();
+  // }, []);
+
   useEffect(() => {
     const fetchTrades = async () => {
       try {
         const token = localStorage.getItem("accessToken");
+
         const res = await fetch(
           "https://backend-production-1e63.up.railway.app/api/trades/",
           {
@@ -85,22 +125,21 @@ const Journal = () => {
 
         const data = await res.json();
 
-        // Map backend fields to frontend expectations
-        const formattedTrades = data.map((t) => ({
+        const formatted = data.map((t) => ({
           ticker: t.symbol,
           positionType: t.side,
           tradingTags: t.tags || [],
-          netProfit: t.profit_loss,
+          netProfit: parseFloat(t.profit_loss),
           openPrice: parseFloat(t.entry_price),
           closePrice: parseFloat(t.exit_price),
           shareQuantity: parseFloat(t.quantity),
           holdingPeriod: `${t.duration} day${t.duration === 1 ? "" : "s"}`,
-          tradeNotes: t.notes || "",
+          tradeNotes: t.notes || "No notes",
         }));
 
-        setJournalEntries(formattedTrades);
+        setJournalEntries(formatted);
       } catch (err) {
-        console.error("Error loading trade journal:", err);
+        console.error("Trade fetch error:", err);
       }
     };
 
